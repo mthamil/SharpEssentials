@@ -26,6 +26,11 @@ namespace SharpEssentials.InputOutput
 	/// </summary>
 	public class DirectoryMonitor : DisposableBase, IDirectoryMonitor
 	{
+        /// <summary>
+        /// Initializes a new <see cref="DirectoryMonitor"/>.
+        /// </summary>
+        /// <param name="fileSystemWatcher">The file system watcher to use</param>
+        /// <param name="timerFactory">Creates timers</param>
 		public DirectoryMonitor(IFileSystemWatcher fileSystemWatcher, Func<ITimer> timerFactory)
 		{
 			_fileSystemWatcher = fileSystemWatcher;

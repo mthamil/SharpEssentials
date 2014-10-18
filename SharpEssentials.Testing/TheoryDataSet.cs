@@ -19,12 +19,15 @@ using System.Collections.Generic;
 namespace SharpEssentials.Testing
 {
 	/// <summary>
-	/// Helper class for generating test data for XUnit's <see cref="Xunit.Extensions.TheoryAttribute"/>-based tests.
-	/// Should be used in combination with <see cref="Xunit.Extensions.PropertyDataAttribute"/>.
+    /// Helper class for generating test data for xUnit's <c>TheoryAttribute</c>-based tests.
+    /// Should be used in combination with <c>PropertyDataAttribute</c>.
 	/// </summary>
 	/// <typeparam name="TParam">First parameter type</typeparam>
 	public class TheoryDataSet<TParam> : TheoryDataSet
 	{
+        /// <summary>
+        /// Adds the data for a test case.
+        /// </summary>
 		public void Add(TParam p)
 		{
 			AddItem(p);
@@ -32,13 +35,16 @@ namespace SharpEssentials.Testing
 	}
 
 	/// <summary>
-	/// Helper class for generating test data for XUnit's <see cref="Xunit.Extensions.TheoryAttribute"/>-based tests.
-	/// Should be used in combination with <see cref="Xunit.Extensions.PropertyDataAttribute"/>.
+    /// Helper class for generating test data for xUnit's <c>TheoryAttribute</c>-based tests.
+    /// Should be used in combination with <c>PropertyDataAttribute</c>.
 	/// </summary>
 	/// <typeparam name="TParam1">First parameter type</typeparam>
 	/// <typeparam name="TParam2">Second parameter type</typeparam>
 	public class TheoryDataSet<TParam1, TParam2> : TheoryDataSet
 	{
+        /// <summary>
+        /// Adds the data for a test case.
+        /// </summary>
 		public void Add(TParam1 p1, TParam2 p2)
 		{
 			AddItem(p1, p2);
@@ -46,14 +52,17 @@ namespace SharpEssentials.Testing
 	}
 
 	/// <summary>
-	/// Helper class for generating test data for XUnit's <see cref="Xunit.Extensions.TheoryAttribute"/>-based tests.
-	/// Should be used in combination with <see cref="Xunit.Extensions.PropertyDataAttribute"/>.
+    /// Helper class for generating test data for xUnit's <c>TheoryAttribute</c>-based tests.
+    /// Should be used in combination with <c>PropertyDataAttribute</c>.
 	/// </summary>
 	/// <typeparam name="TParam1">First parameter type</typeparam>
 	/// <typeparam name="TParam2">Second parameter type</typeparam>
 	/// <typeparam name="TParam3">Third parameter type</typeparam>
 	public class TheoryDataSet<TParam1, TParam2, TParam3> : TheoryDataSet
 	{
+        /// <summary>
+        /// Adds the data for a test case.
+        /// </summary>
 		public void Add(TParam1 p1, TParam2 p2, TParam3 p3)
 		{
 			AddItem(p1, p2, p3);
@@ -61,8 +70,8 @@ namespace SharpEssentials.Testing
 	}
 
 	/// <summary>
-	/// Helper class for generating test data for XUnit's <see cref="Xunit.Extensions.TheoryAttribute"/>-based tests.
-	/// Should be used in combination with <see cref="Xunit.Extensions.PropertyDataAttribute"/>.
+    /// Helper class for generating test data for xUnit's <c>TheoryAttribute</c>-based tests.
+    /// Should be used in combination with <c>PropertyDataAttribute</c>.
 	/// </summary>
 	/// <typeparam name="TParam1">First parameter type</typeparam>
 	/// <typeparam name="TParam2">Second parameter type</typeparam>
@@ -70,6 +79,9 @@ namespace SharpEssentials.Testing
 	/// <typeparam name="TParam4">Fourth parameter type</typeparam>
 	public class TheoryDataSet<TParam1, TParam2, TParam3, TParam4> : TheoryDataSet
 	{
+        /// <summary>
+        /// Adds the data for a test case.
+        /// </summary>
 		public void Add(TParam1 p1, TParam2 p2, TParam3 p3, TParam4 p4)
 		{
 			AddItem(p1, p2, p3, p4);
@@ -77,8 +89,8 @@ namespace SharpEssentials.Testing
 	}
 
 	/// <summary>
-	/// Helper class for generating test data for XUnit's <see cref="Xunit.Extensions.TheoryAttribute"/>-based tests.
-	/// Should be used in combination with <see cref="Xunit.Extensions.PropertyDataAttribute"/>.
+    /// Helper class for generating test data for xUnit's <c>TheoryAttribute</c>-based tests.
+    /// Should be used in combination with <c>PropertyDataAttribute</c>.
 	/// </summary>
 	/// <typeparam name="TParam1">First parameter type</typeparam>
 	/// <typeparam name="TParam2">Second parameter type</typeparam>
@@ -87,6 +99,9 @@ namespace SharpEssentials.Testing
 	/// <typeparam name="TParam5">Fifth parameter type</typeparam>
 	public class TheoryDataSet<TParam1, TParam2, TParam3, TParam4, TParam5> : TheoryDataSet
 	{
+        /// <summary>
+        /// Adds the data for a test case.
+        /// </summary>
 		public void Add(TParam1 p1, TParam2 p2, TParam3 p3, TParam4 p4, TParam5 p5)
 		{
 			AddItem(p1, p2, p3, p4, p5);
@@ -100,11 +115,15 @@ namespace SharpEssentials.Testing
 	{
 		private readonly List<object[]> data = new List<object[]>();
 
+        /// <summary>
+        /// Adds the data for a test case.
+        /// </summary>
 		protected void AddItem(params object[] values)
 		{
 			data.Add(values);
 		}
 
+        /// <see cref="IEnumerable{T}.GetEnumerator"/>
 		public IEnumerator<object[]> GetEnumerator()
 		{
 			return data.GetEnumerator();

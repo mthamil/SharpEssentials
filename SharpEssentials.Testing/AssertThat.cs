@@ -306,6 +306,9 @@ namespace SharpEssentials.Testing
 			return proxy;
 		}
 
+        /// <summary>
+        /// Delegate for code that should raise an event.
+        /// </summary>
 		public delegate void EventDelegate();
 
 		private class EventProxy
