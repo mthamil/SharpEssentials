@@ -32,9 +32,9 @@ using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 
-[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "Utilities.Controls.Localization")]
-[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2007/xaml/presentation", "Utilities.Controls.Localization")]
-[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2008/xaml/presentation", "Utilities.Controls.Localization")]
+[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "SharpEssentials.Controls.Localization")]
+[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2007/xaml/presentation", "SharpEssentials.Controls.Localization")]
+[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2008/xaml/presentation", "SharpEssentials.Controls.Localization")]
 
 namespace SharpEssentials.Controls.Localization
 {
