@@ -91,83 +91,86 @@ namespace Tests.Unit.SharpEssentials.InputOutput
 		[Fact]
 		public void Test_Watcher_Created()
 		{
-			// Arrange.
-			var testFile = new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"TestDiagrams\class.puml"));
+			using (var temp = new TemporaryFile().Touch())
+            {
+                // Arrange.
+			    var createdArgs = new List<FileSystemEventArgs>();
+			    EventHandler<FileSystemEventArgs> createdHandler = (o, e) => createdArgs.Add(e);
+			    monitor.Created += createdHandler;
 
-			var createdArgs = new List<FileSystemEventArgs>();
-			EventHandler<FileSystemEventArgs> createdHandler = (o, e) => createdArgs.Add(e);
-			monitor.Created += createdHandler;
+			    // Act.
+                watcher.Raise(w => w.Created += null, new FileSystemEventArgs(WatcherChangeTypes.Created, temp.File.Directory.FullName, temp.File.Name));
 
-			// Act.
-			watcher.Raise(w => w.Created += null, new FileSystemEventArgs(WatcherChangeTypes.Created, testFile.Directory.FullName, testFile.Name));
+			    // Assert.
+			    Assert.Single(timers);
+			    timers.Single().VerifySet(t => t.Interval = TimeSpan.FromSeconds(2));
+                timers.Single().Verify(t => t.Restart(temp.File.FullName));
 
-			// Assert.
-			Assert.Single(timers);
-			timers.Single().VerifySet(t => t.Interval = TimeSpan.FromSeconds(2));
-			timers.Single().Verify(t => t.Restart(testFile.FullName));
+			    // Act.
+                timers.Single().Raise(t => t.Elapsed += null, new TimerElapsedEventArgs(DateTime.Now, temp.File.FullName));
 
-			// Act.
-			timers.Single().Raise(t => t.Elapsed += null, new TimerElapsedEventArgs(DateTime.Now, testFile.FullName));
-
-			// Assert.
-			Assert.Single(createdArgs);
-			Assert.Equal(testFile.FullName, createdArgs.Single().FullPath);
-			timers.Single().Verify(t => t.TryStop());
+			    // Assert.
+			    Assert.Single(createdArgs);
+                Assert.Equal(temp.File.FullName, createdArgs.Single().FullPath);
+			    timers.Single().Verify(t => t.TryStop());
+            }
 		}
 
 		[Fact]
 		public void Test_Watcher_Created_ThenChanged()
 		{
-			// Arrange.
-			var testFile = new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"TestDiagrams\class.puml"));
+		    using (var temp = new TemporaryFile().Touch())
+		    {
+		        // Arrange.
+		        var createdArgs = new List<FileSystemEventArgs>();
+		        EventHandler<FileSystemEventArgs> createdHandler = (o, e) => createdArgs.Add(e);
+		        monitor.Created += createdHandler;
 
-			var createdArgs = new List<FileSystemEventArgs>();
-			EventHandler<FileSystemEventArgs> createdHandler = (o, e) => createdArgs.Add(e);
-			monitor.Created += createdHandler;
+                watcher.Raise(w => w.Created += null, new FileSystemEventArgs(WatcherChangeTypes.Created, temp.File.Directory.FullName, temp.File.Name));
 
-			watcher.Raise(w => w.Created += null, new FileSystemEventArgs(WatcherChangeTypes.Created, testFile.Directory.FullName, testFile.Name));
+		        // Act.
+                watcher.Raise(w => w.Changed += null, new FileSystemEventArgs(WatcherChangeTypes.Changed, temp.File.Directory.FullName, temp.File.Name));
 
-			// Act.
-			watcher.Raise(w => w.Changed += null, new FileSystemEventArgs(WatcherChangeTypes.Changed, testFile.Directory.FullName, testFile.Name));
+		        // Assert.
+		        Assert.Single(timers);
+		        timers.Single().VerifySet(t => t.Interval = TimeSpan.FromSeconds(2));
+                timers.Single().Verify(t => t.Restart(temp.File.FullName), Times.Exactly(2));
 
-			// Assert.
-			Assert.Single(timers);
-			timers.Single().VerifySet(t => t.Interval = TimeSpan.FromSeconds(2));
-			timers.Single().Verify(t => t.Restart(testFile.FullName), Times.Exactly(2));
+		        // Act.
+                timers.Single().Raise(t => t.Elapsed += null, new TimerElapsedEventArgs(DateTime.Now, temp.File.FullName));
 
-			// Act.
-			timers.Single().Raise(t => t.Elapsed += null, new TimerElapsedEventArgs(DateTime.Now, testFile.FullName));
-
-			// Assert.
-			Assert.Single(createdArgs);
-			Assert.Equal(testFile.FullName, createdArgs.Single().FullPath);
-			timers.Single().Verify(t => t.TryStop());
+		        // Assert.
+		        Assert.Single(createdArgs);
+                Assert.Equal(temp.File.FullName, createdArgs.Single().FullPath);
+		        timers.Single().Verify(t => t.TryStop());
+		    }
 		}
 
 		[Fact]
 		public void Test_Watcher_Created_ThenDeleted()
 		{
-			// Arrange.
-			var testFile = new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"TestDiagrams\class.puml"));
+		    using (var temp = new TemporaryFile().Touch())
+		    {
+		        // Arrange.
+		        var createdArgs = new List<FileSystemEventArgs>();
+		        EventHandler<FileSystemEventArgs> createdHandler = (o, e) => createdArgs.Add(e);
+		        monitor.Created += createdHandler;
 
-			var createdArgs = new List<FileSystemEventArgs>();
-			EventHandler<FileSystemEventArgs> createdHandler = (o, e) => createdArgs.Add(e);
-			monitor.Created += createdHandler;
+                watcher.Raise(w => w.Created += null, new FileSystemEventArgs(WatcherChangeTypes.Created, temp.File.Directory.FullName, temp.File.Name));
 
-			watcher.Raise(w => w.Created += null, new FileSystemEventArgs(WatcherChangeTypes.Created, testFile.Directory.FullName, testFile.Name));
+		        // Act.
+                watcher.Raise(w => w.Deleted += null, new FileSystemEventArgs(WatcherChangeTypes.Deleted, temp.File.Directory.FullName, temp.File.Name));
 
-			// Act.
-			watcher.Raise(w => w.Deleted += null, new FileSystemEventArgs(WatcherChangeTypes.Deleted, testFile.Directory.FullName, testFile.Name));
+		        // Assert.
+		        Assert.Single(timers);
+		        timers.Single().Verify(t => t.TryStop());
 
-			// Assert.
-			Assert.Single(timers);
-			timers.Single().Verify(t => t.TryStop());
+		        // Act.
+                timers.Single().Raise(t => t.Elapsed += null, new TimerElapsedEventArgs(DateTime.Now, temp.File.FullName));
 
-			// Act.
-			timers.Single().Raise(t => t.Elapsed += null, new TimerElapsedEventArgs(DateTime.Now, testFile.FullName));
-
-			// Assert.
-			Assert.Empty(createdArgs);
+		        // Assert.
+		        Assert.Empty(createdArgs);
+		    }
 		}
 
 		[Fact]
