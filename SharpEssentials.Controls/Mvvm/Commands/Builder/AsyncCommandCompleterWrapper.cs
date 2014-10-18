@@ -26,6 +26,10 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 	/// </summary>
 	public class AsyncCommandCompleterWrapper : IAsyncCommandCompleter
 	{
+        /// <summary>
+        /// Initializes a new <see cref="AsyncCommandCompleterWrapper"/>.
+        /// </summary>
+        /// <param name="completer">The <see cref="ICommandCompleter"/> to wrap and make async</param>
 		public AsyncCommandCompleterWrapper(ICommandCompleter completer)
 		{
 			_completer = completer;

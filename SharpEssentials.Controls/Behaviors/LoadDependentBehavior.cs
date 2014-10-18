@@ -25,6 +25,9 @@ namespace SharpEssentials.Controls.Behaviors
 	/// <typeparam name="T">The type the <see cref="T:System.Windows.Interactivity.Behavior`1"/> can be attached to.</typeparam>
 	public abstract class LoadDependentBehavior<T> : Behavior<T> where T : FrameworkElement
 	{
+        /// <summary>
+        /// <see cref="Behavior.OnAttached"/>
+        /// </summary>
 		protected override void OnAttached()
 		{
 			if (AssociatedObject.IsLoaded)

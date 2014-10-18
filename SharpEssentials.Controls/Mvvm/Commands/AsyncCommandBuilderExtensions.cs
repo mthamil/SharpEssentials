@@ -17,6 +17,9 @@ using SharpEssentials.Controls.Mvvm.Commands.Builder;
 
 namespace SharpEssentials.Controls.Mvvm.Commands
 {
+    /// <summary>
+    /// Provides extension methods for asynchronous command creation.
+    /// </summary>
 	public static class AsyncCommandBuilderExtensions
 	{
 		/// <summary>

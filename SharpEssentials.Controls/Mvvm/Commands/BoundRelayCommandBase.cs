@@ -25,6 +25,12 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 	/// </summary>
 	public abstract class BoundRelayCommandBase : ICommand
 	{
+        /// <summary>
+        /// Initializes a new <see cref="BoundRelayCommandBase"/>
+        /// </summary>
+        /// <param name="propertyDeclarer">An instance of the type that declares the property to bind to</param>
+        /// <param name="propertyName">The name of the property to bind to</param>
+        /// <param name="canExecute">The condition that determines whether the command can execute</param>
 		protected BoundRelayCommandBase(INotifyPropertyChanged propertyDeclarer, string propertyName, Func<bool> canExecute)
 		{
 			if (propertyDeclarer == null)
