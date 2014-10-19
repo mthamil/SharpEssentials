@@ -100,6 +100,8 @@
     <Compile Include="SharpEssentials.Controls\Behaviors\CollectionViewSourceFilterActionTests.cs" />
     <Compile Include="SharpEssentials.Controls\Behaviors\AutoSelectOnFocusBehaviorTests.cs" />
     <Compile Include="SharpEssentials.Controls\Behaviors\TreeViewBindableSelectedItemBehaviorTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Commands\CloseWindowCommandTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Commands\OpenContextMenuCommandTests.cs" />
     <Compile Include="SharpEssentials.Controls\Converters\BooleanToVisibilityValueConverterTests.cs" />
     <Compile Include="SharpEssentials.Controls\Converters\ComposingConverterTests.cs" />
     <Compile Include="SharpEssentials.Controls\Converters\AndConverterTests.cs" />
