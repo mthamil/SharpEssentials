@@ -15,6 +15,7 @@
 // 
 using System;
 using System.Windows;
+using SharpEssentials.Reflection;
 
 namespace SharpEssentials.Controls.Commands
 {
@@ -35,8 +36,15 @@ namespace SharpEssentials.Controls.Commands
 		public override void Execute(object parameter)
 		{
 			var window = (Window)Activator.CreateInstance(Type);
-			if (parameter != null)
-				window.DataContext = parameter;
+            if (parameter != null)
+            {
+                // Detect Lazy<T> data contexts.
+                var parameterType = parameter.GetType();
+                if (parameterType.IsClosedTypeOf(LazyType))
+                    parameter = parameterType.GetProperty("Value").GetValue(parameter);
+
+                window.DataContext = parameter;
+            }
 
 			if (Owner != null)
 				window.Owner = Owner;
@@ -67,5 +75,7 @@ namespace SharpEssentials.Controls.Commands
 			typeof(Window),
 			typeof(OpenDialogCommand),
 			new FrameworkPropertyMetadata(null));
+
+        private static readonly Type LazyType = typeof(Lazy<>);
 	}
 }

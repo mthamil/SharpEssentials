@@ -31,6 +31,16 @@ namespace SharpEssentials.InputOutput
 			File = new FileInfo(Path.GetTempFileName());
 		}
 
+        /// <summary>
+        /// Initializes a new <see cref="TemporaryFile"/> with the given name
+        /// in a temporary path.
+        /// </summary>
+        /// <param name="fileName">The name of the temporary file</param>
+        public TemporaryFile(string fileName)
+        {
+            File = new FileInfo(Path.Combine(Path.GetTempPath(), fileName));
+        }
+
 		/// <summary>
 		/// Creates an empty temporary file for the file path represented by this <see cref="TemporaryFile"/>.
 		/// </summary>

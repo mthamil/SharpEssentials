@@ -21,6 +21,20 @@ namespace Tests.Unit.SharpEssentials.InputOutput
 			Assert.Equal(Path.GetTempPath().TrimEnd(Path.DirectorySeparatorChar), file.DirectoryName.TrimEnd(Path.DirectorySeparatorChar));
 		}
 
+        [Fact]
+        public void Test_File_With_Specific_Filename()
+        {
+            // Arrange.
+            var temp = new TemporaryFile("testFile1.txt");
+
+            // Act.
+            var file = temp.File;
+
+            // Assert.
+            Assert.NotNull(file);
+            Assert.Equal(Path.Combine(Path.GetTempPath(), "testFile1.txt"), file.FullName);
+        }
+
 		[Fact]
 		public void Test_Touch()
 		{

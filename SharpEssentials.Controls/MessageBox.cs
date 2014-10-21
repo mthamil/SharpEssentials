@@ -25,12 +25,12 @@ namespace SharpEssentials.Controls
     /// DesignTimeVisible property is set to false so it doesn't show up in the designer.
     /// </summary>
     [DesignTimeVisible(false)]
-    public class MVVMMessageBox : Control
+    public class MessageBox : Control
     {
 		/// <summary>
         /// Initializes a new message box.
         /// </summary>
-		public MVVMMessageBox()
+		public MessageBox()
         {
             // The control doesn't have any specific rendering of its own.
             Visibility = Visibility.Hidden;
@@ -49,7 +49,7 @@ namespace SharpEssentials.Controls
 		/// <summary>
 		/// DependencyProperty for "Trigger". This also overrides the PropertyChangedCallback to trigger the message box display.
 		/// </summary>
-		public static readonly DependencyProperty TriggerProperty = DependencyProperty.Register("Trigger", typeof(bool), typeof(MVVMMessageBox),
+		public static readonly DependencyProperty TriggerProperty = DependencyProperty.Register("Trigger", typeof(bool), typeof(MessageBox),
 			new FrameworkPropertyMetadata(new PropertyChangedCallback(OnTriggerChange)));
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace SharpEssentials.Controls
 		/// <summary>
 		/// DependencyProperty for "Type".
 		/// </summary>
-		public static readonly DependencyProperty TypeProperty = DependencyProperty.Register("Type", typeof(MessageBoxButton), typeof(MVVMMessageBox));
+		public static readonly DependencyProperty TypeProperty = DependencyProperty.Register("Type", typeof(MessageBoxButton), typeof(MessageBox));
 
         /// <summary>
         /// Command executed for Ok/Yes options.
@@ -83,7 +83,7 @@ namespace SharpEssentials.Controls
 		/// <summary>
 		/// DependencyProperty for "AffirmativeAction".
 		/// </summary>
-		public static readonly DependencyProperty AffirmativeActionProperty = DependencyProperty.Register("AffirmativeAction", typeof(ICommand), typeof(MVVMMessageBox));
+		public static readonly DependencyProperty AffirmativeActionProperty = DependencyProperty.Register("AffirmativeAction", typeof(ICommand), typeof(MessageBox));
 
         /// <summary>
         /// Command executed for No options.
@@ -97,7 +97,7 @@ namespace SharpEssentials.Controls
 		/// <summary>
 		/// DependencyProperty for "NegativeAction".
 		/// </summary>
-		public static readonly DependencyProperty NegativeActionProperty = DependencyProperty.Register("NoAction", typeof(ICommand), typeof(MVVMMessageBox));
+		public static readonly DependencyProperty NegativeActionProperty = DependencyProperty.Register("NoAction", typeof(ICommand), typeof(MessageBox));
 
         /// <summary>
         /// On a Yes/No/Cancel or Ok/Cancel dialog, this will Execute the bound DelegateCommand on the user clicking "Cancel".
@@ -111,7 +111,7 @@ namespace SharpEssentials.Controls
 		/// <summary>
 		/// DependencyProperty for "CancelAction".
 		/// </summary>
-		public static readonly DependencyProperty CancelActionProperty = DependencyProperty.Register("CancelAction", typeof(ICommand), typeof(MVVMMessageBox));
+		public static readonly DependencyProperty CancelActionProperty = DependencyProperty.Register("CancelAction", typeof(ICommand), typeof(MessageBox));
 
         /// <summary>
         /// The message to show the user.
@@ -125,7 +125,7 @@ namespace SharpEssentials.Controls
 		/// <summary>
 		/// DependencyProperty for "Message".
 		/// </summary>
-		public static readonly DependencyProperty MessageProperty = DependencyProperty.Register("Message", typeof(string), typeof(MVVMMessageBox));
+		public static readonly DependencyProperty MessageProperty = DependencyProperty.Register("Message", typeof(string), typeof(MessageBox));
 
         /// <summary>
         /// The message box caption/title to show the user.
@@ -139,7 +139,7 @@ namespace SharpEssentials.Controls
 		/// <summary>
 		/// DependencyProperty for "Caption".
 		/// </summary>
-		public static readonly DependencyProperty CaptionProperty = DependencyProperty.Register("Caption", typeof(string), typeof(MVVMMessageBox));
+		public static readonly DependencyProperty CaptionProperty = DependencyProperty.Register("Caption", typeof(string), typeof(MessageBox));
 
         /// <summary>
         /// The "Trigger" propery changed override. Whenever the "Trigger" property changes to true or false this will be executed.
@@ -149,7 +149,7 @@ namespace SharpEssentials.Controls
         /// <param name="e"></param>
         private static void OnTriggerChange(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-			var messageBox = (MVVMMessageBox)dependencyObject;
+			var messageBox = (MessageBox)dependencyObject;
             if (!messageBox.Trigger) return;
 
             switch (messageBox.Type)
@@ -174,7 +174,7 @@ namespace SharpEssentials.Controls
         /// </summary>
         private void ShowInfo()
         {
-            MessageBox.Show(Message, Caption, MessageBoxButton.OK, MessageBoxImage.Information);
+            System.Windows.MessageBox.Show(Message, Caption, MessageBoxButton.OK, MessageBoxImage.Information);
 
 			if (AffirmativeAction != null)
 				AffirmativeAction.Execute(null);
@@ -185,7 +185,7 @@ namespace SharpEssentials.Controls
         /// </summary>
         private void ShowOkCancel()
         {
-			ICommand action = MessageBox.Show(Message, Caption, MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.OK 
+			ICommand action = System.Windows.MessageBox.Show(Message, Caption, MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.OK 
 				? AffirmativeAction 
 				: CancelAction;
 
@@ -198,7 +198,7 @@ namespace SharpEssentials.Controls
         /// </summary>
         private void ShowYesNo()
         {
-			ICommand action = MessageBox.Show(Message, Caption, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes 
+			ICommand action = System.Windows.MessageBox.Show(Message, Caption, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes 
 				? AffirmativeAction 
 				: NegativeAction;
 
@@ -211,7 +211,7 @@ namespace SharpEssentials.Controls
         /// </summary>
         private void ShowYesNoCancel()
         {
-            MessageBoxResult result = MessageBox.Show(Message, Caption, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            MessageBoxResult result = System.Windows.MessageBox.Show(Message, Caption, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
 			ICommand action;
             switch (result)

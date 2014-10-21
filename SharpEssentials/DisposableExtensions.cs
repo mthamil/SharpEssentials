@@ -31,5 +31,17 @@ namespace SharpEssentials
 			if (disposable != null)
 				disposable.Dispose();
 		}
+
+        /// <summary>
+        /// Disposes the value of a <see cref="Lazy{T}"/> if it has been created.
+        /// </summary>
+        /// <typeparam name="TDisposable">A disposable type</typeparam>
+        /// <param name="lazyDisposable">A lazy disposable value</param>
+        public static void Dispose<TDisposable>(this Lazy<TDisposable> lazyDisposable)
+            where TDisposable : IDisposable
+        {
+            if (lazyDisposable.IsValueCreated)
+                lazyDisposable.Value.Dispose();
+        }
 	}
 }

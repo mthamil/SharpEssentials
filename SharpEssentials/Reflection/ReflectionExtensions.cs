@@ -36,5 +36,25 @@ namespace SharpEssentials.Reflection
 			return null;
 		}
 		private static readonly Type voidType = typeof(void);
+
+        /// <summary>
+        /// Checks whether another type is the generic type definition of this type.
+        /// </summary>
+        /// <param name="type">The closed type to check</param>
+        /// <param name="openGenericType">An open generic type that may be the definition of <paramref name="type"/></param>
+        /// <returns>True if <paramref name="openGenericType"/> is the generic type definition of <paramref name="type"/></returns>
+        public static bool IsClosedTypeOf(this Type type, Type openGenericType)
+        {
+            if (type == null)
+                throw new ArgumentNullException("type");
+
+            if (openGenericType == null)
+                throw new ArgumentNullException("openGenericType");
+
+            if (!openGenericType.IsGenericTypeDefinition)
+                throw new ArgumentException("Must be an open generic type.", "openGenericType");
+
+            return type.IsGenericType && type.GetGenericTypeDefinition() == openGenericType;
+        }
 	}
 }

@@ -78,7 +78,7 @@
     <Compile Include="Behaviors\TitleBarOptions.cs" />
     <Compile Include="Behaviors\AutoSelectOnFocusBehavior.cs" />
     <Compile Include="Behaviors\TextBoxWatermark.cs" />
-    <Compile Include="Behaviors\TreeViewBindableSelectedItemBehavior.cs" />
+    <Compile Include="Behaviors\TreeViewBindableSelectedItem.cs" />
     <Compile Include="Behaviors\TreeViewItemExpandedCommandBehavior.cs" />
     <Compile Include="Behaviors\TreeViewItemSelectedCommandBehavior.cs" />
     <Compile Include="Behaviors\WindowBehaviors.cs" />
@@ -116,7 +116,7 @@
     <Compile Include="MultiKey\MultiKeyBinding.cs" />
     <Compile Include="MultiKey\MultiKeyGesture.cs" />
     <Compile Include="MultiKey\MultiKeyGestureConverter.cs" />
-    <Compile Include="MVVMMessageBox.cs" />
+    <Compile Include="MessageBox.cs" />
     <Compile Include="Mvvm\Commands\AsyncCommandBuilderExtensions.cs" />
     <Compile Include="Mvvm\Commands\AsyncRelayCommand.cs" />
     <Compile Include="Mvvm\Commands\BoundRelayCommand.cs" />
@@ -155,6 +155,7 @@
     </Compile>
     <Compile Include="Selectors\TypeBasedDataTemplateSelector.cs" />
     <Compile Include="Selectors\TypeBasedStyleSelector.cs" />
+    <Compile Include="TreeViewExtensions.cs" />
     <Compile Include="VisualTreeExtensions.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
