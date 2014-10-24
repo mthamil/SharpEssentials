@@ -3,4 +3,4 @@ SharpEssentials
 
 Commonly used utility code for C#.
 
-Continuous integration is provided through [AppVeyor](https://ci.appveyor.com/project/mthamil/sharpessentials).
+[![Build status](https://ci.appveyor.com/api/projects/status/xg0cj5tjqe4iwdhq)](https://ci.appveyor.com/project/mthamil/sharpessentials)
