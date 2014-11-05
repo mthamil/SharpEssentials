@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpEssentials", "SharpEss
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpEssentials.Controls", "SharpEssentials.Controls\SharpEssentials.Controls.csproj", "{3BE8D9DC-DDC3-47D8-848F-68CF43026CCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Unit", "Tests.Unit\Tests.Unit.csproj", "{4AB0FC65-635E-46C2-B821-5B8C74DB7C8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpEssentials.Tests.Unit", "SharpEssentials.Tests.Unit\SharpEssentials.Tests.Unit.csproj", "{4AB0FC65-635E-46C2-B821-5B8C74DB7C8F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpEssentials.Testing", "SharpEssentials.Testing\SharpEssentials.Testing.csproj", "{03BBCD92-4B36-4C97-8FA4-F2A26B81C04A}"
 EndProject

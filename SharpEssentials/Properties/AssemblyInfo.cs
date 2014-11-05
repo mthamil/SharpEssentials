@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("3c826027-9033-40fb-be6f-44e409db36c3")]
 
-[assembly: InternalsVisibleTo("Tests.Unit")]
+[assembly: InternalsVisibleTo("SharpEssentials.Tests.Unit")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]

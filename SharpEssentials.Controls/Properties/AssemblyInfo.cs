@@ -38,7 +38,7 @@ using System.Windows;
 	// app, or any theme specific resource dictionaries)
 )]
 
-[assembly: InternalsVisibleTo("Tests.Unit")]
+[assembly: InternalsVisibleTo("SharpEssentials.Tests.Unit")]
 
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]

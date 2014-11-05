@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4AB0FC65-635E-46C2-B821-5B8C74DB7C8F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SharpEssentials.Tests.Unit</RootNamespace>
+    <AssemblyName>SharpEssentials.Tests.Unit</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq, Version=4.2.1402.2112, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="xunit, Version=1.9.2.1705, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.extensions, Version=1.9.2.1705, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssertThatTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SharpEssentials.Controls\Behaviors\CollectionViewSourceFilterActionTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Behaviors\AutoSelectOnFocusBehaviorTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Behaviors\TreeViewBindableSelectedItemBehaviorTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Commands\CloseWindowCommandTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Commands\OpenContextMenuCommandTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Converters\BooleanToVisibilityValueConverterTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Converters\ComposingConverterTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Converters\AndConverterTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Converters\DirectoryInfoToUriConverterTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Converters\FileInfoToUriConverterTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Converters\NegatingConverterTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Converters\OrConverterTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Converters\ReverseConverterTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Converters\SecondsToTimeSpanConverterTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Converters\UriConverterTests.cs" />
+    <Compile Include="SharpEssentials.Controls\EnumValuesExtensionTests.cs" />
+    <Compile Include="SharpEssentials.Controls\MultiKey\MultiKeyGestureConverterTests.cs" />
+    <Compile Include="SharpEssentials.Controls\MultiKey\MultiKeyGestureTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Selectors\TypeMapDataTemplateSelectorTests.cs" />
+    <Compile Include="SharpEssentials\Collections\CollectionExtensionTests.cs" />
+    <Compile Include="SharpEssentials\Collections\CollectionMirrorTests.cs" />
+    <Compile Include="SharpEssentials\Collections\DictionaryExtensionsTests.cs" />
+    <Compile Include="SharpEssentials\Collections\EnumerableExtensionsTests.cs" />
+    <Compile Include="SharpEssentials\Collections\ReverseComparerTests.cs" />
+    <Compile Include="SharpEssentials\Concurrency\ReaderWriterLockSlimExtensionTests.cs" />
+    <Compile Include="SharpEssentials\Concurrency\TaskExtensionsTests.cs" />
+    <Compile Include="SharpEssentials\Concurrency\TasksTests.cs" />
+    <Compile Include="SharpEssentials\Diagnostics\ExceptionExtensionsTests.cs" />
+    <Compile Include="SharpEssentials\DisposableBaseTests.cs" />
+    <Compile Include="SharpEssentials\DisposableExtensionsTests.cs" />
+    <Compile Include="SharpEssentials\InputOutput\AsyncStreamTests.cs" />
+    <Compile Include="SharpEssentials\InputOutput\DirectoryMonitorTests.cs" />
+    <Compile Include="SharpEssentials\InputOutput\FileInfoExtensionsTests.cs" />
+    <Compile Include="SharpEssentials\InputOutput\FileSystemInfoPathEqualityComparerTests.cs" />
+    <Compile Include="SharpEssentials\InputOutput\StreamExtensionsTests.cs" />
+    <Compile Include="SharpEssentials\InputOutput\TemporaryFileTests.cs" />
+    <Compile Include="SharpEssentials\Mvvm\Commands\BoundRelayCommandTests.cs" />
+    <Compile Include="SharpEssentials\Mvvm\Commands\AggregateBoundRelayCommandTests.cs" />
+    <Compile Include="SharpEssentials\Mvvm\Commands\CancelTaskCommandTests.cs" />
+    <Compile Include="SharpEssentials\Mvvm\Commands\AsyncRelayCommandTests.cs" />
+    <Compile Include="SharpEssentials\Mvvm\Commands\DependentBoundRelayCommandTests.cs" />
+    <Compile Include="SharpEssentials\Mvvm\Commands\RelayCommandTests.cs" />
+    <Compile Include="SharpEssentials\OptionTests.cs" />
+    <Compile Include="SharpEssentials\Observable\PropertyTests.cs" />
+    <Compile Include="SharpEssentials\Reflection\ReflectionExtensionsTests.cs" />
+    <Compile Include="SharpEssentials\Reflection\ReflectTests.cs" />
+    <Compile Include="SharpEssentials\WeakEventHandlerTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpEssentials.Controls\SharpEssentials.Controls.csproj">
+      <Project>{3be8d9dc-ddc3-47d8-848f-68cf43026cca}</Project>
+      <Name>SharpEssentials.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpEssentials.Testing\SharpEssentials.Testing.csproj">
+      <Project>{03bbcd92-4b36-4c97-8fa4-f2a26b81c04a}</Project>
+      <Name>SharpEssentials.Testing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpEssentials\SharpEssentials.csproj">
+      <Project>{573d5f8c-4c19-42c3-b84b-bc585008b505}</Project>
+      <Name>SharpEssentials</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
