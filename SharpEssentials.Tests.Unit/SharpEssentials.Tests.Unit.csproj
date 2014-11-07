@@ -33,6 +33,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
+    <ReferencePath>..\..\packages\xunit.1.9.2\lib\net20\;..\..\packages\xunit.extensions.1.9.2\lib\net20\;..\..\packages\Moq.4.2.1402.2112\lib\net40\;..\..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
