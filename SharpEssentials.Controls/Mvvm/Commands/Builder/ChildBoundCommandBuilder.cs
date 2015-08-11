@@ -55,7 +55,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 		public ICommandCompleter When(Expression<Func<IEnumerable<TChild>, bool>> aggregatePredicate)
 		{
 			if (aggregatePredicate == null)
-				throw new ArgumentNullException("aggregatePredicate");
+				throw new ArgumentNullException(nameof(aggregatePredicate));
 
 			var propertyAggregationFunc = aggregatePredicate.Compile();
 			Func<bool> canExecute = () => propertyAggregationFunc(_collectionGetter());
@@ -71,7 +71,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 		public DependentChildPropertyCommandBuilder<TParent, TChild> Where(Expression<Func<TParent, bool>> parentProperty)
 		{
 			if (parentProperty == null)
-				throw new ArgumentNullException("parentProperty");
+				throw new ArgumentNullException(nameof(parentProperty));
 
 			if (Reflect.PropertyOf(parentProperty).SetMethod != null)
 				throw new ArgumentException("Parent property must not have a setter.");

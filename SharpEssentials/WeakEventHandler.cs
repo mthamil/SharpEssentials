@@ -66,32 +66,29 @@ namespace SharpEssentials
 		{
 			TTarget target = (TTarget)_targetRef.Target;
 
-			if (target != null)
-				_openHandler.Invoke(target, sender, e);
-			else if (_unregister != null)
-			{
-				_unregister(_handler);
-				_unregister = null;
-			}
+		    if (target != null)
+		    {
+		        _openHandler.Invoke(target, sender, e);
+		    }
+		    else if (_unregister != null)
+		    {
+		        _unregister(_handler);
+		        _unregister = null;
+		    }
 		}
 
 		#region Implementation of IWeakEventHandler<E>
 
 		/// <see cref="IWeakEventHandler{E}.Handler"/>
-		public EventHandler<TArgs> Handler
-		{
-			get { return _handler; }
-		}
+		public EventHandler<TArgs> Handler => _handler;
 
-		#endregion
+	    #endregion
 
-		/// <summary>
-		/// Converts a weak event handler to a regular event handler.
-		/// </summary>
-		public static implicit operator EventHandler<TArgs>(WeakEventHandler<TTarget, TArgs> weakHandler)
-		{
-			return weakHandler._handler;
-		}
+	    /// <summary>
+	    /// Converts a weak event handler to a regular event handler.
+	    /// </summary>
+	    public static implicit operator EventHandler<TArgs>(WeakEventHandler<TTarget, TArgs> weakHandler)
+	        => weakHandler._handler;
 
 		private delegate void OpenEventHandler(TTarget @this, object sender, TArgs e);
 
@@ -119,10 +116,10 @@ namespace SharpEssentials
 			where TArgs : EventArgs
 		{
 			if (eventHandler == null)
-				throw new ArgumentNullException("eventHandler");
+				throw new ArgumentNullException(nameof(eventHandler));
 
 			if (eventHandler.Method.IsStatic || eventHandler.Target == null)
-				throw new ArgumentException(@"Only instance methods are supported.", "eventHandler");
+				throw new ArgumentException(@"Only instance methods are supported.", nameof(eventHandler));
 
 			var closedWeakHandlerType = openWeakEventHandlerType.MakeGenericType(eventHandler.Method.DeclaringType, typeof(TArgs));
 			var handlerConstructor = closedWeakHandlerType.GetConstructor(new[] { typeof(EventHandler<TArgs>), typeof(UnregisterCallback<TArgs>) });

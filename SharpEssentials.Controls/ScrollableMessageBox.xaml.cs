@@ -43,7 +43,10 @@ namespace SharpEssentials.Controls
 		/// <summary>
 		/// DependencyProperty for "Message".
 		/// </summary>
-		public static readonly DependencyProperty MessageProperty = DependencyProperty.Register("Message", typeof(string), typeof(ScrollableMessageBox));
+		public static readonly DependencyProperty MessageProperty = 
+            DependencyProperty.Register(nameof(Message),
+                typeof(string), 
+                typeof(ScrollableMessageBox));
 
 		/// <summary>
 		/// The message box caption/title to show the user.
@@ -57,7 +60,10 @@ namespace SharpEssentials.Controls
 		/// <summary>
 		/// DependencyProperty for "Caption".
 		/// </summary>
-		public static readonly DependencyProperty CaptionProperty = DependencyProperty.Register("Caption", typeof(string), typeof(ScrollableMessageBox));
+		public static readonly DependencyProperty CaptionProperty = 
+            DependencyProperty.Register(nameof(Caption),
+                typeof(string), 
+                typeof(ScrollableMessageBox));
 
 		/// <summary>
 		/// The types of buttons to show on the message box.
@@ -85,7 +91,7 @@ namespace SharpEssentials.Controls
 						NegativeButtonVisibility = Visibility.Visible;
 						break;
 					default:
-						throw new ArgumentOutOfRangeException("value", @"Value is not supported.");
+						throw new ArgumentOutOfRangeException(nameof(value), @"Value is not supported.");
 				}
 			}
 		}
@@ -103,7 +109,10 @@ namespace SharpEssentials.Controls
 		/// <summary>
 		/// DependencyProperty for "AffirmativeButtonText".
 		/// </summary>
-		public static readonly DependencyProperty AffirmativeButtonTextProperty = DependencyProperty.Register("AffirmativeButtonText", typeof(string), typeof(ScrollableMessageBox));
+		public static readonly DependencyProperty AffirmativeButtonTextProperty = 
+            DependencyProperty.Register(nameof(AffirmativeButtonText),
+                typeof(string), 
+                typeof(ScrollableMessageBox));
 
 		private void AffirmativeButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -122,7 +131,10 @@ namespace SharpEssentials.Controls
 		/// <summary>
 		/// DependencyProperty for "NegativeButtonText".
 		/// </summary>
-		public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(ScrollableMessageBox));
+		public static readonly DependencyProperty NegativeButtonTextProperty = 
+            DependencyProperty.Register(nameof(NegativeButtonText),
+                typeof(string), 
+                typeof(ScrollableMessageBox));
 
 		/// <summary>
 		/// The visibility of the message box's negative button.
@@ -136,7 +148,10 @@ namespace SharpEssentials.Controls
 		/// <summary>
 		/// DependencyProperty for "NegativeButtonVisibility".
 		/// </summary>
-		public static readonly DependencyProperty NegativeButtonVisibilityProperty = DependencyProperty.Register("NegativeButtonVisibility", typeof(Visibility), typeof(ScrollableMessageBox));
+		public static readonly DependencyProperty NegativeButtonVisibilityProperty = 
+            DependencyProperty.Register(nameof(NegativeButtonVisibility),
+                typeof(Visibility), 
+                typeof(ScrollableMessageBox));
 
 		private void NegativeButton_Click(object sender, RoutedEventArgs e)
 		{

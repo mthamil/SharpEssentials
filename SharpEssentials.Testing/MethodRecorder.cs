@@ -38,12 +38,9 @@ namespace SharpEssentials.Testing
 		/// <summary>
 		/// The underlying proxy.
 		/// </summary>
-		public T Proxy
-		{
-			get { return _proxy.Value; }
-		}
+		public T Proxy => _proxy.Value;
 
-		/// <summary>
+	    /// <summary>
 		/// The most recent invocation made on the proxy.
 		/// </summary>
 		public IMethodCallMessage LastInvocation { get; private set; }

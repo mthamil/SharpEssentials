@@ -157,19 +157,13 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Mvvm.Commands
 				_items.Value = new ObservableCollection<TestItem>();
 			}
 
-			public ObservableCollection<TestItem> Items
-			{
-				get { return _items.Value; }
-			}
+			public ObservableCollection<TestItem> Items => _items.Value;
 
-			public bool IndependentBoolValue { get; set; }
+		    public bool IndependentBoolValue { get; set; }
 
-			public bool DependentBoolValue
-			{
-				get { return Items.Any(i => i.BoolValue); }
-			}
+			public bool DependentBoolValue => Items.Any(i => i.BoolValue);
 
-			private readonly Property<ObservableCollection<TestItem>> _items;
+		    private readonly Property<ObservableCollection<TestItem>> _items;
 		}
 
 		private class TestItem : ObservableObject

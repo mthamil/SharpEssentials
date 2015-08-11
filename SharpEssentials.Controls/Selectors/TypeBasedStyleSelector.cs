@@ -41,22 +41,16 @@ namespace SharpEssentials.Controls.Selectors
 		#region Overrides of MarkupExtension
 
 		/// <see cref="MarkupExtension.ProvideValue"/>
-		public override object ProvideValue(IServiceProvider serviceProvider)
-		{
-			return _selector.Value;
-		}
+		public override object ProvideValue(IServiceProvider serviceProvider) => _selector.Value;
 
-		#endregion
+	    #endregion
 
 		/// <summary>
 		/// The styles to select from.
 		/// </summary>
-		public Collection<StyleMapEntry> Styles
-		{
-			get { return new Collection<StyleMapEntry>(_styles); }
-		}
+		public Collection<StyleMapEntry> Styles => new Collection<StyleMapEntry>(_styles);
 
-		private readonly IList<StyleMapEntry> _styles = new List<StyleMapEntry>();
+	    private readonly IList<StyleMapEntry> _styles = new List<StyleMapEntry>();
 		private readonly Lazy<StyleSelector> _selector;
 	}
 
@@ -95,7 +89,7 @@ namespace SharpEssentials.Controls.Selectors
 		public override Style SelectStyle(object item, DependencyObject container)
 		{
 			if (item == null) 
-				throw new ArgumentNullException("item");
+				throw new ArgumentNullException(nameof(item));
 
 			Style style;
 			if (_styleMap.TryGetValue(item.GetType(), out style))

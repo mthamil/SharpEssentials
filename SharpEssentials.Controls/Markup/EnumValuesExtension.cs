@@ -32,20 +32,17 @@ namespace SharpEssentials.Controls.Markup
 		public EnumValuesExtension(Type enumType)
 		{
 			if (enumType == null)
-				throw new ArgumentNullException("enumType");
+				throw new ArgumentNullException(nameof(enumType));
 
 			if (!enumType.IsEnum)
-				throw new ArgumentException("enumType must derive from type Enum.");
+				throw new ArgumentException(@"enumType must derive from type Enum.", nameof(enumType));
 
 			_enumType = enumType;
 		}
 
 		///<see cref="MarkupExtension.ProvideValue"/>
-		public override object ProvideValue(IServiceProvider serviceProvider)
-		{
-			return Enum.GetValues(_enumType);
-		}
+		public override object ProvideValue(IServiceProvider serviceProvider) => Enum.GetValues(_enumType);
 
-		private readonly Type _enumType;
+	    private readonly Type _enumType;
 	} 
 }

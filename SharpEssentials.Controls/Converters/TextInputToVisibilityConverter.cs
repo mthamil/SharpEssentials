@@ -21,7 +21,7 @@ using System.Windows.Data;
 namespace SharpEssentials.Controls.Converters
 {
 	/// <summary>
-	/// A multi-value converter that uses test input to determine Visibility.
+	/// A multi-value converter that uses text input to determine Visibility.
 	/// </summary>
     public class TextInputToVisibilityConverter : IMultiValueConverter
     {

@@ -25,17 +25,11 @@ namespace SharpEssentials.Chronology
 		#region Implementation of IClock
 
 		/// <see cref="IClock.Now"/>
-		public DateTimeOffset Now
-		{
-			get { return DateTimeOffset.Now; }
-		}
+		public DateTimeOffset Now => DateTimeOffset.Now;
 
-		/// <see cref="IClock.UtcNow"/>
-		public DateTimeOffset UtcNow
-		{
-			get { return DateTimeOffset.UtcNow; }
-		}
+	    /// <see cref="IClock.UtcNow"/>
+		public DateTimeOffset UtcNow => DateTimeOffset.UtcNow;
 
-		#endregion
+	    #endregion
 	}
 }

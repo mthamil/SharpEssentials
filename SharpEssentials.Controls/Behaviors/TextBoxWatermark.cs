@@ -44,10 +44,9 @@ namespace SharpEssentials.Controls.Behaviors
 		/// The watermark property.
 		/// </summary>
 		public static readonly DependencyProperty WatermarkProperty =
-			DependencyProperty.RegisterAttached(
-			"Watermark",
-			typeof(string),
-			typeof(TextBoxWatermark),
-			new FrameworkPropertyMetadata(string.Empty));
+			DependencyProperty.RegisterAttached("Watermark",
+			    typeof(string),
+			    typeof(TextBoxWatermark),
+			    new FrameworkPropertyMetadata(string.Empty));
 	}
 }

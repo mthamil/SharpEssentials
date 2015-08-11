@@ -34,9 +34,7 @@ namespace SharpEssentials.Observable
 		/// <param name="propertyName">The name of the property that changed</param>
 		protected void OnPropertyChanged(string propertyName)
 		{
-			var localEvent = PropertyChanged;
-			if (localEvent != null)
-				localEvent(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
         /// <summary>
@@ -45,9 +43,7 @@ namespace SharpEssentials.Observable
         /// <param name="property">A lambda expression referencing the property that changed</param>
         protected void OnPropertyChanged<T>(Expression<Func<T, object>> property)
         {
-            var localEvent = PropertyChanged;
-            if (localEvent != null)
-                localEvent(this, new PropertyChangedEventArgs(Reflect.PropertyOf(property).Name));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Reflect.PropertyOf(property).Name));
         }
 
         /// <summary>

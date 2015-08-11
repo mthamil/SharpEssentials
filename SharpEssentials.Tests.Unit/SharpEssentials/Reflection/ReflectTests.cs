@@ -14,7 +14,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Reflection
 			PropertyInfo property = Reflect.PropertyOf<TestType>(t => t.IntProperty);
 
 			// Assert.
-			Assert.Equal("IntProperty", property.Name);
+			Assert.Equal(nameof(TestType.IntProperty), property.Name);
 			Assert.Equal(typeof(Int32), property.PropertyType);
 			Assert.Equal(typeof(TestType), property.DeclaringType);
 		}
@@ -26,7 +26,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Reflection
 			PropertyInfo property = Reflect.PropertyOf<TestType>(t => t.StringProperty);
 
 			// Assert.
-			Assert.Equal("StringProperty", property.Name);
+			Assert.Equal(nameof(TestType.StringProperty), property.Name);
 			Assert.Equal(typeof(String), property.PropertyType);
 			Assert.Equal(typeof(TestType), property.DeclaringType);
 		}
@@ -50,7 +50,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Reflection
 			MethodInfo method = Reflect.MethodOf<TestType>(t => t.ToString());
 
 			// Assert.
-			Assert.Equal("ToString", method.Name);
+			Assert.Equal(nameof(TestType.ToString), method.Name);
 			Assert.Equal(typeof(string), method.ReturnType);
 			Assert.Equal(typeof(object), method.DeclaringType);
 		}
@@ -62,7 +62,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Reflection
 			MethodInfo method = Reflect.MethodOf<TestType>(t => t.VoidReturning());
 
 			// Assert.
-			Assert.Equal("VoidReturning", method.Name);
+			Assert.Equal(nameof(TestType.VoidReturning), method.Name);
 			Assert.Equal(typeof(void), method.ReturnType);
 			Assert.Equal(typeof(TestType), method.DeclaringType);
 			Assert.Equal(0, method.GetParameters().Length);
@@ -75,7 +75,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Reflection
 			MethodInfo method = Reflect.MethodOf<TestType>(t => t.VoidReturning(0));
 
 			// Assert.
-			Assert.Equal("VoidReturning", method.Name);
+			Assert.Equal(nameof(TestType.VoidReturning), method.Name);
 			Assert.Equal(typeof(void), method.ReturnType);
 			Assert.Equal(typeof(TestType), method.DeclaringType);
 			Assert.Equal(1, method.GetParameters().Length);

@@ -32,7 +32,7 @@ namespace SharpEssentials.Collections
 		public ReverseComparer(IComparer<T> baseComparer)
 		{
 			if (baseComparer == null)
-				throw new ArgumentNullException("baseComparer");
+				throw new ArgumentNullException(nameof(baseComparer));
 
 			this.baseComparer = baseComparer;
 		}

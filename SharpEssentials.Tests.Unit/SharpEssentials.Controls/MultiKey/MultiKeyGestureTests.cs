@@ -176,33 +176,25 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.MultiKey
 
 			#region Overrides of KeyboardDevice
 
-			protected override KeyStates GetKeyStatesFromSystem(Key key)
-			{
-				return PressedKeys.Contains(key) ? KeyStates.Down : KeyStates.None;
-			}
+			protected override KeyStates GetKeyStatesFromSystem(Key key) 
+                => PressedKeys.Contains(key) ? KeyStates.Down : KeyStates.None;
 
-			#endregion
+		    #endregion
 
-			public ISet<Key> PressedKeys { get; private set; }
+			public ISet<Key> PressedKeys { get; }
 		}
 
 		public class PresentationSourceStub : PresentationSource
 		{
 			#region Overrides of PresentationSource
 
-			protected override CompositionTarget GetCompositionTargetCore()
-			{
-				return null;
-			}
+			protected override CompositionTarget GetCompositionTargetCore() => null;
 
-			public override Visual RootVisual { get; set; }
+		    public override Visual RootVisual { get; set; }
 
-			public override bool IsDisposed
-			{
-				get { return false; }
-			}
+			public override bool IsDisposed => false;
 
-			#endregion
+		    #endregion
 		}
 	}
 }

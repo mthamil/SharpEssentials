@@ -38,7 +38,7 @@ namespace SharpEssentials.Controls.Localization
         /// <summary>
         /// Initializes a new instance of a markup extension.
         /// </summary>
-        public ManagedMarkupExtension(MarkupExtensionManager manager)
+        protected ManagedMarkupExtension(MarkupExtensionManager manager)
         {
             manager.RegisterExtension(this);
         }
@@ -92,18 +92,12 @@ namespace SharpEssentials.Controls.Localization
 	        if (dependencyProperty != null)
             {
                 var dependencyObject = target as DependencyObject;
-                if (dependencyObject != null)
-                {
-                    dependencyObject.SetValue(dependencyProperty, GetValue());
-                }
+                dependencyObject?.SetValue(dependencyProperty, GetValue());
             }
             else
 	        {
 		        var property = _targetProperty as PropertyInfo;
-		        if (property != null)
-		        {
-			        property.SetValue(target, GetValue(), null);
-		        }
+	            property?.SetValue(target, GetValue(), null);
 	        }
         }
 
@@ -173,10 +167,7 @@ namespace SharpEssentials.Controls.Localization
         /// For normal elements their will be a single target. For templates
         /// their may be zero or more targets
         /// </remarks>
-        protected IEnumerable<WeakReference> TargetObjects
-        {
-            get { return _targetObjects; }
-        }
+        protected IEnumerable<WeakReference> TargetObjects => _targetObjects;
 
         /// <summary>
         /// Return the Target Property the extension is associated with
@@ -184,10 +175,7 @@ namespace SharpEssentials.Controls.Localization
         /// <remarks>
         /// Can either be a <see cref="DependencyProperty"/> or <see cref="PropertyInfo"/>
         /// </remarks>
-        protected object TargetProperty
-        {
-            get { return _targetProperty; }
-        }
+        protected object TargetProperty => _targetProperty;
 
         /// <summary>
         /// The type of the Target Property.
@@ -200,9 +188,7 @@ namespace SharpEssentials.Controls.Localization
 					return ((DependencyProperty)_targetProperty).PropertyType;
 	            if (_targetProperty is PropertyInfo)
 		            return ((PropertyInfo)_targetProperty).PropertyType;
-	            if (_targetProperty != null)
-		            return _targetProperty.GetType();
-	            return null;
+                return _targetProperty?.GetType();
             }
         }
 

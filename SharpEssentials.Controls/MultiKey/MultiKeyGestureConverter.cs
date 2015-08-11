@@ -47,7 +47,7 @@ namespace SharpEssentials.Controls.MultiKey
 		{
 			var gestureString = value as string;
 			if (gestureString == null)
-				throw new ArgumentException(@"Invalid gesture string.", "value");
+				throw new ArgumentException(@"Invalid gesture string.", nameof(value));
 
 			// Parse the gesture string.
 			var keys = new List<KeyInput>();

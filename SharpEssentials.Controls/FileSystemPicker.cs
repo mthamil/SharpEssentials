@@ -53,7 +53,7 @@ namespace SharpEssentials.Controls
 		/// DependencyProperty for "Trigger". This also overrides the PropertyChangedCallback to trigger the message box display.
 		/// </summary>
 		public static readonly DependencyProperty TriggerProperty =
-			DependencyProperty.Register("Trigger",
+			DependencyProperty.Register(nameof(Trigger),
 				typeof(bool),
 				typeof(FileSystemPicker),
 				new FrameworkPropertyMetadata(OnTriggerChanged));
@@ -100,7 +100,7 @@ namespace SharpEssentials.Controls
 					break;
 
 				default:
-					throw new InvalidOperationException(String.Format("{0}.{1} is unsupported.", typeof(FilePickerMode).Name, filePicker.Mode));
+					throw new InvalidOperationException($"{typeof(FilePickerMode).Name}.{filePicker.Mode} is unsupported.");
 			}
 		}
 
@@ -132,7 +132,7 @@ namespace SharpEssentials.Controls
 		/// DependencyProperty for the chosen file system path.
 		/// </summary>
 		public static readonly DependencyProperty SelectedPathProperty =
-			DependencyProperty.Register("SelectedPath",
+			DependencyProperty.Register(nameof(SelectedPath),
 				typeof(FileSystemInfo),
 				typeof(FileSystemPicker),
 				new FrameworkPropertyMetadata(null));
@@ -150,7 +150,7 @@ namespace SharpEssentials.Controls
 		/// DependencyProperty for the initial file name.
 		/// </summary>
 		public static readonly DependencyProperty InitialFileNameProperty =
-			DependencyProperty.Register("InitialFileName",
+			DependencyProperty.Register(nameof(InitialFileName),
 				typeof(string),
 				typeof(FileSystemPicker));
 
@@ -167,7 +167,7 @@ namespace SharpEssentials.Controls
 		/// DependencyProperty for the initial directory.
 		/// </summary>
 		public static readonly DependencyProperty InitialLocationProperty =
-			DependencyProperty.Register("InitialLocation",
+			DependencyProperty.Register(nameof(InitialLocation),
 				typeof(DirectoryInfo),
 				typeof(FileSystemPicker),
 				new FrameworkPropertyMetadata(null));
@@ -185,7 +185,7 @@ namespace SharpEssentials.Controls
 		/// DependencyProperty for the file filter.
 		/// </summary>
 		public static readonly DependencyProperty FilterProperty =
-			DependencyProperty.Register("Filter",
+			DependencyProperty.Register(nameof(Filter),
 				typeof(string),
 				typeof(FileSystemPicker));
 
@@ -202,7 +202,7 @@ namespace SharpEssentials.Controls
 		/// DependencyProperty for the URI of the file chosen.
 		/// </summary>
 		public static readonly DependencyProperty ModeProperty =
-			DependencyProperty.Register("Mode",
+			DependencyProperty.Register(nameof(Mode),
 				typeof(FilePickerMode),
 				typeof(FileSystemPicker));
 
@@ -220,8 +220,7 @@ namespace SharpEssentials.Controls
 		/// The affirmative command property.
 		/// </summary>
 		public static readonly DependencyProperty AffirmativeCommandProperty =
-			DependencyProperty.Register(
-			"AffirmativeCommand",
+			DependencyProperty.Register(nameof(AffirmativeCommand),
 				typeof(ICommand),
 				typeof(FileSystemPicker));
 
@@ -238,7 +237,7 @@ namespace SharpEssentials.Controls
 		/// The AffirmativeCommandConverter dependency property.
 		/// </summary>
 		public static readonly DependencyProperty AffirmativeCommandConverterProperty =
-			DependencyProperty.Register("AffirmativeCommandConverter", 
+			DependencyProperty.Register(nameof(AffirmativeCommandConverter), 
 				typeof(IValueConverter), 
 				typeof(FileSystemPicker), 
 				new PropertyMetadata(default(IValueConverter)));

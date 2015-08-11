@@ -21,21 +21,12 @@ namespace SharpEssentials.Clipboard
 	public class ClipboardWrapper : IClipboard
 	{
 		/// <see cref="IClipboard.ContainsText"/>
-		public bool ContainsText 
-		{
-			get { return System.Windows.Clipboard.ContainsText(); }
-		}
+		public bool ContainsText => System.Windows.Clipboard.ContainsText();
 
-		/// <see cref="IClipboard.GetText"/>
-		public string GetText()
-		{
-			return System.Windows.Clipboard.GetText();
-		}
+	    /// <see cref="IClipboard.GetText"/>
+		public string GetText() => System.Windows.Clipboard.GetText();
 
-		/// <see cref="IClipboard.SetText"/>
-		public void SetText(string text)
-		{
-			System.Windows.Clipboard.SetText(text);
-		}
+	    /// <see cref="IClipboard.SetText"/>
+		public void SetText(string text) => System.Windows.Clipboard.SetText(text);
 	}
 }

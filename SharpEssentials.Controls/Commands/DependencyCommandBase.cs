@@ -25,12 +25,9 @@ namespace SharpEssentials.Controls.Commands
 	public abstract class DependencyCommandBase : DependencyObject, ICommand
 	{
 		/// <see cref="ICommand.CanExecute"/>
-		public virtual bool CanExecute(object parameter)
-		{
-			return true;
-		}
+		public virtual bool CanExecute(object parameter) => true;
 
-		/// <see cref="ICommand.Execute"/>
+	    /// <see cref="ICommand.Execute"/>
 		public abstract void Execute(object parameter);
 
 		/// <see cref="ICommand.CanExecuteChanged"/>

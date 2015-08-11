@@ -466,9 +466,7 @@ namespace SharpEssentials.Tests.Unit
 
 			private void OnPropertyChanged([CallerMemberName] string propertyName = null)
 			{
-				PropertyChangedEventHandler handler = PropertyChanged;
-				if (handler != null) 
-					handler(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 
@@ -479,7 +477,7 @@ namespace SharpEssentials.Tests.Unit
 				Value = value;
 			}
 
-			public int Value { get; private set; }
+			public int Value { get; }
 		}
 	}
 }

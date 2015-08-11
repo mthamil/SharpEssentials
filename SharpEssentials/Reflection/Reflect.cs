@@ -68,11 +68,11 @@ namespace SharpEssentials.Reflection
 		{
 			MemberExpression memberExpr = ExtractMemberExpression(type, propertyAccessor);
 			if (memberExpr == null)
-				throw new ArgumentException("The body of the expression must be a member of " + type.Name, "propertyAccessor");
+				throw new ArgumentException($"The body of the expression must be a member of {type.Name}", nameof(propertyAccessor));
 
 			PropertyInfo property = memberExpr.Member as PropertyInfo;
 			if (property == null)
-				throw new ArgumentException("The body of the expression must be a property invocation.", "propertyAccessor");
+				throw new ArgumentException("The body of the expression must be a property invocation.", nameof(propertyAccessor));
 
 			return property;
 		}
@@ -130,7 +130,7 @@ namespace SharpEssentials.Reflection
 		{
 			MethodCallExpression methodCall = methodCaller.Body as MethodCallExpression;
 			if (methodCall == null)
-				throw new ArgumentException("The body of the expression must be a method of " + type.Name, "methodCaller");
+				throw new ArgumentException($"The body of the expression must be a method of {type.Name}", nameof(methodCaller));
 
 			return methodCall;
 		}

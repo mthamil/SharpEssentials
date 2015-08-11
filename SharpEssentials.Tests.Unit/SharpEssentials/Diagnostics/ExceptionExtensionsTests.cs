@@ -18,8 +18,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Diagnostics
 			var chain = exception.GetExceptionChain();
 
 			// Assert.
-			Assert.Single(chain);
-			Assert.Equal(exception, chain.Single());
+			var single = Assert.Single(chain);
+			Assert.Equal(exception, single);
 		}
 
 		[Fact]

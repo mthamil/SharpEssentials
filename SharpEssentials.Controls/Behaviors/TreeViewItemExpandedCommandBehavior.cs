@@ -95,8 +95,7 @@ namespace SharpEssentials.Controls.Behaviors
 		/// The command property.
 		/// </summary>
 		public static readonly DependencyProperty ExpandedCommandProperty =
-			DependencyProperty.RegisterAttached(
-			    "ExpandedCommand",
+			DependencyProperty.RegisterAttached("ExpandedCommand",
 			    typeof(ICommand),
 			    typeof(TreeViewItemExpandedCommandBehavior),
 			    new UIPropertyMetadata(null, OnExpandedCommandChanged));

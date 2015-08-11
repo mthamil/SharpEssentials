@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Linq;
+using System.Windows.Controls;
 
 namespace SharpEssentials.Controls
 {
@@ -29,18 +30,12 @@ namespace SharpEssentials.Controls
 			if (container != null)
 				return container;
 
-			foreach (var parent in containerGenerator.Items)
-			{
-				var c = containerGenerator.ContainerFromItem(parent) as TreeViewItem;
-				if (c != null)
-				{
-					var found = FindGeneratedItem(c.ItemContainerGenerator, item);
-					if (found != null)
-						return found;
-				}
-			}
-
-			return null;
+		    return containerGenerator.Items
+		                             .Select(containerGenerator.ContainerFromItem)
+		                             .Where(c => c != null)
+		                             .OfType<TreeViewItem>()
+		                             .Select(c => FindGeneratedItem(c.ItemContainerGenerator, item))
+		                             .FirstOrDefault(foundItem => foundItem != null);
 		}
 	}
 }

@@ -33,7 +33,7 @@ namespace SharpEssentials.Controls.Converters
 			if (value is bool)
 				return !(bool)value;
 
-			throw new ArgumentException(@"Argument is invalid type", "value");
+			throw new ArgumentException(@"Argument is invalid type", nameof(value));
 		}
 
 		/// <see cref="IValueConverter.ConvertBack"/>
@@ -42,7 +42,7 @@ namespace SharpEssentials.Controls.Converters
 			if (value is bool)
 				return !(bool)value;
 
-			throw new ArgumentException(@"Argument is invalid type", "value");
+			throw new ArgumentException(@"Argument is invalid type", nameof(value));
 		}
 		#endregion
 	}

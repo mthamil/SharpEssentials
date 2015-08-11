@@ -129,7 +129,7 @@ namespace SharpEssentials.Concurrency.Processes
 					return new ProcessResult(outputStream, errorStream);
 				}
 
-				throw new ProcessErrorException("Process " + processInfo.FileName + " did not start.");
+				throw new ProcessErrorException($"Process {processInfo.FileName} did not start.");
 			}
 		}
 
@@ -167,7 +167,7 @@ namespace SharpEssentials.Concurrency.Processes
 			catch (InvalidOperationException)
 			{
 				// This may happen if the process already exited.
-				// Calling Process.HasExited doesn't seem to be any help.
+				// Checking Process.HasExited doesn't seem to be any help.
 			}
 		}
 

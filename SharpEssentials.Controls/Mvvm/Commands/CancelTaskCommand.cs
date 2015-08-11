@@ -63,11 +63,10 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 
 		private void OnCanExecuteChanged()
 		{
-			if (_canExecuteChanged != null)
-				_canExecuteChanged(this, EventArgs.Empty);
+		    _canExecuteChanged?.Invoke(this, EventArgs.Empty);
 		}
 
-		private event EventHandler _canExecuteChanged;
+	    private event EventHandler _canExecuteChanged;
 
 		private readonly CancellationTokenSource _cancellationTokenSource;
 	}

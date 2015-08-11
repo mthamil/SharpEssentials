@@ -45,8 +45,7 @@ namespace SharpEssentials.Controls.Behaviors
 		/// The command property.
 		/// </summary>
 		public static readonly DependencyProperty SelectedCommandProperty =
-			DependencyProperty.RegisterAttached(
-			    "SelectedCommand",
+			DependencyProperty.RegisterAttached("SelectedCommand",
 			    typeof(ICommand),
 			    typeof(TreeViewItemSelectedCommandBehavior),
 			    new UIPropertyMetadata(null, OnSelectedCommandChanged));

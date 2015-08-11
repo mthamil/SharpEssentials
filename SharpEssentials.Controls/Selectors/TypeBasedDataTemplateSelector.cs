@@ -40,22 +40,16 @@ namespace SharpEssentials.Controls.Selectors
 		#region Overrides of MarkupExtension
 
 		/// <see cref="MarkupExtension.ProvideValue"/>
-		public override object ProvideValue(IServiceProvider serviceProvider)
-		{
-			return _selector.Value;
-		}
+		public override object ProvideValue(IServiceProvider serviceProvider) => _selector.Value;
 
-		#endregion
+	    #endregion
 
 		/// <summary>
 		/// The data templates to select from.
 		/// </summary>
-		public Collection<DataTemplate> DataTemplates
-		{
-			get { return new Collection<DataTemplate>(_dataTemplates); }
-		}
+		public Collection<DataTemplate> DataTemplates => new Collection<DataTemplate>(_dataTemplates);
 
-		private readonly IList<DataTemplate> _dataTemplates = new List<DataTemplate>();
+	    private readonly IList<DataTemplate> _dataTemplates = new List<DataTemplate>();
 		private readonly Lazy<DataTemplateSelector> _selector;
 	}
 
@@ -86,7 +80,7 @@ namespace SharpEssentials.Controls.Selectors
 		public override DataTemplate SelectTemplate(object item, DependencyObject container)
 		{
 			if (item == null) 
-				throw new ArgumentNullException("item");
+				throw new ArgumentNullException(nameof(item));
 
 			var dataType = item.GetType();
 
@@ -94,15 +88,11 @@ namespace SharpEssentials.Controls.Selectors
 			if (_dataTemplateMap.TryGetValue(dataType, out template))
 				return template;
 
-			// Fallback to assignability.
-			foreach (var dataTemplate in _orderedTemplates)
-			{
-				if (dataTemplate.Key.IsAssignableFrom(dataType))
-					return dataTemplate.Value;
-			}
-
-			return null;
-		}
+            // Fallback to assignability.
+            return _orderedTemplates.Where(dataTemplate => dataTemplate.Key.IsAssignableFrom(dataType))
+                                    .Select(dataTemplate => dataTemplate.Value)
+                                    .FirstOrDefault();
+        }
 
 		private readonly IDictionary<Type, DataTemplate> _dataTemplateMap;
 		private readonly IList<KeyValuePair<Type, DataTemplate>> _orderedTemplates;

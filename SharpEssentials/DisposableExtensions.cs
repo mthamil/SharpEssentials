@@ -28,11 +28,10 @@ namespace SharpEssentials
 		/// <param name="disposable">A disposable resource</param>
 		public static void DisposeSafely(this IDisposable disposable)
 		{
-			if (disposable != null)
-				disposable.Dispose();
+		    disposable?.Dispose();
 		}
 
-        /// <summary>
+	    /// <summary>
         /// Disposes the value of a <see cref="Lazy{T}"/> if it has been created.
         /// </summary>
         /// <typeparam name="TDisposable">A disposable type</typeparam>

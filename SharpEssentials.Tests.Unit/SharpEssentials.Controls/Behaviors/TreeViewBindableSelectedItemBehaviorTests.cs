@@ -19,7 +19,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Behaviors
             selectedItemWatcher.Children.Add(child);
 
             var childView = new TreeViewItem { DataContext = child };
-            var isSelectedBinding = new Binding("IsSelected") { Mode = BindingMode.TwoWay };
+            var isSelectedBinding = new Binding(nameof(TreeViewItem.IsSelected)) { Mode = BindingMode.TwoWay };
             childView.SetBinding(TreeViewItem.IsSelectedProperty, isSelectedBinding);
 
             var treeView = new TreeView { DataContext = selectedItemWatcher };
@@ -70,10 +70,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Behaviors
             }
             private readonly Property<object> _selectedItem;
 
-            public ICollection<TestViewModel> Children
-            {
-                get { return _children.Value; }
-            }
+            public ICollection<TestViewModel> Children => _children.Value;
             private readonly Property<ICollection<TestViewModel>> _children;
         }
     }

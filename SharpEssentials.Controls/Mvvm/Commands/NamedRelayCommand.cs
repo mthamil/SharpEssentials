@@ -58,9 +58,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 
 		private void OnPropertyChanged(string propertyName)
 		{
-			var localEvent = PropertyChanged;
-			if (localEvent != null)
-				localEvent(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#endregion
@@ -108,9 +106,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 
 		private void OnPropertyChanged(string propertyName)
 		{
-			var localEvent = PropertyChanged;
-			if (localEvent != null)
-				localEvent(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#endregion

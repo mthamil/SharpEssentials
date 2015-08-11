@@ -35,9 +35,9 @@ namespace SharpEssentials.Concurrency
 		public static Task<T2> Then<T1, T2>(this Task<T1> first, Func<T1, Task<T2>> next)
 		{
 			if (first == null) 
-				throw new ArgumentNullException("first");
+				throw new ArgumentNullException(nameof(first));
 			if (next == null) 
-				throw new ArgumentNullException("next");
+				throw new ArgumentNullException(nameof(next));
 
 			var tcs = new TaskCompletionSource<T2>();
 			first.ContinueWith(delegate
@@ -84,9 +84,9 @@ namespace SharpEssentials.Concurrency
 		public static Task<T2> Then<T2>(this Task first, Func<Task<T2>> next)
 		{
 			if (first == null)
-				throw new ArgumentNullException("first");
+				throw new ArgumentNullException(nameof(first));
 			if (next == null)
-				throw new ArgumentNullException("next");
+				throw new ArgumentNullException(nameof(next));
 
 			var tcs = new TaskCompletionSource<T2>();
 			first.ContinueWith(delegate
@@ -132,9 +132,9 @@ namespace SharpEssentials.Concurrency
 		public static Task Then(this Task first, Func<Task> next)
 		{
 			if (first == null)
-				throw new ArgumentNullException("first");
+				throw new ArgumentNullException(nameof(first));
 			if (next == null)
-				throw new ArgumentNullException("next");
+				throw new ArgumentNullException(nameof(next));
 
 			var tcs = new TaskCompletionSource<object>();
 			first.ContinueWith(delegate
@@ -182,9 +182,9 @@ namespace SharpEssentials.Concurrency
 		public static Task<T2> Then<T1, T2>(this Task<T1> first, Func<T1, T2> continuation)
 		{
 			if (first == null)
-				throw new ArgumentNullException("first");
+				throw new ArgumentNullException(nameof(first));
 			if (continuation == null)
-				throw new ArgumentNullException("continuation");
+				throw new ArgumentNullException(nameof(continuation));
 
 			var tcs = new TaskCompletionSource<T2>();
 			first.ContinueWith(delegate
@@ -223,9 +223,9 @@ namespace SharpEssentials.Concurrency
 		public static Task Then(this Task first, Action continuation)
 		{
 			if (first == null)
-				throw new ArgumentNullException("first");
+				throw new ArgumentNullException(nameof(first));
 			if (continuation == null)
-				throw new ArgumentNullException("continuation");
+				throw new ArgumentNullException(nameof(continuation));
 
 			var tcs = new TaskCompletionSource<object>();
 			first.ContinueWith(delegate

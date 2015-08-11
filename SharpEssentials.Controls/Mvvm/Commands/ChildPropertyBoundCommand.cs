@@ -46,16 +46,16 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 			Expression<Func<TPropertySource, bool>> childPropertyExpression, Func<bool> canExecute, Action<object> execute)
 		{
 			if (parent == null)
-				throw new ArgumentNullException("parent");
+				throw new ArgumentNullException(nameof(parent));
 
 			if (collectionGetter == null)
-				throw new ArgumentNullException("collectionGetter");
+				throw new ArgumentNullException(nameof(collectionGetter));
 
 			if (childPropertyExpression == null)
-				throw new ArgumentNullException("childPropertyExpression");
+				throw new ArgumentNullException(nameof(childPropertyExpression));
 
 			if (execute == null)
-				throw new ArgumentNullException("execute");
+				throw new ArgumentNullException(nameof(execute));
 
 			_execute = execute;
 			_canExecute = canExecute;
@@ -78,25 +78,17 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		#region ICommand Members
 
 		/// <see cref="ICommand.CanExecute"/>
-		public bool CanExecute(object parameter)
-		{
-			return _canExecute();
-		}
+		public bool CanExecute(object parameter) => _canExecute();
 
-		/// <see cref="ICommand.Execute"/>
-		public void Execute(object parameter)
-		{
-			_execute(parameter);
-		}
+	    /// <see cref="ICommand.Execute"/>
+		public void Execute(object parameter) => _execute(parameter);
 
-		/// <see cref="ICommand.CanExecuteChanged"/>
+	    /// <see cref="ICommand.CanExecuteChanged"/>
 		public event EventHandler CanExecuteChanged;
 
 		private void OnCanExecuteChanged()
 		{
-			var localEvent = CanExecuteChanged;
-			if (localEvent != null)
-				localEvent(this, EventArgs.Empty);
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 		}
 
 		#endregion ICommand Members
@@ -104,12 +96,9 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		/// <summary>
 		/// Gets the collection of items the command depends on.
 		/// </summary>
-		internal IEnumerable<TPropertySource> Collection
-		{
-			get { return _collectionGetter(); }
-		}
+		internal IEnumerable<TPropertySource> Collection => _collectionGetter();
 
-		void collection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+	    void collection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			if (e.OldItems != null)
 			{

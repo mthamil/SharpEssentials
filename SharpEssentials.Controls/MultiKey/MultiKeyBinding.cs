@@ -32,7 +32,7 @@ namespace SharpEssentials.Controls.MultiKey
 			set
 			{
 				if (!(value is MultiKeyGesture))
-					throw new ArgumentException(@"Gesture does not support multiple keys.", "value");
+					throw new ArgumentException(@"Gesture does not support multiple keys.", nameof(value));
 
 				base.Gesture = value;
 			}

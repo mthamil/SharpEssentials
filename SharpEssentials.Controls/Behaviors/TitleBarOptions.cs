@@ -44,8 +44,7 @@ namespace SharpEssentials.Controls.Behaviors
 		/// The ShowButtons dependency property.
 		/// </summary>
 		public static readonly DependencyProperty ShowButtonsProperty =
-			DependencyProperty.Register(
-				"ShowButtons",
+			DependencyProperty.Register(nameof(ShowButtons),
 				typeof(bool),
 				typeof(TitleBarOptions),
 				new UIPropertyMetadata(false, ShowButtonsChanged));

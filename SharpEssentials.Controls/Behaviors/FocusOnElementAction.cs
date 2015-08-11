@@ -47,8 +47,7 @@ namespace SharpEssentials.Controls.Behaviors
 		/// The ElementToFocus dependency property.
 		/// </summary>
 		public static readonly DependencyProperty ElementToFocusProperty =
-			DependencyProperty.Register(
-			"ElementToFocus",
+			DependencyProperty.Register(nameof(ElementToFocus),
 			typeof(UIElement),
 			typeof(FocusOnElementAction),
 			new UIPropertyMetadata(default(UIElement)));

@@ -45,7 +45,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 		public ICommandCompleter DependsOn(Expression<Func<TSource, bool>> predicateProperty)
 		{
 			if (predicateProperty == null)
-				throw new ArgumentNullException("predicateProperty");
+				throw new ArgumentNullException(nameof(predicateProperty));
 
 			return new SimpleBoundCommandBuilder<TSource>(_source, predicateProperty);
 		}
@@ -61,7 +61,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 			where TChild : INotifyPropertyChanged
 		{
 			if (collection == null)
-				throw new ArgumentNullException("collection");
+				throw new ArgumentNullException(nameof(collection));
 
 			return new ChildBoundCommandBuilder<TSource, TChild>(_source, collection);
 		}

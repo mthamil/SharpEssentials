@@ -81,7 +81,7 @@ namespace SharpEssentials.Controls.Localization
 			: base(markupExtensionManager)
 		{
 			_cultureManager = cultureManager;
-			_key = key;
+			Key = key;
 
 			WeakEventManager<ICultureManager, EventArgs>.AddHandler(_cultureManager, "UICultureChanged", cultureManager_UICultureChanged);
 		}
@@ -126,13 +126,9 @@ namespace SharpEssentials.Controls.Localization
         }
 
         /// <summary>
-        /// The name of the resource key.
-        /// </summary>
-        public string Key
-        {
-            get { return _key; }
-            set { _key = value; }
-        }
+		/// The key used to retrieve the resource.
+		/// </summary>
+        public string Key { get; set; }
 
         /// <summary>
         /// The default value to use if a resource can't be found.
@@ -142,11 +138,7 @@ namespace SharpEssentials.Controls.Localization
         /// values because it allows a page to be displayed even if
         /// the resource can't be loaded.
         /// </remarks>
-        public string DefaultValue
-        {
-            get { return _defaultValue; }
-            set { _defaultValue = value; }
-        }
+        public string DefaultValue { get; set; }
 
         /// <summary>
         /// The child Resx elements (if any).
@@ -157,20 +149,14 @@ namespace SharpEssentials.Controls.Localization
         /// elements similar to a <see cref="MultiBinding"/>.
         /// </remarks>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Collection<LocalizeExtension> Children
-        {
-            get { return _children; }
-        }
+        public Collection<LocalizeExtension> Children => _children;
 
         #region Delegated Binding properties
 
         /// <summary>
         /// The associated binding for the extension.
         /// </summary>
-        public Binding Binding
-        {
-            get { return _binding.Value; }
-        }
+        public Binding Binding => _binding.Value;
 
         /// <summary>
         /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.ElementName"/>.
@@ -386,10 +372,7 @@ namespace SharpEssentials.Controls.Localization
         /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.ValidationRules"/>.
         /// </summary>
         [DefaultValue(false)]
-        public Collection<ValidationRule> BindingValidationRules
-        {
-            get { return Binding.ValidationRules; }
-        }
+        public Collection<ValidationRule> BindingValidationRules => Binding.ValidationRules;
 
         #endregion
 
@@ -457,8 +440,7 @@ namespace SharpEssentials.Controls.Localization
         /// The ResxName attached property.
         /// </summary>
         public static readonly DependencyProperty DefaultResxNameProperty =
-            DependencyProperty.RegisterAttached(
-            "DefaultResxName",
+            DependencyProperty.RegisterAttached("DefaultResxName",
             typeof(string),
             typeof(LocalizeExtension),
             new FrameworkPropertyMetadata(null,
@@ -566,34 +548,20 @@ namespace SharpEssentials.Controls.Localization
         /// <summary>
         /// Whether any binding properties have been set.
         /// </summary>
-        private bool IsBindingExpression
-        {
-            get 
-            {
-				return (_binding.Value.Source != null || _binding.Value.RelativeSource != null ||
-					    _binding.Value.ElementName != null || _binding.Value.XPath != null ||
-					    _binding.Value.Path != null); 
-            }
-        }
+        private bool IsBindingExpression 
+            => (_binding.Value.Source != null || _binding.Value.RelativeSource != null ||
+                _binding.Value.ElementName != null || _binding.Value.XPath != null ||
+                _binding.Value.Path != null);
 
         /// <summary>
 		/// Whether this <see cref="LocalizeExtension"/> is being used as a multi-binding parent.
         /// </summary>
-        private bool IsMultiBindingParent
-        {
-            get { return _children.Count > 0; }
-        }
+        private bool IsMultiBindingParent => _children.Count > 0;
 
         /// <summary>
 		/// Whether this <see cref="LocalizeExtension"/> is being used inside another <see cref="LocalizeExtension"/> for multi-binding.
         /// </summary>
-        private bool IsMultiBindingChild
-        {
-            get 
-            { 
-                return (TargetPropertyType == typeof(Collection<LocalizeExtension>)); 
-            }
-        }
+        private bool IsMultiBindingChild => (TargetPropertyType == typeof(Collection<LocalizeExtension>));
 
         /// <summary>
         /// Produces the value for the markup extension.
@@ -638,11 +606,7 @@ namespace SharpEssentials.Controls.Localization
                 }
             }
 
-            if (result == null)
-            {
-                result = GetDefaultValue(Key);
-            }
-            return result;
+            return result ?? GetDefaultValue(Key);
         }
 
         /// <summary>
@@ -859,7 +823,7 @@ namespace SharpEssentials.Controls.Localization
         private object GetDefaultValue(string key)
         {
             Type targetType = TargetPropertyType;
-            if (_defaultValue == null)
+            if (DefaultValue == null)
             {
                 if (targetType == typeof(String) || targetType == typeof(object) || IsMultiBindingChild)
                 {
@@ -874,7 +838,7 @@ namespace SharpEssentials.Controls.Localization
                     try
                     {
                         TypeConverter converter = TypeDescriptor.GetConverter(targetType);
-                        return converter.ConvertFromInvariantString(_defaultValue);
+                        return converter.ConvertFromInvariantString(DefaultValue);
                     }
                     catch (Exception e)
                     {
@@ -883,7 +847,7 @@ namespace SharpEssentials.Controls.Localization
                 }
             }
 
-			return _defaultValue;
+			return DefaultValue;
         }
 
         #endregion
@@ -898,17 +862,7 @@ namespace SharpEssentials.Controls.Localization
 		/// </summary>
 		private string _defaultResxName;
 
-	    /// <summary>
-		/// The key used to retrieve the resource.
-		/// </summary>
-		private string _key;
-
-		/// <summary>
-		/// The default value for the property.
-		/// </summary>
-		private string _defaultValue;
-
-		/// <summary>
+        /// <summary>
 		/// The resource manager to use for this extension.  Holding a strong reference to the
 		/// Resource Manager keeps it in the cache while ever there are LocalizeExtensions that
 		/// are using it.

@@ -55,22 +55,18 @@ namespace SharpEssentials.Controls.Behaviors
         /// The SelectedItem dependency property.
         /// </summary>
         public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register(
-            "SelectedItem",
-            typeof(object),
-            typeof(TreeViewBindableSelectedItem),
-            new FrameworkPropertyMetadata(null,
-                FrameworkPropertyMetadataOptions.AffectsRender |
-                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-                OnSelectedItemChanged));
+            DependencyProperty.Register(nameof(SelectedItem),
+                typeof(object),
+                typeof(TreeViewBindableSelectedItem),
+                new FrameworkPropertyMetadata(null,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                    OnSelectedItemChanged));
 
         private static void OnSelectedItemChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var behavior = dependencyObject as TreeViewBindableSelectedItem;
-            if (behavior == null)
-                return;
-
-            behavior.AssociatedObject.FindContainerFromItem(e.NewValue).Apply(item =>
+            behavior?.AssociatedObject.FindContainerFromItem(e.NewValue).Apply(item =>
             {
                 if (item != null && !item.IsSelected)
                     item.IsSelected = true;

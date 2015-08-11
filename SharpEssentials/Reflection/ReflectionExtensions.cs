@@ -30,12 +30,12 @@ namespace SharpEssentials.Reflection
 		/// <returns>A default value for the type</returns>
 		public static object GetDefaultValue(this Type type)
 		{
-			if (type.IsValueType && type != voidType)	// can't create an instance of Void
+			if (type.IsValueType && type != VoidType)	// can't create an instance of Void
 				return Activator.CreateInstance(type);
 
 			return null;
 		}
-		private static readonly Type voidType = typeof(void);
+		private static readonly Type VoidType = typeof(void);
 
         /// <summary>
         /// Checks whether another type is the generic type definition of this type.
@@ -46,13 +46,13 @@ namespace SharpEssentials.Reflection
         public static bool IsClosedTypeOf(this Type type, Type openGenericType)
         {
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
 
             if (openGenericType == null)
-                throw new ArgumentNullException("openGenericType");
+                throw new ArgumentNullException(nameof(openGenericType));
 
             if (!openGenericType.IsGenericTypeDefinition)
-                throw new ArgumentException("Must be an open generic type.", "openGenericType");
+                throw new ArgumentException("Must be an open generic type.", nameof(openGenericType));
 
             return type.IsGenericType && type.GetGenericTypeDefinition() == openGenericType;
         }

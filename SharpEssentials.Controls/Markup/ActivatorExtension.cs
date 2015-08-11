@@ -49,12 +49,9 @@ namespace SharpEssentials.Controls.Markup
 		#region Overrides of MarkupExtension
 
 		/// <see cref="MarkupExtension.ProvideValue"/>
-		public override object ProvideValue(IServiceProvider serviceProvider)
-		{
-			return _instance.Value;
-		}
+		public override object ProvideValue(IServiceProvider serviceProvider) => _instance.Value;
 
-		#endregion
+	    #endregion
 
 		/// <summary>
 		/// The type to instantiate.
@@ -64,28 +61,18 @@ namespace SharpEssentials.Controls.Markup
 		/// <summary>
 		/// The type arguments of the type to instantiate.
 		/// </summary>
-		public Collection<Type> TypeArguments
-		{
-			get { return _typeArguments; } 
-		}
+		public Collection<Type> TypeArguments { get; } = new Collection<Type>();
 
-		/// <summary>
+	    /// <summary>
 		/// The arguments to instantiate an instance with.
 		/// </summary>
-		public Collection<object> ConstructorArguments
-		{
-			get { return _constructorArguments; }
-		}
+		public Collection<object> ConstructorArguments { get; } = new Collection<object>();
 
-		private Type ConstructType()
-		{
-			return Type.IsGenericTypeDefinition 
-				? Type.MakeGenericType(TypeArguments.ToArray()) 
-				: Type;
-		}
+	    private Type ConstructType() 
+            => Type.IsGenericTypeDefinition
+	            ? Type.MakeGenericType(TypeArguments.ToArray())
+	            : Type;
 
-		private readonly Lazy<object> _instance;
-		private readonly Collection<Type> _typeArguments = new Collection<Type>();
-		private readonly Collection<object> _constructorArguments = new Collection<object>(); 
+	    private readonly Lazy<object> _instance;
 	}
 }

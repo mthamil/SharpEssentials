@@ -37,9 +37,7 @@ namespace SharpEssentials.Controls.Mvvm
 		/// <param name="propertyName">The name of the property that changed</param>
 		protected void OnPropertyChanged(string propertyName)
 		{
-			var localEvent = PropertyChanged;
-			if (localEvent != null)
-				localEvent(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#endregion

@@ -45,19 +45,12 @@ namespace SharpEssentials.InputOutput
 		/// <summary>
 		/// Returns a file system entity full name's hashcode.
 		/// </summary>
-        public int GetHashCode(FileSystemInfo obj)
-		{
-			return obj.FullName.ToLowerInvariant().GetHashCode();
-		}
+        public int GetHashCode(FileSystemInfo obj) 
+            => obj.FullName.ToLowerInvariant().GetHashCode();
 
-		/// <summary>
+	    /// <summary>
 		/// Gets a <see cref="FileSystemInfoPathEqualityComparer"/> equality comparer.
 		/// </summary>
-        public static IEqualityComparer<FileSystemInfo> Instance
-		{
-			get { return instance; }
-		}
-
-        private static readonly IEqualityComparer<FileSystemInfo> instance = new FileSystemInfoPathEqualityComparer(); 
+        public static IEqualityComparer<FileSystemInfo> Instance { get; } = new FileSystemInfoPathEqualityComparer();
 	}
 }

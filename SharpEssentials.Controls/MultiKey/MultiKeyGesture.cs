@@ -44,7 +44,7 @@ namespace SharpEssentials.Controls.MultiKey
 			: base(Key.None, ModifierKeys.None, displayString)
 		{
 			if (!keys.Any())
-				throw new ArgumentException(@"At least one key must be specified.", "keys");
+				throw new ArgumentException(@"At least one key must be specified.", nameof(keys));
 
 			_keys = new List<KeyInput>(keys);
 

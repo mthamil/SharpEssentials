@@ -34,7 +34,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		public RelayCommand(Action execute, Func<bool> canExecute = null)
 		{
 			if (execute == null)
-				throw new ArgumentNullException("execute");
+				throw new ArgumentNullException(nameof(execute));
 
 			_execute = execute;
 			_canExecute = canExecute;
@@ -80,7 +80,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		public RelayCommand(Action<T> execute, Predicate<T> canExecute = null)
 		{
 			if (execute == null)
-				throw new ArgumentNullException("execute");
+				throw new ArgumentNullException(nameof(execute));
 
 			_execute = execute;
 			_canExecute = canExecute;

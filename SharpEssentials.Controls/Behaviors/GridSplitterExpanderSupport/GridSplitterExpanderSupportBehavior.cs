@@ -107,7 +107,7 @@ namespace SharpEssentials.Controls.Behaviors.GridSplitterExpanderSupport
 			if (_gridSplitter != null)
 				_gridSplitter.IsEnabled = true;
 
-			_expanderSize.DimensionSize = _newDimensionSize.HasValue ? _newDimensionSize.Value : _dimensionSize;
+			_expanderSize.DimensionSize = _newDimensionSize ?? _dimensionSize;
 		}
 
 		private bool _sizeInitialized;

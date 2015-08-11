@@ -33,7 +33,7 @@ namespace SharpEssentials.Controls
 		public static IEnumerable<DependencyObject> VisualChildren(this DependencyObject parent)
 		{
 			if (parent == null)
-				throw new ArgumentNullException("parent");
+				throw new ArgumentNullException(nameof(parent));
 
 			return parent.EnumerateVisualTreeChildren();
 		}

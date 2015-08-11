@@ -101,12 +101,9 @@ namespace SharpEssentials.Observable
 		/// <summary>
 		/// Converts a PropertyBuilder into its output Property.
 		/// </summary>
-		public static implicit operator Property<V>(PropertyBuilder<T, V> builder)
-		{
-			return builder.Get();
-		}
+		public static implicit operator Property<V>(PropertyBuilder<T, V> builder) => builder.Get();
 
-		/// <summary>
+	    /// <summary>
 		/// The following method is necessary to allow a Property to be created that is accessed using a 
 		/// property of a different type than it is actually declaring.
 		/// For example, we have the following property:
@@ -199,12 +196,9 @@ namespace SharpEssentials.Observable
 		/// <summary>
 		/// The property's name.
 		/// </summary>
-		public string Name
-		{
-			get { return _name; }
-		}
+		public string Name => _name;
 
-		private readonly string _name;
+	    private readonly string _name;
 		private V _value;
 		private readonly Action<string> _propertyChangedRaiser;
 		private readonly IEnumerable<string> _dependentPropertyNames;

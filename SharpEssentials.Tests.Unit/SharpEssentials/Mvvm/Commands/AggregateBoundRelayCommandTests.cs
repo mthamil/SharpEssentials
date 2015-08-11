@@ -205,12 +205,9 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Mvvm.Commands
 				_items.Value = new ObservableCollection<TestItem>();
 			}
 
-			public ObservableCollection<TestItem> Items
-			{
-				get { return _items.Value; }
-			}
+			public ObservableCollection<TestItem> Items => _items.Value;
 
-			private readonly Property<ObservableCollection<TestItem>> _items;
+		    private readonly Property<ObservableCollection<TestItem>> _items;
 		}
 
 		private class TestItem : ObservableObject

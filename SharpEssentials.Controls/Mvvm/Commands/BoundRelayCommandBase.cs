@@ -34,13 +34,13 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		protected BoundRelayCommandBase(INotifyPropertyChanged propertyDeclarer, string propertyName, Func<bool> canExecute)
 		{
 			if (propertyDeclarer == null)
-				throw new ArgumentNullException("propertyDeclarer");
+				throw new ArgumentNullException(nameof(propertyDeclarer));
 
 			if (propertyName == null)
-				throw new ArgumentNullException("propertyName");
+				throw new ArgumentNullException(nameof(propertyName));
 
 			if (canExecute == null)
-				throw new ArgumentNullException("canExecute");
+				throw new ArgumentNullException(nameof(canExecute));
 
 			_propertyName = propertyName;
 			_canExecute = canExecute;
@@ -66,9 +66,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		/// </summary>
 		protected void OnCanExecuteChanged()
 		{
-			var localEvent = CanExecuteChanged;
-			if (localEvent != null)
-				localEvent(this, EventArgs.Empty);
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 		}
 
 		private void propertyDeclarer_PropertyChanged(object sender, PropertyChangedEventArgs e)

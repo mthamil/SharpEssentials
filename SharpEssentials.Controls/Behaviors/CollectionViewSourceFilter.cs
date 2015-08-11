@@ -47,8 +47,7 @@ namespace SharpEssentials.Controls.Behaviors
 		/// The Filter dependency property.
 		/// </summary>
 		public static readonly DependencyProperty FilterProperty =
-			DependencyProperty.Register(
-				"Filter",
+			DependencyProperty.Register(nameof(Filter),
 				typeof(Predicate<object>),
 				typeof(CollectionViewSourceFilter),
 				new UIPropertyMetadata(null));

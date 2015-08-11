@@ -35,7 +35,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		public AsyncRelayCommand(Func<Task> execute, Func<bool> canExecute = null)
 		{
 			if (execute == null)
-				throw new ArgumentNullException("execute");
+				throw new ArgumentNullException(nameof(execute));
 
 			_execute = execute;
 			_canExecute = canExecute;
@@ -81,7 +81,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		public AsyncRelayCommand(Func<T, Task> execute, Predicate<T> canExecute = null)
 		{
 			if (execute == null)
-				throw new ArgumentNullException("execute");
+				throw new ArgumentNullException(nameof(execute));
 
 			_execute = execute;
 			_canExecute = canExecute;

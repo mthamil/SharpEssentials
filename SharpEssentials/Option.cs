@@ -30,40 +30,28 @@ namespace SharpEssentials
 		/// </summary>
 		internal Option() { }
 
-		/// <summary>
-		/// Returns a None Option of a given type.
-		/// </summary>
-		public static Option<T> None()
-		{
-			return none;
-		}
-		private static readonly Option<T> none = new None<T>();	// this can be a singleton for each type because None has no variable properties
+	    /// <summary>
+	    /// Returns a None Option of a given type.
+	    /// </summary>
+	    public static Option<T> None() => none;
+		private static readonly Option<T> none = new None<T>();	// this can be a singleton for each type because None has no mutable state
 
 		/// <summary>
 		/// Creates a Some Option with the given value.
 		/// </summary>
-		public static Option<T> Some(T value)
-		{
-			return new Some<T>(value);
-		}
+		public static Option<T> Some(T value) => new Some<T>(value);
 
 		/// <summary>
 		/// Creates an Option from a value that may be null.
 		/// None will be returned if the value is null, otherwise
 		/// Some.
 		/// </summary>
-		public static Option<T> From(T value)
-		{
-			return value == null ? None() : Some(value);
-		}
+		public static Option<T> From(T value) => value == null ? None() : Some(value);
 
-		/// <summary>
-		/// Converts a value to an Option type.
-		/// </summary>
-		public static implicit operator Option<T>(T value)
-		{
-			return From(value);
-		}
+	    /// <summary>
+	    /// Converts a value to an Option type.
+	    /// </summary>
+	    public static implicit operator Option<T>(T value) => From(value);
 
 		/// <summary>
 		/// True if a value exists.
@@ -135,12 +123,9 @@ namespace SharpEssentials
 		/// <summary>
 		/// Always returns false.
 		/// </summary>
-		public override bool HasValue
-		{
-			get { return false; }
-		}
+		public override bool HasValue => false;
 
-		/// <summary>
+	    /// <summary>
 		/// Throws an exception because no value exists.
 		/// </summary>
 		public override T Value
@@ -151,36 +136,27 @@ namespace SharpEssentials
 		/// <summary>
 		/// Returns None of the result type.
 		/// </summary>
-		public override Option<TResult> Select<TResult>(Func<T, TResult> selector)
-		{
-			return Option<TResult>.None();
-		}
+		public override Option<TResult> Select<TResult>(Func<T, TResult> selector) 
+            => Option<TResult>.None();
 
 		/// <summary>
 		/// Returns None of the result type.
 		/// </summary>
-		public override Option<TResult> SelectMany<TResult>(Func<T, Option<TResult>> optionSelector)
-		{
-			return Option<TResult>.None();
-		}
+		public override Option<TResult> SelectMany<TResult>(Func<T, Option<TResult>> optionSelector) 
+            => Option<TResult>.None();
 
 		/// <summary>
 		/// Returns None of the result type.
 		/// </summary>
-		public override Option<TResult> SelectMany<TIntermediate, TResult>(Func<T, Option<TIntermediate>> optionSelector, Func<T, TIntermediate, TResult> resultSelector)
-		{
-			return Option<TResult>.None(); 
-		}
+		public override Option<TResult> SelectMany<TIntermediate, TResult>(Func<T, Option<TIntermediate>> optionSelector, Func<T, TIntermediate, TResult> resultSelector) 
+            => Option<TResult>.None();
 
-		/// <summary>
+	    /// <summary>
 		/// Returns None.
 		/// </summary>
-		public override Option<T> Where(Func<T, bool> predicate)
-		{
-			return None(); 
-		}
+		public override Option<T> Where(Func<T, bool> predicate) => None();
 
-		/// <summary>
+	    /// <summary>
 		/// Does nothing.
 		/// </summary>
 		public override void Apply(Action<T> action)
@@ -191,18 +167,12 @@ namespace SharpEssentials
 		/// <summary>
 		/// Executes an alternative function.
 		/// </summary>
-		public override Option<T> OrElse(Func<Option<T>> fallbackAction)
-		{
-			return fallbackAction();
-		}
+		public override Option<T> OrElse(Func<Option<T>> fallbackAction) => fallbackAction();
 
-		/// <summary>
+	    /// <summary>
 		/// Executes an alternative function.
 		/// </summary>
-		public override T GetOrElse(Func<T> fallbackAction)
-		{
-			return fallbackAction();
-		}
+		public override T GetOrElse(Func<T> fallbackAction) => fallbackAction();
 	}
 
 	/// <summary>
@@ -217,44 +187,34 @@ namespace SharpEssentials
 		public Some(T value)
 		{
 			if (value == null)
-				throw new ArgumentNullException("value");
+				throw new ArgumentNullException(nameof(value));
 
-			_value = value;
+			Value = value;
 		}
 
 		/// <summary>
 		/// Always returns true.
 		/// </summary>
-		public override bool HasValue
-		{
-			get { return true; }
-		}
+		public override bool HasValue => true;
 
-		/// <summary>
+	    /// <summary>
 		/// The value of the Option.
 		/// </summary>
-		public override T Value
-		{
-			get { return _value; }
-		}
+		public override T Value { get; }
 
-		/// <summary>
+	    /// <summary>
 		/// Applies a mapping function to a Some's value.
 		/// </summary>
 		public override Option<TResult> Select<TResult>(Func<T, TResult> selector)
-		{
-			return Option<TResult>.From(selector(Value));
-		}
+            => Option<TResult>.From(selector(Value));
 
-		/// <summary>
+	    /// <summary>
 		/// Applies a mapping function to a Some's value.
 		/// </summary>
-		public override Option<TResult> SelectMany<TResult>(Func<T, Option<TResult>> optionSelector)
-		{
-			return optionSelector(Value);
-		}
+		public override Option<TResult> SelectMany<TResult>(Func<T, Option<TResult>> optionSelector) 
+            => optionSelector(Value);
 
-		/// <summary>
+	    /// <summary>
 		/// Applies a mapping function to a Some's value.
 		/// </summary>
 		public override Option<TResult> SelectMany<TIntermediate, TResult>(Func<T, Option<TIntermediate>> optionSelector, Func<T, TIntermediate, TResult> resultSelector)
@@ -269,36 +229,24 @@ namespace SharpEssentials
 		/// <summary>
 		/// Returns this Option if its value meets the given condition.
 		/// </summary>
-		public override Option<T> Where(Func<T, bool> predicate)
-		{
-			return predicate(Value) ? this : None();
-		}
+		public override Option<T> Where(Func<T, bool> predicate) => predicate(Value) ? this : None();
 
-		/// <summary>
+	    /// <summary>
 		/// Performs an action on the Option's value.
 		/// </summary>
-		public override void Apply(Action<T> action)
-		{
-			action(Value);
-		}
+		public override void Apply(Action<T> action) => action(Value);
 
-		/// <summary>
+	    /// <summary>
 		/// Returns this.
 		/// </summary>
-		public override Option<T> OrElse(Func<Option<T>> fallbackAction)
-		{
-			return this;
-		}
+		public override Option<T> OrElse(Func<Option<T>> fallbackAction) => this;
 
-		/// <summary>
+	    /// <summary>
 		/// Returns this Option's value.
 		/// </summary>
-		public override T GetOrElse(Func<T> fallbackAction)
-		{
-			return Value;
-		}
+		public override T GetOrElse(Func<T> fallbackAction) => Value;
 
-		/// <summary>
+	    /// <summary>
 		/// Whether a Some Option is equal to another.
 		/// </summary>
 		public override bool Equals(object obj)
@@ -319,11 +267,6 @@ namespace SharpEssentials
 		/// <summary>
 		/// Gets the hash code for a Some Option.
 		/// </summary>
-		public override int GetHashCode()
-		{
-			return Value.GetHashCode();
-		}
-
-		private readonly T _value;
+		public override int GetHashCode() => Value.GetHashCode();
 	}
 }

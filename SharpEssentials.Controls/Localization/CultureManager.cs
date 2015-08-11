@@ -33,12 +33,9 @@ namespace SharpEssentials.Controls.Localization
 		/// <summary>
 		/// The default culture manager instance.
 		/// </summary>
-		public static ICultureManager Default
-		{
-			get { return _defaultInstance; }
-		}
+		public static ICultureManager Default => _defaultInstance;
 
-        /// <summary>
+	    /// <summary>
         /// Sets the UICulture for a <see cref="CultureManager"/> and raises the <see cref="UICultureChanged"/>
         /// event causing any XAML elements using the <see cref="LocalizeExtension"/> to automatically
         /// update.
@@ -80,9 +77,7 @@ namespace SharpEssentials.Controls.Localization
 
 		private void OnUICultureChanged()
 		{
-			var localEvent = UICultureChanged;
-			if (localEvent != null)
-				localEvent(this, EventArgs.Empty);
+            UICultureChanged?.Invoke(this, EventArgs.Empty);
 		}
 
         /// <summary>

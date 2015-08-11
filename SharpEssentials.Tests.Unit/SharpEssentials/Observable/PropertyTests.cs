@@ -139,8 +139,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Observable
 			property.Value = 50;
 
 			// Assert.
-			AssertThat.SequenceEqual(new[] { "IntValue", "StringValue" }, changedPropertyNames);
-			Assert.Equal("IntValue", property.Name);
+			AssertThat.SequenceEqual(new[] { nameof(IntValue), nameof(StringValue) }, changedPropertyNames);
+			Assert.Equal(nameof(IntValue), property.Name);
 		}
 
 		[Fact]
@@ -185,12 +185,12 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Observable
 		}
 
 		public int IntValue { get; set; }
-		public string StringValue { get { return IntValue.ToString(); } }
-		public object ObjectValue { get; set; }
+		public string StringValue => IntValue.ToString();
+	    public object ObjectValue { get; set; }
 
 		private class CustomEquals
 		{
-			public int Value { get; private set; }
+			public int Value { get; }
 
 			public CustomEquals(int value)
 			{
@@ -206,10 +206,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Observable
 				return (Value - 2 <= other.Value && other.Value <= Value + 2);
 			}
 
-			public override int GetHashCode()
-			{
-				return Value;
-			}
+			public override int GetHashCode() => Value;
 		}
 	}
 }

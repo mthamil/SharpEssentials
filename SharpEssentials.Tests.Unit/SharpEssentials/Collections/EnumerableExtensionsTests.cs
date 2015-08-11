@@ -448,7 +448,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Act.
 			await Enumerable.Range(0, 5).Select<int, Task>(async i =>
 			{
-				await Tasks.FromSuccess();
+				await Task.CompletedTask;
 				results[i] = true;
 			});
 

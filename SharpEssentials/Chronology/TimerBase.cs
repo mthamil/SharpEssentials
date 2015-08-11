@@ -74,19 +74,12 @@ namespace SharpEssentials.Chronology
 		/// <param name="state">Associated user state</param>
 		protected void OnElapsed(DateTime elapsedTime, object state)
 		{
-			var localEvent = Elapsed;
-			if (localEvent != null)
-				localEvent(this, new TimerElapsedEventArgs(elapsedTime, state));
+            Elapsed?.Invoke(this, new TimerElapsedEventArgs(elapsedTime, state));
 		}
 
 		/// <summary>
 		/// Object used for locking.
 		/// </summary>
-		protected object SyncObject
-		{
-			get { return _syncObject; }
-		}
-
-		private readonly object _syncObject = new object();
+		protected object SyncObject { get; } = new object();
 	}
 }

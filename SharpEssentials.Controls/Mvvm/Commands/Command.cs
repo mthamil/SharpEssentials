@@ -33,7 +33,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		public static ICommandBuilder<TSource> For<TSource>(TSource source) where TSource : INotifyPropertyChanged
 		{
 			if (source == null)
-				throw new ArgumentNullException("source");
+				throw new ArgumentNullException(nameof(source));
 
 			return new CommandBuilder<TSource>(source);
 		}

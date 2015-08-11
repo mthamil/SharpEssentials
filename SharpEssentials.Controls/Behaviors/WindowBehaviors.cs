@@ -42,8 +42,7 @@ namespace SharpEssentials.Controls.Behaviors
 		/// The BindableDialogResult attached property.
 		/// </summary>
 		public static readonly DependencyProperty DialogResultProperty =
-			DependencyProperty.RegisterAttached(
-				"DialogResult",
+			DependencyProperty.RegisterAttached("DialogResult",
 				typeof(bool?),
 				typeof(WindowBehaviors),
 				new PropertyMetadata(default(bool?), OnBindableDialogResultChanged));

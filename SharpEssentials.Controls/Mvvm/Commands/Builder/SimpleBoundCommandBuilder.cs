@@ -63,7 +63,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 		public ICommand Executes(Action<object> operation)
 		{
 			if (operation == null)
-				throw new ArgumentNullException("operation");
+				throw new ArgumentNullException(nameof(operation));
 
 			return new BoundRelayCommand(_source, _property.Value.Name, _canExecutePredicate.Value, operation);
 		}

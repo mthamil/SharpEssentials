@@ -44,14 +44,10 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 
 			public void OnEvent()
 			{
-				if (Event != null)
-					Event(this, EventArgs.Empty);
+			    Event?.Invoke(this, EventArgs.Empty);
 			}
 
-			public bool HasSubscribers
-			{ 
-				get { return Event != null; } 
-			}
+		    public bool HasSubscribers => Event != null;
 		}
 	}
 }

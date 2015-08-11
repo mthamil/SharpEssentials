@@ -64,7 +64,7 @@ namespace SharpEssentials.Collections
 		public static IEnumerable<IReadOnlyCollection<T>> Slices<T>(this IEnumerable<T> sourceItems, int sliceSize)
 		{
 			if (sourceItems == null)
-				throw new ArgumentNullException("sourceItems");
+				throw new ArgumentNullException(nameof(sourceItems));
 
 			if (sliceSize < 1)
 				return Enumerable.Empty<IReadOnlyCollection<T>>();
@@ -84,7 +84,7 @@ namespace SharpEssentials.Collections
 		public static IEnumerable<T> ToEnumerable<T>(this IEnumerator<T> enumerator)
 		{
 			if (enumerator == null)
-				throw new ArgumentNullException("enumerator");
+				throw new ArgumentNullException(nameof(enumerator));
 
 			return enumerator.ToEnumerableImpl();
 		}
@@ -180,10 +180,10 @@ namespace SharpEssentials.Collections
 		private static TSource ExtremumBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector, IComparer<TKey> comparer)
 		{
 			if (source == null)
-				throw new ArgumentNullException("source");
+				throw new ArgumentNullException(nameof(source));
 
 			if (selector == null)
-				throw new ArgumentNullException("selector");
+				throw new ArgumentNullException(nameof(selector));
 
 			TSource extremum = source.Aggregate((currentExtremum, element) =>
 			{
@@ -271,9 +271,9 @@ namespace SharpEssentials.Collections
 		public static Option<T> FirstOrNone<T>(this IEnumerable<T> source, Func<T, bool> predicate)
 		{
 			if (source == null)
-				throw new ArgumentNullException("source");
+				throw new ArgumentNullException(nameof(source));
 			if (predicate == null)
-				throw new ArgumentNullException("predicate");
+				throw new ArgumentNullException(nameof(predicate));
 
 			foreach (var item in source)
 			{

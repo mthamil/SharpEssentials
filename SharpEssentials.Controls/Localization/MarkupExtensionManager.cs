@@ -56,10 +56,7 @@ namespace SharpEssentials.Controls.Localization
         /// <summary>
         /// All currently active extensions.
         /// </summary>
-        public IEnumerable<ManagedMarkupExtension> ActiveExtensions
-        {
-            get { return _extensions; }
-        }
+        public IEnumerable<ManagedMarkupExtension> ActiveExtensions => _extensions;
 
         /// <summary>
         /// Cleans up references to extensions for targets which have been garbage collected.

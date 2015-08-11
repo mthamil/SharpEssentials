@@ -41,7 +41,7 @@ namespace SharpEssentials.Controls.Commands
                 // Detect Lazy<T> data contexts.
                 var parameterType = parameter.GetType();
                 if (parameterType.IsClosedTypeOf(LazyType))
-                    parameter = parameterType.GetProperty("Value").GetValue(parameter);
+                    parameter = parameterType.GetProperty(LazyValueName).GetValue(parameter);
 
                 window.DataContext = parameter;
             }
@@ -70,12 +70,12 @@ namespace SharpEssentials.Controls.Commands
 		/// The Owner dependency property.
 		/// </summary>
 		public static readonly DependencyProperty OwnerProperty =
-			DependencyProperty.RegisterAttached(
-			"Owner",
-			typeof(Window),
-			typeof(OpenDialogCommand),
-			new FrameworkPropertyMetadata(null));
+			DependencyProperty.RegisterAttached(nameof(Owner),
+			    typeof(Window),
+			    typeof(OpenDialogCommand),
+			    new FrameworkPropertyMetadata(null));
 
         private static readonly Type LazyType = typeof(Lazy<>);
+	    private const string LazyValueName = nameof(Lazy<object>.Value);
 	}
 }

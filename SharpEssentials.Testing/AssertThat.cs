@@ -236,7 +236,7 @@ namespace SharpEssentials.Testing
 
 			IMethodCallMessage eventMember = recorder.LastInvocation;
 			if (!(eventMember.MethodName.StartsWith("add_") || eventMember.MethodName.StartsWith("remove_")))
-				throw new ArgumentException(@"Invocation must be an event subscription or unsubscription", "eventAccessor");
+				throw new ArgumentException(@"Invocation must be an event subscription or unsubscription", nameof(eventAccessor));
 
 			string eventName = eventMember.MethodName.Replace("add_", string.Empty).Replace("remove_", string.Empty);
 			EventInfo eventInfo = typeof(T).GetEvent(eventName);
@@ -342,7 +342,7 @@ namespace SharpEssentials.Testing
 							   string eventName,
 							   bool shouldHaveBeenRaised,
 							   bool wasRaised)
-			: base(typeof(RaisesException).Name + " : Event Assertion Failure")
+			: base($"{typeof(RaisesException).Name} : Event Assertion Failure")
 		{
 			EventOwner = eventOwner;
 			EventName = eventName;
@@ -358,34 +358,29 @@ namespace SharpEssentials.Testing
 		/// <summary>
 		/// The name of the event.
 		/// </summary>
-		public string EventName { get; private set; }
+		public string EventName { get; }
 
 		/// <summary>
 		/// Whether the event should have been raised.
 		/// </summary>
-		public bool ShouldHaveBeenRaised { get; private set; }
+		public bool ShouldHaveBeenRaised { get; }
 
 		/// <summary>
 		/// Whether the event was raised.
 		/// </summary>
-		public bool WasRaised { get; private set; }
+		public bool WasRaised { get; }
 
-		/// <summary>
-		/// Gets a message that describes the current exception.
-		/// </summary>
-		/// <returns>The error message that explains the reason for the exception, or an empty string("").</returns>
-		public override string Message
-		{
-			get
-			{
-				return String.Format("{0}{1}The event {2} {3} when {4}.",
-					base.Message,
-					Environment.NewLine,
-					EventName,
-					WasRaised ? "was raised" : "was not raised",
-					ShouldHaveBeenRaised ? "expected" : "not expected");
-			}
-		}
+	    /// <summary>
+	    /// Gets a message that describes the current exception.
+	    /// </summary>
+	    /// <returns>The error message that explains the reason for the exception, or an empty string("").</returns>
+	    public override string Message
+	        => String.Format("{0}{1}The event {2} {3} when {4}.",
+	                          base.Message,
+	                          Environment.NewLine,
+	                          EventName,
+	                          WasRaised ? "was raised" : "was not raised",
+	                          ShouldHaveBeenRaised ? "expected" : "not expected");
 	}
 
 	/// <summary>
@@ -401,7 +396,7 @@ namespace SharpEssentials.Testing
 		/// <param name="actual">The actual sequence</param>
 		/// <param name="actualFullyDrained">Whether the entirety of the actual sequence was evaluated</param>
 		public SequenceEqualException(IEnumerable expected, bool expectedFullyDrained, IEnumerable actual, bool actualFullyDrained)
-			: base(typeof(SequenceEqualException).Name + " : SequenceEqual Assertion Failure")
+			: base($"{typeof(SequenceEqualException).Name} : SequenceEqual Assertion Failure")
 		{
 			_expected = expected;
 			_actual = actual;
@@ -415,40 +410,27 @@ namespace SharpEssentials.Testing
 		/// <summary>
 		/// Gets the actual sequence.
 		/// </summary>
-		public string Actual
-		{
-			get;
-			private set;
-		}
+		public string Actual { get; }
 
 		/// <summary>
 		/// Gets the expected sequence.
 		/// </summary>
-		public string Expected
-		{
-			get;
-			private set;
-		}
+		public string Expected { get; }
 
-		/// <summary>
-		/// Gets a message that describes the current exception.
-		/// </summary>
-		/// <returns>The error message that explains the reason for the exception, or an empty string("").</returns>
-		public override string Message
-		{
-			get
-			{
-				return String.Format("{0}{1}Expected: {2}{3}{1}Actual: {4}{5}",
-					base.Message,
-					Environment.NewLine,
-					Expected == string.Empty ? EMPTY_COLLECTION_MESSAGE : Expected,
-					_expectedFullyDrained ? string.Empty : ",...",
-					Actual == string.Empty ? EMPTY_COLLECTION_MESSAGE : Actual,
-					_actualFullyDrained ? string.Empty : ",...");
-			}
-		}
+	    /// <summary>
+	    /// Gets a message that describes the current exception.
+	    /// </summary>
+	    /// <returns>The error message that explains the reason for the exception, or an empty string("").</returns>
+	    public override string Message
+	        => String.Format("{0}{1}Expected: {2}{3}{1}Actual: {4}{5}",
+	                          base.Message,
+	                          Environment.NewLine,
+	                          Expected == string.Empty ? EMPTY_COLLECTION_MESSAGE : Expected,
+	                          _expectedFullyDrained ? string.Empty : ",...",
+	                          Actual == string.Empty ? EMPTY_COLLECTION_MESSAGE : Actual,
+	                          _actualFullyDrained ? string.Empty : ",...");
 
-		private readonly IEnumerable _expected;
+	    private readonly IEnumerable _expected;
 		private readonly IEnumerable _actual;
 		private readonly bool _expectedFullyDrained;
 		private readonly bool _actualFullyDrained;
@@ -467,7 +449,7 @@ namespace SharpEssentials.Testing
 		/// </summary>
 		/// <param name="propertyName">The name of the property that should not have changed.</param>
 		public PropertyDoesNotChangeException(string propertyName)
-			: base(String.Format("PropertyDoesNotChange assertion failure: PropertyChanged event for property {0} was raised", propertyName))
+			: base($"PropertyDoesNotChange assertion failure: PropertyChanged event for property {propertyName} was raised")
 		{
 		}
 

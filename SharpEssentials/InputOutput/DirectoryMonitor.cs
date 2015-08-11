@@ -89,9 +89,7 @@ namespace SharpEssentials.InputOutput
 
 		private void OnChanged(FileSystemEventArgs args)
 		{
-			var localEvent = Changed;
-			if (localEvent != null)
-				localEvent(this, args);
+            Changed?.Invoke(this, args);
 		}
 
 		/// <see cref="IDirectoryMonitor.Created"/>
@@ -111,9 +109,7 @@ namespace SharpEssentials.InputOutput
 
 		private void OnCreated(FileSystemEventArgs args)
 		{
-			var localEvent = Created;
-			if (localEvent != null)
-				localEvent(this, args);
+            Created?.Invoke(this, args);
 		}
 
 		void fileTimer_Elapsed(object sender, TimerElapsedEventArgs e)
@@ -146,9 +142,7 @@ namespace SharpEssentials.InputOutput
 
 		private void OnDeleted(FileSystemEventArgs args)
 		{
-			var localEvent = Deleted;
-			if (localEvent != null)
-				localEvent(this, args);
+            Deleted?.Invoke(this, args);
 		}
 
 		/// <see cref="IDirectoryMonitor.Renamed"/>
@@ -161,9 +155,7 @@ namespace SharpEssentials.InputOutput
 
 		private void OnRenamed(RenamedEventArgs args)
 		{
-			var localEvent = Renamed;
-			if (localEvent != null)
-				localEvent(this, args);
+            Renamed?.Invoke(this, args);
 		}
 
 		/// <summary>

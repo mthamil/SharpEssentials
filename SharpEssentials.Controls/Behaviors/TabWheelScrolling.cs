@@ -76,8 +76,7 @@ namespace SharpEssentials.Controls.Behaviors
 		/// The InvertScrollDirection dependency property.
 		/// </summary>
 		public static readonly DependencyProperty InvertScrollDirectionProperty =
-			DependencyProperty.Register(
-				"InvertScrollDirection",
+			DependencyProperty.Register(nameof(InvertScrollDirection),
 				typeof(bool),
 				typeof(TabWheelScrolling),
 				new PropertyMetadata(false));
@@ -95,8 +94,7 @@ namespace SharpEssentials.Controls.Behaviors
 		/// The ScrollWrapsAround dependency property.
 		/// </summary>
 		public static readonly DependencyProperty ScrollWrapsAroundProperty =
-			DependencyProperty.Register(
-				"ScrollWrapsAround",
+			DependencyProperty.Register(nameof(ScrollWrapsAround),
 				typeof(bool),
 				typeof(TabWheelScrolling),
 				new PropertyMetadata(false));
