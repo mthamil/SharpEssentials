@@ -184,7 +184,19 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Observable
 			Assert.Equal(10, property.Value);
 		}
 
-		public int IntValue { get; set; }
+        [Fact]
+        public void Test_PropertyChange_Action_Not_Explicitly_Supplied()
+        {
+            // Act.
+            Property<int> property = Property.New(this, p => p.IntValue);
+
+            // Act/Assert.
+            AssertThat.PropertyChanged(this,
+                x => x.IntValue,
+                () => property.Value = 4);
+        }
+
+        public int IntValue { get; set; }
 		public string StringValue => IntValue.ToString();
 	    public object ObjectValue { get; set; }
 

@@ -111,6 +111,7 @@
     <Compile Include="InputOutput\TemporaryFile.cs" />
     <Compile Include="Net\AsyncWebClient.cs" />
     <Compile Include="Net\IAsyncWebClient.cs" />
+    <Compile Include="Net\UriEqualityComparer.cs" />
     <Compile Include="Net\WebClientExtensions.cs" />
     <Compile Include="Observable\PropertyBuilderEqualityExtensions.cs" />
     <Compile Include="Option.cs" />

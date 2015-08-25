@@ -66,7 +66,7 @@ namespace SharpEssentials.Controls.Behaviors
         private static void OnSelectedItemChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var behavior = dependencyObject as TreeViewBindableSelectedItem;
-            behavior?.AssociatedObject.FindContainerFromItem(e.NewValue).Apply(item =>
+            behavior?.AssociatedObject?.FindContainerFromItem(e.NewValue).Apply(item =>
             {
                 if (item != null && !item.IsSelected)
                     item.IsSelected = true;

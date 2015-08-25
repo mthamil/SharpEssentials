@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using SharpEssentials.Reflection;
 
 namespace SharpEssentials.Observable
@@ -37,8 +38,7 @@ namespace SharpEssentials.Observable
 		/// <param name="propertyChangedRaiser">A function that raises a property changed event</param>
 		/// <returns>A new ObservableProperty&lt;V&gt;</returns>
 		[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures")]
-		[SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", Justification = "Factory method uses parameter for type inference.")]
-		public static PropertyBuilder<T, V> New<T, V>(T owner, Expression<Func<T, V>> propertyAccessor, Action<string> propertyChangedRaiser)
+		public static PropertyBuilder<T, V> New<T, V>(T owner, Expression<Func<T, V>> propertyAccessor, Action<string> propertyChangedRaiser = null)
 		{
 			return new PropertyBuilder<T, V>(owner, propertyAccessor, propertyChangedRaiser);
 		}
@@ -57,10 +57,11 @@ namespace SharpEssentials.Observable
 		/// <param name="owner">An instance of the type that contains the property</param>
 		/// <param name="propertyAccessor">An expression that references the desired property</param>
 		/// <param name="propertyChangedRaiser">A function that raises a property changed event</param>
-		public PropertyBuilder(T owner, Expression<Func<T, V>> propertyAccessor, Action<string> propertyChangedRaiser)
+		public PropertyBuilder(T owner, Expression<Func<T, V>> propertyAccessor, Action<string> propertyChangedRaiser = null)
 		{
 			_propertyName = Reflect.PropertyOf(typeof(T), UnwrapPropertyExpression(propertyAccessor)).Name;
-			_propertyChangedRaiser = propertyChangedRaiser;
+
+            _propertyChangedRaiser = propertyChangedRaiser ?? CreateRaiseFunction(owner);
 		}
 
 		/// <summary>
@@ -127,10 +128,27 @@ namespace SharpEssentials.Observable
 			return propertyAccessor;
 		}
 
-		private readonly string _propertyName;
+        private static Action<string> CreateRaiseFunction(T owner)
+        {
+            var raiseMethod = owner.GetType().GetMethod(DefaultPropertyChangedRaiserName,
+                                                        BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public,
+                                                        null, new[] { typeof(string) }, null);
+
+            if (raiseMethod == null)
+                throw new ArgumentException("A property changed event raising function must be supplied.");
+
+            var parameter = Expression.Parameter(typeof(string));
+            var raiseExpression = Expression.Lambda<Action<string>>(
+                Expression.Call(Expression.Constant(owner), raiseMethod, parameter), parameter);
+            return raiseExpression.Compile();
+        }
+
+        private readonly string _propertyName;
 		private readonly Action<string> _propertyChangedRaiser;
 		private readonly ICollection<string> _dependentPropertyNames = new List<string>();
 		private Func<V, V, bool> _customComparison;
+
+	    private const string DefaultPropertyChangedRaiserName = "OnPropertyChanged";
 	}
 
 	/// <summary>
