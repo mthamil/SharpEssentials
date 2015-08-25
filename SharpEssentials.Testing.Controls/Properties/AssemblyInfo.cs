@@ -19,10 +19,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SharpEssentials.Testing")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("SharpEssentials.Testing")]
+[assembly: AssemblyTitle("SharpEssentials.Testing.Controls")]
+[assembly: AssemblyProduct("SharpEssentials.Testing.Controls")]
 [assembly: AssemblyCopyright("Copyright © Matt Hamilton 2015")]
 [assembly: AssemblyCulture("")]
 
@@ -32,7 +30,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("500d562f-216d-4021-b4ab-6eeb0bec1ee6")]
+[assembly: Guid("b667a48f-c77c-4612-82dc-df701509da08")]
 
 // Version information for an assembly consists of the following four values:
 //

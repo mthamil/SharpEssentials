@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2015 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyProduct("SharpEssentials")]
-[assembly: AssemblyCopyright("Copyright © Matt Hamilton 2014")]
+[assembly: AssemblyCopyright("Copyright © Matt Hamilton 2015")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.*")]

@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using SharpEssentials.Concurrency;
 using SharpEssentials.Testing;
 using Xunit;
 using Xunit.Sdk;
@@ -73,8 +70,7 @@ namespace SharpEssentials.Tests.Unit
 			var actual = new List<int> { 1, 2, 3 };
 
 			// Act/Assert.
-			Assert.DoesNotThrow(() =>
-				AssertThat.SequenceEqual(expected, actual));
+			AssertThat.SequenceEqual(expected, actual);
 		}
 
 		[Fact]
@@ -85,8 +81,7 @@ namespace SharpEssentials.Tests.Unit
 			var actual = Enumerable.Range(1, 3);
 
 			// Act/Assert.
-			Assert.DoesNotThrow(() =>
-				AssertThat.SequenceEqual(expected, actual));
+			AssertThat.SequenceEqual(expected, actual);
 		}
 
 		[Fact]
@@ -128,8 +123,7 @@ namespace SharpEssentials.Tests.Unit
 			IEventTest test = new EventTest();
 
 			// Act/Assert.
-			Assert.DoesNotThrow(() =>
-				AssertThat.Raises(test, "TestEvent", () => test.OnTestEvent(4)));
+			AssertThat.Raises(test, "TestEvent", () => test.OnTestEvent(4));
 
 			Assert.True(test.EventRaised);
 		}
@@ -154,8 +148,7 @@ namespace SharpEssentials.Tests.Unit
 			IEventTest test = new EventTest();
 
 			// Act/Assert.
-			Assert.DoesNotThrow(() =>
-				AssertThat.Raises(test, t => t.TestEvent += null, () => test.OnTestEvent(4)));
+			AssertThat.Raises(test, t => t.TestEvent += null, () => test.OnTestEvent(4));
 
 			Assert.True(test.EventRaised);
 		}
@@ -193,8 +186,7 @@ namespace SharpEssentials.Tests.Unit
 			IEventTest test = new EventTest();
 
 			// Act/Assert.
-			Assert.DoesNotThrow(() =>
-				AssertThat.DoesNotRaise(test, "TestEvent", () => test.ToString()));
+			AssertThat.DoesNotRaise(test, "TestEvent", () => test.ToString());
 
 			Assert.False(test.EventRaised);
 		}
@@ -219,8 +211,7 @@ namespace SharpEssentials.Tests.Unit
 			IEventTest test = new EventTest();
 
 			// Act/Assert.
-			Assert.DoesNotThrow(() =>
-				AssertThat.DoesNotRaise(test, t => t.TestEvent += null, () => test.ToString()));
+			AssertThat.DoesNotRaise(test, t => t.TestEvent += null, () => test.ToString());
 
 			Assert.False(test.EventRaised);
 		}
@@ -232,9 +223,9 @@ namespace SharpEssentials.Tests.Unit
 			IEventTest test = new EventTest();
 
 			// Act/Assert.
-			TestEventArgs args = null;
-			Assert.DoesNotThrow(() =>
-				args = AssertThat.RaisesWithEventArgs<TestEventArgs>(test, "TestEvent", () => test.OnTestEvent(4)));
+			var args = AssertThat.RaisesWithEventArgs<TestEventArgs>(test, 
+                "TestEvent", 
+                () => test.OnTestEvent(4));
 
 			Assert.Equal(4, args.Value);
 			Assert.True(test.EventRaised);
@@ -260,9 +251,9 @@ namespace SharpEssentials.Tests.Unit
 			IEventTest test = new EventTest();
 
 			// Act/Assert.
-			TestEventArgs args = null;
-			Assert.DoesNotThrow(() =>
-				args = AssertThat.RaisesWithEventArgs<IEventTest, TestEventArgs>(test, t => t.TestEvent += null, () => test.OnTestEvent(4)));
+			var args = AssertThat.RaisesWithEventArgs<IEventTest, TestEventArgs>(test, 
+                t => t.TestEvent += null, 
+                () => test.OnTestEvent(4));
 
 			Assert.Equal(4, args.Value);
 			Assert.True(test.EventRaised);
@@ -310,8 +301,7 @@ namespace SharpEssentials.Tests.Unit
 			var test = new EventTest();
 
 			// Act/Assert.
-			Assert.DoesNotThrow(() =>
-				AssertThat.PropertyChanged(test, t => t.IntProperty, () => test.IntProperty = 3));
+			AssertThat.PropertyChanged(test, t => t.IntProperty, () => test.IntProperty = 3);
 		}
 
 		[Fact]
@@ -321,8 +311,7 @@ namespace SharpEssentials.Tests.Unit
 			var test = new EventTest { IntProperty = 3 };
 
 			// Act/Assert.
-			Assert.DoesNotThrow(() =>
-				AssertThat.PropertyDoesNotChange(test, t => t.IntProperty, () => test.IntProperty = 3));
+			AssertThat.PropertyDoesNotChange(test, t => t.IntProperty, () => test.IntProperty = 3);
 		}
 
 		[Fact]
@@ -332,8 +321,7 @@ namespace SharpEssentials.Tests.Unit
 			var test = new EventTest();
 
 			// Act/Assert.
-			Assert.DoesNotThrow(() =>
-				AssertThat.PropertyDoesNotChange(test, t => t.IntProperty, () => test.StringProperty = "value"));
+			AssertThat.PropertyDoesNotChange(test, t => t.IntProperty, () => test.StringProperty = "value");
 		}
 
 		[Fact]
@@ -345,70 +333,6 @@ namespace SharpEssentials.Tests.Unit
 			// Act/Assert.
 			Assert.Throws<PropertyDoesNotChangeException>(() =>
 				AssertThat.PropertyDoesNotChange(test, t => t.IntProperty, () => test.IntProperty = 3));
-		}
-
-		[Fact]
-		public void Test_Throws_Task_Success()
-		{
-			// Act/Assert.
-			Assert.DoesNotThrow(() =>
-				AssertThat.Throws<ArgumentException>(() => Task.Factory.StartNew(() => 
-					{ 
-						throw new ArgumentException(); 
-					}, CancellationToken.None, TaskCreationOptions.None, new SynchronousTaskScheduler())));
-		}
-
-		[Fact]
-		public void Test_Throws_Task_NoException()
-		{
-			// Act/Assert.
-			var expected = Assert.Throws<ThrowsException>(() =>
-				AssertThat.Throws<ArgumentException>(() => Task.Factory.StartNew(() =>
-				{
-					string.Empty.GetType();
-				}, CancellationToken.None, TaskCreationOptions.None, new SynchronousTaskScheduler())));
-
-			// Assert.
-			Assert.NotNull(expected);
-		}
-
-		[Fact]
-		public void Test_Throws_Task_WrongException()
-		{
-			// Act/Assert.
-			var expected = Assert.Throws<ThrowsException>(() =>
-				AssertThat.Throws<ArgumentException>(() => Task.Factory.StartNew(() =>
-				{
-					throw new ArgumentOutOfRangeException();
-				}, CancellationToken.None, TaskCreationOptions.None, new SynchronousTaskScheduler())));
-
-			// Assert.
-			Assert.NotNull(expected);
-		}
-
-		[Fact]
-		public void Test_DoesNotThrow_Task_Success()
-		{
-			// Act/Assert.
-			Assert.DoesNotThrow(() => 
-				AssertThat.DoesNotThrow(() => Task.Factory.StartNew(() =>
-				{
-					 string.Empty.GetType();
-				}, CancellationToken.None, TaskCreationOptions.None, new SynchronousTaskScheduler())));
-		}
-
-		[Fact]
-		public void Test_DoesNotThrow_Task_Failure()
-		{
-			// Act/Assert.
-			var expected = Assert.Throws<DoesNotThrowException>(() => 
-				AssertThat.DoesNotThrow(() => Task.Factory.StartNew(() =>
-				{
-					throw new ArgumentNullException();
-				}, CancellationToken.None, TaskCreationOptions.None, new SynchronousTaskScheduler())));
-
-			// Assert.
-			Assert.NotNull(expected);
 		}
 
 		public interface IEventTest

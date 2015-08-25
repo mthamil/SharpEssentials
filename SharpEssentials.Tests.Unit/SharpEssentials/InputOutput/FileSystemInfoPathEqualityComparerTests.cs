@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using SharpEssentials.InputOutput;
-using SharpEssentials.Testing;
 using Xunit;
-using Xunit.Extensions;
 
 namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
 {
@@ -14,7 +12,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
 			get
 			{
 				var sameFile = new FileInfo(@"c:\test.txt");
-				return new TheoryDataSet<bool, FileSystemInfo, FileSystemInfo>
+				return new TheoryData<bool, FileSystemInfo, FileSystemInfo>
 				{
 					{ true,  sameFile, sameFile },
 					{ true,  new FileInfo(@"c:\test.txt"),   new FileInfo(@"c:\test.txt") },
@@ -28,7 +26,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
 		}
 
 		[Theory]
-		[PropertyData("EqualsData")]
+		[MemberData("EqualsData")]
         public void Test_Equals(bool expected, FileSystemInfo first, FileSystemInfo second)
 		{
 			// Act.

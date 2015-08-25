@@ -5,13 +5,14 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using SharpEssentials.Controls.MultiKey;
+using SharpEssentials.Testing.Controls.WPF;
 using Xunit;
 
 namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.MultiKey
 {
 	public class MultiKeyGestureTests : IDisposable
 	{
-		[Fact]
+		[WpfFact]
 		public void Test_Matches_IncorrectStartModifier()
 		{
 			// Arrange.
@@ -25,7 +26,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.MultiKey
 			Assert.False(matches);
 		}
 
-		[Fact]
+		[WpfFact]
 		public void Test_Matches_IncorrectStartKey()
 		{
 			// Arrange.
@@ -39,7 +40,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.MultiKey
 			Assert.False(matches);
 		}
 
-		[Fact]
+		[WpfFact]
 		public void Test_Matches_CorrectStartSequence_TimedOut()
 		{
 			// Arrange.
@@ -68,7 +69,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.MultiKey
 			Assert.False(secondMatch);
 		}
 
-		[Fact]
+		[WpfFact]
 		public void Test_Matches_IncorrectNextModifier()
 		{
 			// Arrange.
@@ -89,7 +90,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.MultiKey
 			Assert.False(matches);
 		}
 
-		[Fact]
+		[WpfFact]
 		public void Test_Matches_IncorrectNextKey()
 		{
 			// Arrange.
@@ -110,7 +111,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.MultiKey
 			Assert.False(matches);
 		}
 
-		[Fact]
+		[WpfFact]
 		public void Test_Matches()
 		{
 			// Arrange.

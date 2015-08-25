@@ -1,13 +1,14 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using SharpEssentials.Controls.Behaviors;
+using SharpEssentials.Testing.Controls.WPF;
 using Xunit;
 
 namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Behaviors
 {
 	public class AutoSelectOnFocusBehaviorTests
 	{
-		[Fact]
+		[WpfFact]
 		public void Test_GotKeyboardFocus_ShouldAutoSelect()
 		{
 			// Arrange.
@@ -29,7 +30,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Behaviors
 			Assert.Equal(text, textBox.SelectedText);
 		}
 
-		[Fact]
+		[WpfFact]
 		public void Test_SettingToFalse_ShouldUnsubscribe()
 		{
 			// Arrange.

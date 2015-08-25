@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2015 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,8 +21,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Remoting.Messaging;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
 using SharpEssentials.Reflection;
 using Xunit;
 using Xunit.Sdk;
@@ -43,7 +41,7 @@ namespace SharpEssentials.Testing
 		/// <param name="object">The object declaring the property</param>
 		/// <param name="property">The property</param>
 		/// <param name="testCode">The code that should change the property</param>
-		public static void PropertyChanged<TDeclaring, TValue>(TDeclaring @object, Expression<Func<TDeclaring, TValue>> property, Assert.PropertyChangedDelegate testCode)
+		public static void PropertyChanged<TDeclaring, TValue>(TDeclaring @object, Expression<Func<TDeclaring, TValue>> property, Action testCode)
 			where TDeclaring : INotifyPropertyChanged
 		{
 			Assert.PropertyChanged(@object, Reflect.PropertyOf(property).Name, testCode);
@@ -58,7 +56,7 @@ namespace SharpEssentials.Testing
 		/// <param name="object">The object declaring the property</param>
 		/// <param name="property">The property</param>
 		/// <param name="testCode">The code that should not change the property</param>
-		public static void PropertyDoesNotChange<TDeclaring, TValue>(TDeclaring @object, Expression<Func<TDeclaring, TValue>> property, Assert.PropertyChangedDelegate testCode)
+		public static void PropertyDoesNotChange<TDeclaring, TValue>(TDeclaring @object, Expression<Func<TDeclaring, TValue>> property, Action testCode)
 			where TDeclaring : INotifyPropertyChanged
 		{
 			object sender = null;
@@ -147,37 +145,6 @@ namespace SharpEssentials.Testing
 						throw new SequenceEqualException(expectedBuffer, !expectedEnumerator.MoveNext(), actualBuffer, !actualEnumerator.MoveNext());
 				}
 			}
-		}
-
-		/// <summary>
-		/// Asserts that a specific exception should be thrown by the given asynchronous code.
-		/// </summary>
-		/// <typeparam name="TException">The type of exception that should be thrown</typeparam>
-		/// <param name="task">The code producing the task that should throw the exception</param>
-		/// <returns>The exception if it was thrown</returns>
-		public static TException Throws<TException>(Func<Task> task) where TException : Exception
-		{
-			Exception exception = Record.Exception(() => task().GetAwaiter().GetResult());
-
-			var exceptionType = typeof(TException);
-			if (exception == null)
-				throw new ThrowsException(exceptionType);
-
-			if (!exceptionType.Equals(exception.GetType()))
-				throw new ThrowsException(exceptionType, exception);
-
-			return (TException)exception;
-		}
-
-		/// <summary>
-		/// Asserts that the given asynchronous code does not throw any exceptions.
-		/// </summary>
-		/// <param name="task">The code producing the task that should not throw an exception</param>
-		public static void DoesNotThrow(Func<Task> task)
-		{
-			var exception = Record.Exception(() => task().GetAwaiter().GetResult());
-			if (exception != null)
-				throw new DoesNotThrowException(exception);
 		}
 
 		/// <summary>
@@ -329,7 +296,7 @@ namespace SharpEssentials.Testing
 	/// <summary>
 	/// Exception raised when an assertion about the raising of an event is not met.
 	/// </summary>
-	public class RaisesException : AssertException
+	public class RaisesException : XunitException
 	{
 		/// <summary>
 		/// Creates a new instance of the <see cref="RaisesException"/> class.
@@ -386,7 +353,7 @@ namespace SharpEssentials.Testing
 	/// <summary>
 	/// Exceptions thrown when a SequenceEqual assertion fails.
 	/// </summary>
-	public class SequenceEqualException : AssertException
+	public class SequenceEqualException : XunitException
 	{
 		/// <summary>
 		/// Creates a new instance of the <see cref="SequenceEqualException"/> class.
@@ -442,7 +409,7 @@ namespace SharpEssentials.Testing
 	/// Exception thrown when code unexpectedly changes a property.
 	/// </summary>
 	[Serializable]
-	public class PropertyDoesNotChangeException : AssertException
+	public class PropertyDoesNotChangeException : XunitException
 	{
 		/// <summary>
 		/// Creates a new instance of the <see cref="T:SharpEssentials.Testing.PropertyDoesNotChangeException"/> class.
@@ -450,12 +417,6 @@ namespace SharpEssentials.Testing
 		/// <param name="propertyName">The name of the property that should not have changed.</param>
 		public PropertyDoesNotChangeException(string propertyName)
 			: base($"PropertyDoesNotChange assertion failure: PropertyChanged event for property {propertyName} was raised")
-		{
-		}
-
-		/// <inheritdoc/>
-		protected PropertyDoesNotChangeException(SerializationInfo info, StreamingContext context)
-			: base(info, context)
 		{
 		}
 	}

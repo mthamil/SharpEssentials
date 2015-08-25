@@ -16,6 +16,7 @@
 
 using System.Windows;
 using SharpEssentials.Controls.Commands;
+using SharpEssentials.Testing.Controls.WPF;
 using Xunit;
 
 namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Commands
@@ -32,7 +33,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Commands
 			Assert.True(canExecute);
 		}
 
-		[Fact]
+		[WpfFact]
 		public void Test_Execute()
 		{
 			// Arrange.

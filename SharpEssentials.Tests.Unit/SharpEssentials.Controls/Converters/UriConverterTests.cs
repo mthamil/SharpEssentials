@@ -2,30 +2,23 @@
 using System.Collections.Generic;
 using System.Globalization;
 using SharpEssentials.Controls.Converters;
-using SharpEssentials.Testing;
 using Xunit;
-using Xunit.Extensions;
 
 namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Converters
 {
 	public class UriConverterTests
 	{
-		public static IEnumerable<object[]> ConvertData
-		{
-			get
-			{
-				return new TheoryDataSet<Uri, string>
-				{
-					{ new Uri("http://somesite"),	  "http://somesite" },
-					{ new Uri("file:///C:/somefile"), "C:\\somefile" },
-					{ null,							  "" },
-					{ null,							  "http://somesite\\" }
-				};
-			}
-		}
+		public static IEnumerable<object[]> ConvertData => 
+            new TheoryData<Uri, string>
+		    {
+		        { new Uri("http://somesite"),	  "http://somesite" },
+		        { new Uri("file:///C:/somefile"), "C:\\somefile" },
+		        { null,							  "" },
+		        { null,							  "http://somesite\\" }
+		    };
 
-		[Theory]
-		[PropertyData("ConvertData")]
+	    [Theory]
+		[MemberData("ConvertData")]
 		public void Test_Convert(Uri expected, string input)
 		{
 			// Act.
@@ -35,21 +28,16 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Converters
 			Assert.Equal(expected, actual);
 		}
 
-		public static IEnumerable<object[]> ConvertBackData
-		{
-			get
-			{
-				return new TheoryDataSet<string, Uri>
-				{
-					{ "http://somesite/", new Uri("http://somesite") },
-					{ "C:\\somefile",	  new Uri("file:///C:/somefile") },
-					{ "",				  null }
-				};
-			}
-		}
+		public static IEnumerable<object[]> ConvertBackData => 
+            new TheoryData<string, Uri>
+		    {
+		        { "http://somesite/", new Uri("http://somesite") },
+		        { "C:\\somefile",	  new Uri("file:///C:/somefile") },
+		        { "",				  null }
+		    };
 
-		[Theory]
-		[PropertyData("ConvertBackData")]
+	    [Theory]
+		[MemberData("ConvertBackData")]
 		public void Test_ConvertBack(string expected, Uri input)
 		{
 			// Act.

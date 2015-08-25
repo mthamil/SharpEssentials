@@ -4,13 +4,14 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using SharpEssentials.Controls.Behaviors;
 using SharpEssentials.Observable;
+using SharpEssentials.Testing.Controls.WPF;
 using Xunit;
 
 namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Behaviors
 {
     public class TreeViewBindableSelectedItemTests
     {
-        [Fact]
+        [WpfFact]
         public void Test_BindableSelectedItem_View_To_ViewModel()
         {
             // Arrange.

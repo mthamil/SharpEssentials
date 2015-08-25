@@ -492,22 +492,17 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			AssertThat.SequenceEqual(new [] { 1, 2, 3, 4, 5, 6 }, sink);
 		}
 
-		public static IEnumerable<object[]> FirstOrNoneWithPredicateData
-		{
-			get
-			{
-				return new TheoryDataSet<Option<string>, IEnumerable<string>>
-				{
-					{ "2",					 new [] { "1", "2", "3", "4" } },
-					{ "4",					 new [] { "4", "3", "2", "1" } },
-					{ Option<string>.None(), new [] { "1", "3", "5", "7" } },
-					{ Option<string>.None(), Enumerable.Empty<string>() },
-				};
-			}
-		}
-			
-		[Theory]
-		[PropertyData("FirstOrNoneWithPredicateData")]
+		public static IEnumerable<object[]> FirstOrNoneWithPredicateData => 
+            new TheoryData<Option<string>, IEnumerable<string>>
+		    {
+		        { "2",					 new [] { "1", "2", "3", "4" } },
+		        { "4",					 new [] { "4", "3", "2", "1" } },
+		        { Option<string>.None(), new [] { "1", "3", "5", "7" } },
+		        { Option<string>.None(), Enumerable.Empty<string>() },
+		    };
+
+	    [Theory]
+		[MemberData("FirstOrNoneWithPredicateData")]
 		public void Test_FirstOrNone_WithPredicate(Option<string> expected, IEnumerable<string> input)
 		{
 			// Act.
@@ -531,21 +526,16 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			Assert.Throws<ArgumentNullException>(() => new[] { 1, 2, 3 }.FirstOrNone(null));
 		}
 
-		public static IEnumerable<object[]> FirstOrNoneData
-		{
-			get
-			{
-				return new TheoryDataSet<Option<string>, IEnumerable<string>>
-				{
-					{ "1",					 new [] { "1", "2", "3", "4" } },
-					{ "4",					 new [] { "4" } },
-					{ Option<string>.None(), Enumerable.Empty<string>() },
-				};
-			}
-		}
+		public static IEnumerable<object[]> FirstOrNoneData => 
+            new TheoryData<Option<string>, IEnumerable<string>>
+		    {
+		        { "1",					 new [] { "1", "2", "3", "4" } },
+		        { "4",					 new [] { "4" } },
+		        { Option<string>.None(), Enumerable.Empty<string>() },
+		    };
 
-		[Theory]
-		[PropertyData("FirstOrNoneData")]
+	    [Theory]
+		[MemberData("FirstOrNoneData")]
 		public void Test_FirstOrNone(Option<string> expected, IEnumerable<string> input)
 		{
 			// Act.

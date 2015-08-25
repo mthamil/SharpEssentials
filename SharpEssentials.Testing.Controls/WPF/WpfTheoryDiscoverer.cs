@@ -1,4 +1,4 @@
-// Sharp Essentials
+﻿// Sharp Essentials
 // Copyright 2015 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,21 +14,17 @@
 // limitations under the License.
 // 
 
-using SharpEssentials.Concurrency;
+using Xunit.Abstractions;
+using Xunit.Sdk;
 
-namespace SharpEssentials.Testing
+namespace SharpEssentials.Testing.Controls.WPF
 {
-	/// <summary>
-	/// Sets the current synchronization context to a context that is synchronous.
-	/// </summary>
-	public class SynchronousAttribute : SynchronizationContextAttribute
-	{
-        /// <summary>
-        /// Initializes a new instance of <see cref="SynchronousAttribute"/>.
-        /// </summary>
-        public SynchronousAttribute() 
-            : base(typeof(SynchronousSynchronizationContext))
-	    {
-	    }
-	}
+    /// <remarks>
+    /// See: https://github.com/xunit/samples.xunit/tree/master/STAExamples
+    /// </remarks>
+    public class WpfTheoryDiscoverer : WpfTestDiscoverer
+    {
+        public WpfTheoryDiscoverer(IMessageSink diagnosticMessageSink)
+            : base(new TheoryDiscoverer(diagnosticMessageSink)) { }
+    }
 }

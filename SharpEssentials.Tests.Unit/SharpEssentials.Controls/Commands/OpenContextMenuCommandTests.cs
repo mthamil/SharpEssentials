@@ -17,13 +17,14 @@
 using System.Windows;
 using System.Windows.Controls;
 using SharpEssentials.Controls.Commands;
+using SharpEssentials.Testing.Controls.WPF;
 using Xunit;
 
 namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Commands
 {
 	public class OpenContextMenuCommandTests
 	{
-		[Fact]
+		[WpfFact]
 		public void Test_Execute()
 		{
 			// Act.
