@@ -12,7 +12,7 @@
     <AssemblyName>SharpEssentials.Testing.Controls</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-	<ReferencePath>..\..\packages\xunit.abstractions.2.0.0\lib\net35\;..\..\packages\xunit.assert.2.1.0-beta4-build3109\lib\dotnet\;..\..\packages\xunit.extensibility.core.2.1.0-beta4-build3109\lib\dotnet\;..\..\packages\xunit.extensibility.execution.2.1.0-beta4-build3109\lib\net45\</ReferencePath>
+    <ReferencePath>..\..\packages\xunit.abstractions.2.0.0\lib\net35\;..\..\packages\xunit.assert.2.1.0-beta4-build3109\lib\dotnet\;..\..\packages\xunit.extensibility.core.2.1.0-beta4-build3109\lib\dotnet\;..\..\packages\xunit.extensibility.execution.2.1.0-beta4-build3109\lib\net45\</ReferencePath>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\SharpEssentials.Testing.Controls.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,6 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\SharpEssentials.Testing.Controls.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
