@@ -47,4 +47,4 @@ before_build:
 #    - Tests.Unit.dll
 
 test_script:
-  - ps: &"C:\projects\SharpEssentials\packages\xunit.runner.console*\tools\xunit.console.exe" "C:\projects\SharpEssentials\SharpEssentials.Tests.Unit\bin\Debug\SharpEssentials.Tests.Unit.dll"
+  - ps: '&"C:\projects\SharpEssentials\packages\xunit.runner.console*\tools\xunit.console.exe" "C:\projects\SharpEssentials\SharpEssentials.Tests.Unit\bin\Release\SharpEssentials.Tests.Unit.dll"'
