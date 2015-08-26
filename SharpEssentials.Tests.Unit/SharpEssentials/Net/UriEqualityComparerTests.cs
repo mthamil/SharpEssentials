@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SharpEssentials.Net;
-using SharpEssentials.Testing;
 using Xunit;
-using Xunit.Extensions;
 
 namespace SharpEssentials.Tests.Unit.SharpEssentials.Net
 {
@@ -14,7 +12,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Net
 			get
 			{
 				var sameFile = new Uri(@"http://example.com");
-				return new TheoryDataSet<bool, Uri, Uri>
+				return new TheoryData<bool, Uri, Uri>
 				{
 					{ true,  sameFile, sameFile },
 					{ true,  new Uri(@"http://example.com"), new Uri(@"http://example.com") },
@@ -28,7 +26,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Net
 		}
 
 		[Theory]
-		[PropertyData("EqualsData")]
+		[MemberData("EqualsData")]
         public void Test_Equals(bool expected, Uri first, Uri second)
 		{
 			// Act.
