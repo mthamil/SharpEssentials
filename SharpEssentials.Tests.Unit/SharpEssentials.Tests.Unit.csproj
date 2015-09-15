@@ -146,6 +146,7 @@
     <Compile Include="SharpEssentials\Concurrency\ReaderWriterLockSlimExtensionTests.cs" />
     <Compile Include="SharpEssentials\Concurrency\TaskExtensionsTests.cs" />
     <Compile Include="SharpEssentials\Concurrency\TasksTests.cs" />
+    <Compile Include="SharpEssentials\Concurrency\WaitHandleExtensionsTests.cs" />
     <Compile Include="SharpEssentials\Diagnostics\ExceptionExtensionsTests.cs" />
     <Compile Include="SharpEssentials\DisposableBaseTests.cs" />
     <Compile Include="SharpEssentials\DisposableExtensionsTests.cs" />
