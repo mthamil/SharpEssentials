@@ -82,6 +82,7 @@
     <Compile Include="Clipboard\IClipboard.cs" />
     <Compile Include="Collections\CollectionExtensions.cs" />
     <Compile Include="Collections\CollectionMirror.cs" />
+    <Compile Include="Collections\CollectionMirrorGeneric.cs" />
     <Compile Include="Collections\DictionaryExtensions.cs" />
     <Compile Include="Collections\EnumerableExtensions.cs" />
     <Compile Include="Collections\ReverseComparer.cs" />

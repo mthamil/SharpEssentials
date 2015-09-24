@@ -139,6 +139,7 @@
     <Compile Include="SharpEssentials.Controls\MultiKey\MultiKeyGestureTests.cs" />
     <Compile Include="SharpEssentials.Controls\Selectors\TypeMapDataTemplateSelectorTests.cs" />
     <Compile Include="SharpEssentials\Collections\CollectionExtensionTests.cs" />
+    <Compile Include="SharpEssentials\Collections\CollectionMirrorGenericTests.cs" />
     <Compile Include="SharpEssentials\Collections\CollectionMirrorTests.cs" />
     <Compile Include="SharpEssentials\Collections\DictionaryExtensionsTests.cs" />
     <Compile Include="SharpEssentials\Collections\EnumerableExtensionsTests.cs" />

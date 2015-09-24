@@ -14,6 +14,7 @@
 // limitations under the License.
 // 
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyProduct("Tests.Unit")]
@@ -35,3 +36,5 @@ using System.Runtime.InteropServices;
 #else
 [assembly: AssemblyConfiguration("Release")]
 #endif
+
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
