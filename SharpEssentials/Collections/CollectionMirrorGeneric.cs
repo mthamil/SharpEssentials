@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows;
@@ -31,8 +30,8 @@ namespace SharpEssentials.Collections
         /// <param name="source">The source collection</param>
         /// <param name="target">The target collection</param>
         /// <param name="sourceToTarget">A mapping from source items to target items</param>
-        /// <param name="targetToSource">A mapping from target items to source items</param>
-        public CollectionMirror(IList<TSource> source, IList<TTarget> target, Func<TSource, TTarget> sourceToTarget, Func<TTarget, TSource> targetToSource)
+        /// <param name="targetToSource">An optional mapping back from target items to source items</param>
+        public CollectionMirror(IList<TSource> source, IList<TTarget> target, Func<TSource, TTarget> sourceToTarget, Func<TTarget, TSource> targetToSource = null)
         {
             _source = source;
             _target = target;
@@ -135,31 +134,31 @@ namespace SharpEssentials.Collections
                 case NotifyCollectionChangedAction.Add:
                     if (sourceChanged)
                         PropagateAdd(_target, _sourceToTarget, changeArgs);
-                    else
+                    else if(_targetToSource != null)
                         PropagateAdd(_source, _targetToSource, changeArgs);
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     if (sourceChanged)
                         PropagateRemove(_target, changeArgs);
-                    else
+                    else if(_targetToSource != null)
                         PropagateRemove(_source, changeArgs);
                     break;
                 case NotifyCollectionChangedAction.Replace:
                     if (sourceChanged)
                         PropagateReplace(_target, _sourceToTarget, changeArgs);
-                    else
+                    else if (_targetToSource != null)
                         PropagateReplace(_source, _targetToSource, changeArgs);
                     break;
                 case NotifyCollectionChangedAction.Move:
                     if (sourceChanged)
                         PropagateMove(_target, _sourceToTarget, changeArgs);
-                    else
+                    else if (_targetToSource != null)
                         PropagateMove(_source, _targetToSource, changeArgs);
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     if (sourceChanged)
                         PropagateReset(_source, _target, _sourceToTarget);
-                    else
+                    else if (_targetToSource != null)
                         PropagateReset(_target, _source, _targetToSource);
                     break;
             }
