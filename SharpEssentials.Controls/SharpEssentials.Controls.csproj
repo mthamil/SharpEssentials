@@ -97,6 +97,7 @@
     <Compile Include="Converters\FileSystemInfoToDirectoryInfoConverter.cs" />
     <Compile Include="Converters\NegatingConverter.cs" />
     <Compile Include="Converters\NullToFalseValueConverter.cs" />
+    <Compile Include="Converters\ObjectGetTypeConverter.cs" />
     <Compile Include="Converters\OrConverter.cs" />
     <Compile Include="Converters\ReverseConverter.cs" />
     <Compile Include="Converters\SecondsToTimeSpanConverter.cs" />
