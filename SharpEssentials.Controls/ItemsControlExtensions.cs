@@ -62,8 +62,7 @@ namespace SharpEssentials.Controls
                 {
                     bool isNew;
                     next = generator.GenerateNext(out isNew) as ItemsControl;
-                    if (next != null)
-                        GenerateItems(next);
+                    next?.GenerateItems();
                 } while (next != null);
             }
         }
