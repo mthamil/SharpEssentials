@@ -130,11 +130,13 @@
     <Compile Include="SharpEssentials.Controls\Converters\DirectoryInfoToUriConverterTests.cs" />
     <Compile Include="SharpEssentials.Controls\Converters\FileInfoToUriConverterTests.cs" />
     <Compile Include="SharpEssentials.Controls\Converters\NegatingConverterTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Converters\ObjectGetTypeConverterTests.cs" />
     <Compile Include="SharpEssentials.Controls\Converters\OrConverterTests.cs" />
     <Compile Include="SharpEssentials.Controls\Converters\ReverseConverterTests.cs" />
     <Compile Include="SharpEssentials.Controls\Converters\SecondsToTimeSpanConverterTests.cs" />
     <Compile Include="SharpEssentials.Controls\Converters\UriConverterTests.cs" />
     <Compile Include="SharpEssentials.Controls\EnumValuesExtensionTests.cs" />
+    <Compile Include="SharpEssentials.Controls\ItemsControlExtensionsTests.cs" />
     <Compile Include="SharpEssentials.Controls\MultiKey\MultiKeyGestureConverterTests.cs" />
     <Compile Include="SharpEssentials.Controls\MultiKey\MultiKeyGestureTests.cs" />
     <Compile Include="SharpEssentials.Controls\Selectors\TypeMapDataTemplateSelectorTests.cs" />

@@ -74,6 +74,7 @@
     <Compile Include="Behaviors\GridSplitterExpanderSupport\RowExpanderSize.cs" />
     <Compile Include="Behaviors\Interactivity\Interactions.cs" />
     <Compile Include="Behaviors\LoadDependentBehavior.cs" />
+    <Compile Include="Behaviors\SelectedItemPath.cs" />
     <Compile Include="Behaviors\TabWheelScrolling.cs" />
     <Compile Include="Behaviors\TitleBarOptions.cs" />
     <Compile Include="Behaviors\AutoSelectOnFocusBehavior.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Converters\UriConverter.cs" />
     <Compile Include="Converters\UriToCachedImageConverter.cs" />
     <Compile Include="FileSystemPicker.cs" />
+    <Compile Include="ItemsControlExtensions.cs" />
     <Compile Include="Localization\CultureManager.cs" />
     <Compile Include="Localization\ICultureManager.cs" />
     <Compile Include="Localization\ManagedMarkupExtension.cs" />
