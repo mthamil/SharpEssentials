@@ -26,7 +26,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Net
 		}
 
 		[Theory]
-		[MemberData("EqualsData")]
+		[MemberData(nameof(EqualsData))]
         public void Test_Equals(bool expected, Uri first, Uri second)
 		{
 			// Act.

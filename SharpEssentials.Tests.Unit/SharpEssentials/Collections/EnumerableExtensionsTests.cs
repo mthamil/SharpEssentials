@@ -502,7 +502,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 		    };
 
 	    [Theory]
-		[MemberData("FirstOrNoneWithPredicateData")]
+		[MemberData(nameof(FirstOrNoneWithPredicateData))]
 		public void Test_FirstOrNone_WithPredicate(Option<string> expected, IEnumerable<string> input)
 		{
 			// Act.
@@ -535,7 +535,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 		    };
 
 	    [Theory]
-		[MemberData("FirstOrNoneData")]
+		[MemberData(nameof(FirstOrNoneData))]
 		public void Test_FirstOrNone(Option<string> expected, IEnumerable<string> input)
 		{
 			// Act.

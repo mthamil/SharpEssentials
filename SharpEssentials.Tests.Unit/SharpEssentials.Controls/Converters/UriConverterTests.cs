@@ -18,11 +18,11 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Converters
 		    };
 
 	    [Theory]
-		[MemberData("ConvertData")]
+		[MemberData(nameof(ConvertData))]
 		public void Test_Convert(Uri expected, string input)
 		{
 			// Act.
-			var actual = converter.Convert(input, typeof(Uri), null, CultureInfo.InvariantCulture);
+			var actual = _underTest.Convert(input, typeof(Uri), null, CultureInfo.InvariantCulture);
 
 			// Assert.
 			Assert.Equal(expected, actual);
@@ -37,16 +37,16 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Converters
 		    };
 
 	    [Theory]
-		[MemberData("ConvertBackData")]
+		[MemberData(nameof(ConvertBackData))]
 		public void Test_ConvertBack(string expected, Uri input)
 		{
 			// Act.
-			var actual = converter.ConvertBack(input, typeof(string), null, CultureInfo.InvariantCulture);
+			var actual = _underTest.ConvertBack(input, typeof(string), null, CultureInfo.InvariantCulture);
 
 			// Assert.
 			Assert.Equal(expected, actual);
 		}
 
-		private readonly UriConverter converter = new UriConverter();
+		private readonly UriConverter _underTest = new UriConverter();
 	}
 }

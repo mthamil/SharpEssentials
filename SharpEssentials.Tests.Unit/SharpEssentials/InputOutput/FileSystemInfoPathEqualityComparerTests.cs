@@ -26,7 +26,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
 		}
 
 		[Theory]
-		[MemberData("EqualsData")]
+		[MemberData(nameof(EqualsData))]
         public void Test_Equals(bool expected, FileSystemInfo first, FileSystemInfo second)
 		{
 			// Act.
