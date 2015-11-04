@@ -80,20 +80,6 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
 			Assert.False(temp.File.Exists);
 		}
 
-		[Fact]
-		public void Test_Destructor()
-		{
-			// Act.
-			FileInfo file = GetTempFile();
-
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
-			file.Refresh();
-
-			// Assert.
-			Assert.False(file.Exists);
-		}
-
 		private FileInfo GetTempFile()
 		{
 			var temp = new TemporaryFile().Touch();
