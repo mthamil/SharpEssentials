@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2015 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SharpEssentials.Collections;
@@ -82,9 +83,19 @@ namespace SharpEssentials.Concurrency
 			return FromExceptions<AsyncUnit>(first, exceptions);
 		}
 
-		/// <summary>
-		/// Instead of using System.Object, this type is a clearer indication that a Task does not return a result.
-		/// </summary>
-		struct AsyncUnit { }
+        /// <summary>
+        /// Returns an already completed task with an empty enumerable result.
+        /// </summary>
+        /// <typeparam name="T">The type of the enumerable.</typeparam>
+        /// <returns>A completed task whose result is an empty enumerable.</returns>
+        public static Task<IEnumerable<T>> Empty<T>()
+        {
+            return Task.FromResult(Enumerable.Empty<T>());
+        }
+
+        /// <summary>
+        /// Instead of using System.Object, this type is a clearer indication that a Task does not return a result.
+        /// </summary>
+        struct AsyncUnit { }
 	}
 }

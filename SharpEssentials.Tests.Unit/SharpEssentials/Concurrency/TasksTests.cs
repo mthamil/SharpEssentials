@@ -83,5 +83,17 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 				new[] { typeof(InvalidOperationException), typeof(Exception), typeof(SystemException) }, 
 				task.Exception.InnerExceptions.Select(e => e.GetType()));
 		}
+
+	    [Fact]
+	    public void Test_Empty()
+	    {
+	        // Act.
+	        var task = Tasks.Empty<string>();
+
+	        // Assert.
+            Assert.True(task.IsCompleted);
+            Assert.Equal(TaskStatus.RanToCompletion, task.Status);
+            Assert.Empty(task.Result);
+	    }
 	}
 }

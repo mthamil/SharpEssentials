@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2015 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,14 +12,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 
 namespace SharpEssentials.Collections
 {
@@ -197,34 +195,14 @@ namespace SharpEssentials.Collections
 			return extremum;
 		}
 
-		/// <summary>
-		/// Allows await-ing on an enumerable of Tasks.
-		/// </summary>
-		/// <param name="tasks">The tasks to await</param>
-		/// <returns>An awaiter for the completion of the tasks</returns>
-		public static TaskAwaiter GetAwaiter(this IEnumerable<Task> tasks)
-		{
-			return Task.WhenAll(tasks).GetAwaiter();
-		}
-
-		/// <summary>
-		/// Allows await-ing on an enumerable of Task&lt;T&gt;s.
-		/// </summary>
-		/// <param name="tasks">The tasks to await</param>
-		/// <returns>An awaiter for the completion of the tasks</returns>
-		public static TaskAwaiter<T[]> GetAwaiter<T>(this IEnumerable<Task<T>> tasks)
-		{
-			return Task.WhenAll(tasks).GetAwaiter();
-		}
-
-		/// <summary>
-		/// Lazily pipes the output of an enumerable to an action.
-		/// </summary>
-		/// <typeparam name="T">The type of items</typeparam>
-		/// <param name="items">The items to pipe</param>
-		/// <param name="action">The action to apply</param>
-		/// <returns>The source enumerable</returns>
-		public static IEnumerable<T> Tee<T>(this IEnumerable<T> items, Action<T> action)
+	    /// <summary>
+        /// Lazily pipes the output of an enumerable to an action.
+        /// </summary>
+        /// <typeparam name="T">The type of items</typeparam>
+        /// <param name="items">The items to pipe</param>
+        /// <param name="action">The action to apply</param>
+        /// <returns>The source enumerable</returns>
+        public static IEnumerable<T> Tee<T>(this IEnumerable<T> items, Action<T> action)
 		{
 			foreach (var item in items)
 			{

@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using SharpEssentials.Collections;
-using SharpEssentials.Concurrency;
 using SharpEssentials.Testing;
 using Xunit;
-using Xunit.Extensions;
 
 namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 {
@@ -427,34 +424,6 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 		private class TestContainer<T>
 		{
 			public T Item { get; set; }
-		}
-
-		[Fact]
-		public async Task Test_GetAwaiter_EnumerableOfTasks_WithResults()
-		{
-			// Act.
-			var results = await Enumerable.Range(0, 5).Select(Task.FromResult);
-
-			// Assert.
-			AssertThat.SequenceEqual(new [] { 0, 1, 2, 3, 4 }, results);
-		}
-
-		[Fact]
-		public async Task Test_GetAwaiter_EnumerableOfTasks()
-		{
-			// Arrange.
-			var results = new bool[5];
-
-			// Act.
-			await Enumerable.Range(0, 5).Select<int, Task>(async i =>
-			{
-				await Task.CompletedTask;
-				results[i] = true;
-			});
-
-			// Assert.
-			foreach (var result in results)
-				Assert.True(result);
 		}
 
 		[Fact]
