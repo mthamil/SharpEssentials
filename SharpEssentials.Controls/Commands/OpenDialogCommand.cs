@@ -43,6 +43,10 @@ namespace SharpEssentials.Controls.Commands
                 if (parameterType.IsClosedTypeOf(LazyType))
                     parameter = parameterType.GetProperty(LazyValueName).GetValue(parameter);
 
+                // Detect Func<T> data contexts.
+                if (parameterType.IsClosedTypeOf(FuncType))
+                    parameter = parameterType.GetMethod(FuncInvokeName).Invoke(parameter, null);
+
                 window.DataContext = parameter;
             }
 
@@ -77,5 +81,8 @@ namespace SharpEssentials.Controls.Commands
 
         private static readonly Type LazyType = typeof(Lazy<>);
 	    private const string LazyValueName = nameof(Lazy<object>.Value);
+
+	    private static readonly Type FuncType = typeof(Func<>);
+	    private const string FuncInvokeName = nameof(Func<object>.Invoke);
 	}
 }
