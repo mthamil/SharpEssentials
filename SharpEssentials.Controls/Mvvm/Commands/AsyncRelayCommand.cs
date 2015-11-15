@@ -20,12 +20,12 @@ using System.Windows.Input;
 
 namespace SharpEssentials.Controls.Mvvm.Commands
 {
-	/// <summary>
+    /// <summary>
 	/// A command whose sole purpose is to relay its functionality to other
 	/// objects by invoking asynchronous functions. The default return value for the CanExecute
 	/// method is 'true'.  This command does not take any parameters.
 	/// </summary>
-	public class AsyncRelayCommand : CommandBase
+	public class AsyncRelayCommand : CommandBase, IAsyncCommand
 	{
 		/// <summary>
 		/// Initializes a new asynchronous command.
@@ -56,10 +56,16 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		/// <see cref="ICommand.Execute"/>
 		public async override void Execute(object parameter)
 		{
-			await _execute();
+			await ExecuteAsync(parameter);
 		}
 
-		#endregion
+        /// <see cref="IAsyncCommand.ExecuteAsync"/>
+        public async Task ExecuteAsync(object parameter)
+        {
+            await _execute();
+        }
+
+        #endregion
 
 		readonly Func<Task> _execute;
 		readonly Func<bool> _canExecute;
@@ -71,8 +77,8 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 	/// true, the command parameter must of type T.
 	/// </summary>
 	/// <typeparam name="T">The type of parameter to be passed to the command</typeparam>
-	public class AsyncRelayCommand<T> : CommandBase
-	{
+	public class AsyncRelayCommand<T> : CommandBase, IAsyncCommand
+    {
 		/// <summary>
 		/// Initializes a new asynchronous command.
 		/// </summary>
@@ -105,10 +111,16 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		/// <see cref="ICommand.Execute"/>
 		public async override void Execute(object parameter)
 		{
-			await _execute((T)parameter);
+			await ExecuteAsync(parameter);
 		}
 
-		#endregion
+        /// <see cref="IAsyncCommand.ExecuteAsync"/>
+	    public async Task ExecuteAsync(object parameter)
+        {
+            await _execute((T)parameter);
+        }
+
+	    #endregion
 
 		readonly Func<T, Task> _execute;
 		readonly Predicate<T> _canExecute;
