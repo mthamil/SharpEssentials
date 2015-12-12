@@ -227,6 +227,17 @@ namespace SharpEssentials.Collections
 				destination.Add(item);
 		}
 
+        /// <summary>
+        /// Concatenates the items of a collection into a string.
+        /// </summary>
+        /// <typeparam name="T">The type of items in the collection.</typeparam>
+        /// <param name="items">The items to join.</param>
+        /// <param name="delimiter">The separator to use between items.</param>
+	    public static string ToDelimitedString<T>(this IEnumerable<T> items, string delimiter = ",")
+	    {
+	        return String.Join(delimiter, items);
+	    }
+
 		/// <summary>
 		/// Returns the first element of a sequence or <see cref="Option&lt;T>.None"/> if the sequence is empty.
 		/// </summary>

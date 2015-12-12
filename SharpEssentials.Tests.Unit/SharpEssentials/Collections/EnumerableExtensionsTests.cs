@@ -520,5 +520,18 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Act/Assert.
 			Assert.Throws<ArgumentNullException>(() => ((IEnumerable<int>)null).FirstOrNone());
 		}
+
+	    [Theory]
+        [InlineData(new object[] {1, 2, 3, 4}, ",", "1,2,3,4")]
+        [InlineData(new[] { "a", "b", "c", "d" }, ":", "a:b:c:d")]
+        [InlineData(new object[0], ",", "")]
+        public void Test_ToDelimitedString<T>(IEnumerable<T> items, string delimiter, string expected)
+	    {
+	        // Act.
+	        var actual = items.ToDelimitedString(delimiter);
+
+	        // Assert.
+            Assert.Equal(expected, actual);
+	    }
 	}
 }
