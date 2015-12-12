@@ -448,14 +448,14 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 		}
 
 		[Fact]
-		public void Test_AddTo()
+		public void Test_ToSink()
 		{
 			// Arrange.
 			var input = new[] { 4, 5, 6 };
 			var sink = new List<int> { 1, 2, 3 };
 
 			// Act.
-			input.AddTo(sink);
+			input.ToSink(sink);
 
 			// Assert.
 			AssertThat.SequenceEqual(new [] { 1, 2, 3, 4, 5, 6 }, sink);

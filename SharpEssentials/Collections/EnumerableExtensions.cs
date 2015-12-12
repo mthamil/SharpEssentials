@@ -221,7 +221,7 @@ namespace SharpEssentials.Collections
 		/// <typeparam name="T">The type of items</typeparam>
 		/// <param name="source">The items to iterate over</param>
 		/// <param name="destination">An existing collection to add items to</param>
-		public static void AddTo<T>(this IEnumerable<T> source, ICollection<T> destination)
+		public static void ToSink<T>(this IEnumerable<T> source, ICollection<T> destination)
 		{
 			foreach (var item in source)
 				destination.Add(item);
