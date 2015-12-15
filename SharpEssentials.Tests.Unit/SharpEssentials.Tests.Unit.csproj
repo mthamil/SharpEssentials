@@ -170,6 +170,7 @@
     <Compile Include="SharpEssentials\Net\UriEqualityComparerTests.cs" />
     <Compile Include="SharpEssentials\OptionTests.cs" />
     <Compile Include="SharpEssentials\Observable\PropertyTests.cs" />
+    <Compile Include="SharpEssentials\Reflection\EnumsTests.cs" />
     <Compile Include="SharpEssentials\Reflection\ReflectionExtensionsTests.cs" />
     <Compile Include="SharpEssentials\Reflection\ReflectTests.cs" />
     <Compile Include="SharpEssentials\WeakEventHandlerTests.cs" />
