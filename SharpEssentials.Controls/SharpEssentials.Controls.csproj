@@ -138,7 +138,6 @@
     <Compile Include="Mvvm\Commands\Command.cs" />
     <Compile Include="Mvvm\Commands\CommandBase.cs" />
     <Compile Include="Mvvm\Commands\IAsyncCommand.cs" />
-    <Compile Include="Mvvm\Commands\NamedRelayCommand.cs" />
     <Compile Include="Mvvm\Commands\RelayCommand.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
