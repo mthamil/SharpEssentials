@@ -15,7 +15,6 @@
 // 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Input;
 
 namespace SharpEssentials.Controls.Mvvm.Commands
@@ -49,7 +48,6 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		}
 
 		/// <see cref="ICommand.CanExecute"/>
-		[DebuggerStepThrough]
 		public bool CanExecute(object parameter)
 		{
 			return _canExecute();

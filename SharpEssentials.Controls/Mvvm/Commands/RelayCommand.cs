@@ -14,7 +14,6 @@
 // limitations under the License.
 // 
 using System;
-using System.Diagnostics;
 using System.Windows.Input;
 
 namespace SharpEssentials.Controls.Mvvm.Commands
@@ -43,7 +42,6 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		#region ICommand Members
 
 		/// <see cref="ICommand.CanExecute"/>
-		[DebuggerStepThrough]
 		public override bool CanExecute(object parameter)
 		{
 			if (_canExecute == null)
@@ -89,7 +87,6 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		#region ICommand Members
 
 		/// <see cref="ICommand.CanExecute"/>
-		[DebuggerStepThrough]
 		public override bool CanExecute(object parameter)
 		{
 			if (_canExecute == null)
