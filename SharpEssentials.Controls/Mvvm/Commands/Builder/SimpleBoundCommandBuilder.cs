@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2015 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
@@ -38,10 +38,10 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 		{
 			_source = source;
 			_property = new Lazy<PropertyInfo>(() => Reflect.PropertyOf(predicateProperty));
-			_canExecutePredicate = new Lazy<Func<bool>>(() =>
+			_canExecutePredicate = new Lazy<Predicate<object>>(() =>
 			{
 				Func<TSource, bool> func = predicateProperty.Compile();
-				return () => func(_source);
+				return _ => func(_source);
 			});
 		}
 
@@ -65,11 +65,17 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 			if (operation == null)
 				throw new ArgumentNullException(nameof(operation));
 
-			return new BoundRelayCommand(_source, _property.Value.Name, _canExecutePredicate.Value, operation);
+			var command = new TriggeredRelayCommand(operation, _canExecutePredicate.Value);
+            _source.PropertyChanged += (o, e) =>
+            {
+                if (e.PropertyName == _property.Value.Name)
+                    command.RaiseCanExecuteChanged();
+            };
+		    return command;
 		}
 
 		private readonly TSource _source;
 		private readonly Lazy<PropertyInfo> _property;
-		private readonly Lazy<Func<bool>> _canExecutePredicate;
+		private readonly Lazy<Predicate<object>> _canExecutePredicate;
 	}
 }

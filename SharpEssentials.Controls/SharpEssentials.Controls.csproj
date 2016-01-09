@@ -122,8 +122,8 @@
     <Compile Include="MessageBox.cs" />
     <Compile Include="Mvvm\Commands\AsyncCommandBuilderExtensions.cs" />
     <Compile Include="Mvvm\Commands\AsyncRelayCommand.cs" />
-    <Compile Include="Mvvm\Commands\BoundRelayCommand.cs" />
-    <Compile Include="Mvvm\Commands\BoundRelayCommandBase.cs" />
+    <Compile Include="Mvvm\Commands\Builder\AsyncTriggeredRelayCommand.cs" />
+    <Compile Include="Mvvm\Commands\Builder\TriggeredRelayCommand.cs" />
     <Compile Include="Mvvm\Commands\Builder\AsyncCommandCompleterWrapper.cs" />
     <Compile Include="Mvvm\Commands\Builder\ChildBoundCommandBuilder.cs" />
     <Compile Include="Mvvm\Commands\Builder\ChildBoundCommandCompleter.cs" />
@@ -134,7 +134,6 @@
     <Compile Include="Mvvm\Commands\Builder\ICommandCompleter.cs" />
     <Compile Include="Mvvm\Commands\Builder\SimpleBoundCommandBuilder.cs" />
     <Compile Include="Mvvm\Commands\CancelTaskCommand.cs" />
-    <Compile Include="Mvvm\Commands\ChildPropertyBoundCommand.cs" />
     <Compile Include="Mvvm\Commands\Command.cs" />
     <Compile Include="Mvvm\Commands\CommandBase.cs" />
     <Compile Include="Mvvm\Commands\IAsyncCommand.cs" />

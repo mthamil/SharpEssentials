@@ -12,10 +12,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 
-namespace SharpEssentials
+namespace SharpEssentials.Weak
 {
 	/// <summary>
 	/// Callback that unsubscribes a handler from an event once its target has been garbage collected.

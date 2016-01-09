@@ -1,7 +1,8 @@
 using System;
+using SharpEssentials.Weak;
 using Xunit;
 
-namespace SharpEssentials.Tests.Unit.SharpEssentials
+namespace SharpEssentials.Tests.Unit.SharpEssentials.Weak
 {
 	public class WeakEventHandlerTests
 	{

@@ -99,7 +99,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 			if (_canExecute == null)
 				return true;
 
-			if (parameter is T)
+			if (parameter is T || parameter == null)
 				return _canExecute((T)parameter);
 
 			return false;

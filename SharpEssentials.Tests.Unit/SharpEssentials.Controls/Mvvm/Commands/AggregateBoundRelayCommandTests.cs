@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using SharpEssentials.Controls.Mvvm.Commands;
 using SharpEssentials.Observable;
 using SharpEssentials.Testing;
 using Xunit;
-using Xunit.Extensions;
 
-namespace SharpEssentials.Tests.Unit.SharpEssentials.Mvvm.Commands
+namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Mvvm.Commands
 {
-	public class DependentBoundRelayCommandTests
+	public class AggregateBoundRelayCommandTests
 	{
 		[Theory]
 		[InlineData(true, new [] { true, true })]
 		[InlineData(true, new[] { true, false })]
 		[InlineData(true, new[] { false, true })]
 		[InlineData(false, new[] { false, false })]
-		public void Test_CanExecute(bool expected, bool[] values)
+		public void Test_CanExecute_Any(bool expected, bool[] values)
 		{
 			// Arrange.
 			var parent = new TestParent();
@@ -28,13 +29,39 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Mvvm.Commands
 
 			var command = Command.For(parent)
 			                     .DependsOnCollection(p => p.Items)
-			                     .Where(p => p.DependentBoolValue)
-			                     .DependsOn(c => c.BoolValue)
+			                     .When(c => c.Any(p => p.BoolValue))
 			                     .Executes(() => { });
 
 			// Act.
 			bool actual = command.CanExecute(null);
 			
+			// Assert.
+			Assert.Equal(expected, actual);
+		}
+
+		[Theory]
+		[InlineData(true, new[] { true, true })]
+		[InlineData(false, new[] { true, false })]
+		[InlineData(false, new[] { false, true })]
+		[InlineData(false, new[] { false, false })]
+		public void Test_CanExecute_All(bool expected, bool[] values)
+		{
+			// Arrange.
+			var parent = new TestParent();
+			foreach (var value in values)
+			{
+				var child = new TestItem { BoolValue = value };
+				parent.Items.Add(child);
+			}
+
+			var command = Command.For(parent)
+								 .DependsOnCollection(p => p.Items)
+								 .When(c => c.All(p => p.BoolValue))
+								 .Executes(() => { });
+
+			// Act.
+			bool actual = command.CanExecute(null);
+
 			// Assert.
 			Assert.Equal(expected, actual);
 		}
@@ -48,10 +75,9 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Mvvm.Commands
 			var child2 = new TestItem();
 
 			var command = Command.For(parent)
-								 .DependsOnCollection(p => p.Items)
-								 .Where(p => p.DependentBoolValue)
-								 .DependsOn(c => c.BoolValue)
-								 .Executes(() => { });
+			                     .DependsOnCollection(p => p.Items)
+			                     .When(c => c.Any(p => p.BoolValue))
+			                     .Executes(() => { });
 
 			parent.Items.Add(child1);
 			parent.Items.Add(child2);
@@ -74,10 +100,9 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Mvvm.Commands
 			var child2 = new TestItem();
 
 			var command = Command.For(parent)
-								 .DependsOnCollection(p => p.Items)
-								 .Where(p => p.DependentBoolValue)
-								 .DependsOn(c => c.BoolValue)
-								 .Executes(() => { });
+			                     .DependsOnCollection(p => p.Items)
+			                     .When(c => c.Any(p => p.BoolValue))
+			                     .Executes(() => { });
 
 			parent.Items.Add(child1);
 			parent.Items.Add(child2);
@@ -93,7 +118,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Mvvm.Commands
 		}
 
 		[Fact]
-		public void Test_CanExecuteChanged_ItemRemoved()
+		public void Test_CanExecuteChanged_ItemAdded()
 		{
 			// Arrange.
 			var parent = new TestParent();
@@ -101,11 +126,26 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Mvvm.Commands
 
 			var command = Command.For(parent)
 								 .DependsOnCollection(p => p.Items)
-								 .Where(p => p.DependentBoolValue)
-								 .DependsOn(c => c.BoolValue)
+								 .When(c => c.Any(p => p.BoolValue))
 								 .Executes(() => { });
 
+			// Act/Assert.
 			parent.Items.Add(child);
+			AssertThat.Raises(command, c => c.CanExecuteChanged += null, () => child.BoolValue = true);
+		}
+
+		[Fact]
+		public void Test_CanExecuteChanged_ItemRemoved()
+		{
+			// Arrange.
+			var parent = new TestParent();
+			var child = new TestItem();
+			parent.Items.Add(child);
+
+			var command = Command.For(parent)
+								 .DependsOnCollection(p => p.Items)
+								 .When(c => c.Any(p => p.BoolValue))
+								 .Executes(() => { });
 
 			// Act/Assert.
 			parent.Items.Remove(child);
@@ -121,10 +161,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Mvvm.Commands
 			bool executed = false;
 			var command = Command.For(parent)
 								 .DependsOnCollection(p => p.Items)
-								 .Where(p => p.DependentBoolValue)
-								 .DependsOn(c => c.BoolValue)
+								 .When(c => c.Any(p => p.BoolValue))
 								 .Executes(() => executed = true);
-
 			// Act.
 			command.Execute(null);
 
@@ -133,20 +171,29 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Mvvm.Commands
 		}
 
 		[Fact]
-		public void Test_ParentProperty_MustBeGetOnly()
+		public void Test_Execute_Asynchronously()
 		{
 			// Arrange.
-			var parent = new TestParent();
+			using (var resetEvent = new ManualResetEventSlim())
+			{
+				var parent = new TestParent();
 
-			var builder = Command.For(parent)
-			                     .DependsOnCollection(p => p.Items);
+				var command = Command.For(parent)
+				                     .DependsOnCollection(p => p.Items)
+				                     .When(c => c.Any(p => p.BoolValue))
+									 .Asynchronously()
+									 .Executes(async () =>
+									 {
+										 await Task.Delay(TimeSpan.FromMilliseconds(100));
+										 resetEvent.Set();
+									 });
+				// Act.
+				command.Execute(null);
 
-			// Act/Assert.
-			Assert.Throws<ArgumentException>(() =>
-				builder
-					.Where(p => p.IndependentBoolValue)
-					.DependsOn(c => c.BoolValue)
-					.Executes(() => { }));
+				// Assert.
+				resetEvent.Wait();
+				Assert.True(resetEvent.IsSet);
+			}
 		}
 
 		private class TestParent : ObservableObject
@@ -158,10 +205,6 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Mvvm.Commands
 			}
 
 			public ObservableCollection<TestItem> Items => _items.Value;
-
-		    public bool IndependentBoolValue { get; set; }
-
-			public bool DependentBoolValue => Items.Any(i => i.BoolValue);
 
 		    private readonly Property<ObservableCollection<TestItem>> _items;
 		}
