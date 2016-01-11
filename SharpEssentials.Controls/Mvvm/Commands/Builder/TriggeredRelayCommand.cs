@@ -21,8 +21,8 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 	/// <summary>
 	/// Relay command whose ability to execute can be externally triggered.
 	/// </summary>
-	internal class TriggeredRelayCommand : RelayCommand<object>
-	{
+	internal class TriggeredRelayCommand : RelayCommand<object>, ITriggerableCommand
+    {
         /// <summary>
         /// Initializes a new <see cref="TriggeredRelayCommand"/>.
         /// </summary>

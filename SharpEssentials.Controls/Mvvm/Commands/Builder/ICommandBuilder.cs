@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2015 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,7 +42,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 		/// <typeparam name="TChild">The type of child object</typeparam>
 		/// <param name="collection">The collection whose elements determine whether a command can execute</param>
 		/// <returns>A builder for a command bound to a child property</returns>
-		ChildBoundCommandBuilder<TSource, TChild> DependsOnCollection<TChild>(Expression<Func<TSource, IEnumerable<TChild>>> collection)
+		IChildBoundCommandBuilder<TSource, TChild> DependsOnCollection<TChild>(Expression<Func<TSource, IEnumerable<TChild>>> collection)
 			where TChild : INotifyPropertyChanged;
 	}
 }

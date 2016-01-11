@@ -19,7 +19,6 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Windows.Input;
 using SharpEssentials.Reflection;
 using static SharpEssentials.Weak.WeakEventManagerExtensions;
 
@@ -29,7 +28,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 	/// Class that completes construction of a command that depends on a child collection.
 	/// </summary>
 	/// <typeparam name="TChild">The type of child object the parent depends on</typeparam>
-	public class ChildBoundCommandCompleter<TChild> : ICommandCompleter where TChild : INotifyPropertyChanged
+	public class ChildBoundCommandCompleter<TChild> : BaseCommandCompleter where TChild : INotifyPropertyChanged
 	{
 		/// <summary>
 		/// Initializes a new <see cref="ChildBoundCommandCompleter{TChild}"/>.
@@ -47,28 +46,13 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 			_canExecute = canExecute;
 		}
 
-		/// <summary>
-		/// Sets the operation that a command will execute.
-		/// </summary>
-		/// <param name="operation">The parameterless operation to be executed</param>
-		/// <returns>A new command</returns>
-		public ICommand Executes(Action operation)
-		{
-			return Executes(_ => operation());
-		}
+		protected override Predicate<object> CanExecute() => _ => _canExecute();
 
-		/// <summary>
-		/// Sets the operation that a command will execute.
-		/// </summary>
-		/// <param name="operation">The operation to be executed</param>
-		/// <returns>A new command</returns>
-		public ICommand Executes(Action<object> operation)
-		{
-            var command = new TriggeredRelayCommand(operation, _ => _canExecute());
-
+	    protected override TCommand Configure<TCommand>(TCommand command)
+	    {
             var childPropertyName = Reflect.PropertyOf(_childProperty).Name;
             EventHandler<PropertyChangedEventArgs> propertyChangedHandler = (o, e) =>
-		    {
+            {
                 if (e.PropertyName == childPropertyName)
                 {
                     if (_collectionGetter().Contains((TChild)o))
@@ -76,31 +60,31 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
                 }
             };
 
-		    var collection = _collectionGetter();
+            var collection = _collectionGetter();
             var notifyingCollection = collection as INotifyCollectionChanged;
-		    notifyingCollection?.AddWeakHandler<INotifyCollectionChanged, NotifyCollectionChangedEventArgs>(nameof(INotifyCollectionChanged.CollectionChanged),
-		        (o, e) =>
-		        {
-		            if (e.OldItems != null)
-		            {
-		                foreach (var removedItem in e.OldItems.Cast<INotifyPropertyChanged>())
-		                    removedItem.RemoveWeakHandler(nameof(INotifyPropertyChanged.PropertyChanged), propertyChangedHandler);
-		            }
+            notifyingCollection?.AddWeakHandler<INotifyCollectionChanged, NotifyCollectionChangedEventArgs>(nameof(INotifyCollectionChanged.CollectionChanged),
+                (o, e) =>
+                {
+                    if (e.OldItems != null)
+                    {
+                        foreach (var removedItem in e.OldItems.Cast<INotifyPropertyChanged>())
+                            removedItem.RemoveWeakHandler(nameof(INotifyPropertyChanged.PropertyChanged), propertyChangedHandler);
+                    }
 
-		            if (e.NewItems != null)
-		            {
-		                foreach (var newItem in e.NewItems.Cast<INotifyPropertyChanged>())
-		                    newItem.AddWeakHandler(nameof(INotifyPropertyChanged.PropertyChanged), propertyChangedHandler);
-		            }
-		        });
+                    if (e.NewItems != null)
+                    {
+                        foreach (var newItem in e.NewItems.Cast<INotifyPropertyChanged>())
+                            newItem.AddWeakHandler(nameof(INotifyPropertyChanged.PropertyChanged), propertyChangedHandler);
+                    }
+                });
 
-		    foreach (var existingChild in collection)
+            foreach (var existingChild in collection)
                 existingChild.AddWeakHandler(nameof(INotifyPropertyChanged.PropertyChanged), propertyChangedHandler);
 
             return command;
-		}
+        }
 
-		private readonly Func<IEnumerable<TChild>> _collectionGetter;
+	    private readonly Func<IEnumerable<TChild>> _collectionGetter;
 		private readonly Expression<Func<TChild, bool>> _childProperty;
 		private readonly Func<bool> _canExecute;
 	}

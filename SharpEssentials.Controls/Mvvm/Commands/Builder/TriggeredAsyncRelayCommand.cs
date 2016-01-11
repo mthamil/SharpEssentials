@@ -22,14 +22,14 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
     /// <summary>
     /// Asynchronous relay command whose ability to execute can be externally triggered.
     /// </summary>
-    internal class AsyncTriggeredRelayCommand : AsyncRelayCommand<object>
+    internal class TriggeredAsyncRelayCommand : AsyncRelayCommand<object>, ITriggerableCommand
     {
         /// <summary>
         /// Initializes a new <see cref="TriggeredRelayCommand"/>.
         /// </summary>
         /// <param name="execute">The operation to execute.</param>
         /// <param name="canExecute">Determines whether a command can execute.</param>
-        public AsyncTriggeredRelayCommand(Func<object, Task> execute, Predicate<object> canExecute)
+        public TriggeredAsyncRelayCommand(Func<object, Task> execute, Predicate<object> canExecute)
             : base(execute, canExecute)
         {
         }

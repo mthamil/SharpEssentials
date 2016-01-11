@@ -27,14 +27,14 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 	/// is determined by a property.
 	/// </summary>
 	/// <typeparam name="TSource">The type of object for which a command is being built</typeparam>
-	public class SimpleBoundCommandBuilder<TSource> : ICommandCompleter where TSource : INotifyPropertyChanged
+	internal class PropertyBoundCommandCompleter<TSource> : BaseCommandCompleter where TSource : INotifyPropertyChanged
 	{
 		/// <summary>
-		/// Initializes a new <see cref="SimpleBoundCommandBuilder{TSource}"/>.
+		/// Initializes a new <see cref="PropertyBoundCommandCompleter{TSource}"/>.
 		/// </summary>
 		/// <param name="source">The object that declares the property the command is bound to</param>
 		/// <param name="predicateProperty">The boolean property that determines whether a command can execute</param>
-		public SimpleBoundCommandBuilder(TSource source, Expression<Func<TSource, bool>> predicateProperty)
+		public PropertyBoundCommandCompleter(TSource source, Expression<Func<TSource, bool>> predicateProperty)
 		{
 			_source = source;
 			_property = new Lazy<PropertyInfo>(() => Reflect.PropertyOf(predicateProperty));
@@ -45,36 +45,20 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 			});
 		}
 
-		/// <summary>
-		/// Sets the operation that a command will execute.
-		/// </summary>
-		/// <param name="operation">The parameterless operation to be executed</param>
-		/// <returns>A new command</returns>
-		public ICommand Executes(Action operation)
-		{
-			return Executes(_ => operation());
-		}
+		protected override Predicate<object> CanExecute() => _canExecutePredicate.Value;
 
-		/// <summary>
-		/// Sets the operation that a command will execute.
-		/// </summary>
-		/// <param name="operation">The operation to be executed</param>
-		/// <returns>A new command</returns>
-		public ICommand Executes(Action<object> operation)
-		{
-			if (operation == null)
-				throw new ArgumentNullException(nameof(operation));
-
-			var command = new TriggeredRelayCommand(operation, _canExecutePredicate.Value);
+	    protected override TCommand Configure<TCommand>(TCommand command)
+	    {
             _source.PropertyChanged += (o, e) =>
             {
                 if (e.PropertyName == _property.Value.Name)
                     command.RaiseCanExecuteChanged();
             };
-		    return command;
-		}
+            return command;
+        }
 
-		private readonly TSource _source;
+
+        private readonly TSource _source;
 		private readonly Lazy<PropertyInfo> _property;
 		private readonly Lazy<Predicate<object>> _canExecutePredicate;
 	}

@@ -1,5 +1,5 @@
-// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+﻿// Sharp Essentials
+// Copyright 2015 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,22 +12,20 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
-using SharpEssentials.Controls.Mvvm.Commands.Builder;
 
-namespace SharpEssentials.Controls.Mvvm.Commands
+using System.Windows.Input;
+
+namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 {
     /// <summary>
-    /// Provides extension methods for asynchronous command creation.
+    /// Interface for a command that can have its <see cref="ICommand.CanExecuteChanged"/>
+    /// event raised externally.
     /// </summary>
-	public static class AsyncCommandBuilderExtensions
-	{
-		/// <summary>
-		/// Indicates that a command executes an asynchronous operation.
-		/// </summary>
-		public static IAsyncCommandCompleter Asynchronously(this ICommandCompleter completer)
-		{
-			return new AsyncCommandCompleterWrapper(completer);
-		}
-	}
+    public interface ITriggerableCommand
+    {
+        /// <summary>
+        /// Raises the <see cref="ICommand.CanExecuteChanged"/> event.
+        /// </summary>
+        void RaiseCanExecuteChanged();
+    }
 }

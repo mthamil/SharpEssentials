@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2015 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,13 +23,12 @@ using SharpEssentials.Reflection;
 namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 {
 	/// <summary>
-	/// Class that aids in creating commands who abilituy to execute depends on properties of a child collection's
+	/// Class that aids in creating commands who ability to execute depends on properties of a child collection's
 	/// elements.
 	/// </summary>
-	/// <typeparam name="TParent">The type of parent that owns the child collection</typeparam>
-	/// <typeparam name="TChild">The type of object whose properties the parent depends on</typeparam>
-	public class ChildBoundCommandBuilder<TParent, TChild>
-		where TChild : INotifyPropertyChanged
+	/// <typeparam name="TParent">The type of parent that owns the child collection.</typeparam>
+	/// <typeparam name="TChild">The type of object whose properties the parent depends on.</typeparam>
+	internal class ChildBoundCommandBuilder<TParent, TChild> : IChildBoundCommandBuilder<TParent, TChild> where TChild : INotifyPropertyChanged
 	{
 		/// <summary>
 		/// Initializes a new <see cref="ChildBoundCommandBuilder{TParent,TChild}"/>.
@@ -68,7 +67,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 		/// </summary>
 		/// <param name="parentProperty">The property that determines whether a command can execute</param>
 		/// <returns>A builder that enables setting the child property the parent property's value depends on</returns>
-		public DependentChildPropertyCommandBuilder<TParent, TChild> Where(Expression<Func<TParent, bool>> parentProperty)
+		public IDependentChildPropertyCommandBuilder<TChild> Where(Expression<Func<TParent, bool>> parentProperty)
 		{
 			if (parentProperty == null)
 				throw new ArgumentNullException(nameof(parentProperty));

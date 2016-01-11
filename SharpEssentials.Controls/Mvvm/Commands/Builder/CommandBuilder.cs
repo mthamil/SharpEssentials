@@ -25,7 +25,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 	/// Class that aids in creating complex <see cref="ICommand"/>s.
 	/// </summary>
 	/// <typeparam name="TSource">The type of object for which a command is being built</typeparam>
-	public class CommandBuilder<TSource> : ICommandBuilder<TSource> where TSource : INotifyPropertyChanged
+	internal class CommandBuilder<TSource> : ICommandBuilder<TSource> where TSource : INotifyPropertyChanged
 	{
 		/// <summary>
 		/// Initializes a new <see cref="CommandBuilder{TSource}"/>.
@@ -47,7 +47,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 			if (predicateProperty == null)
 				throw new ArgumentNullException(nameof(predicateProperty));
 
-			return new SimpleBoundCommandBuilder<TSource>(_source, predicateProperty);
+			return new PropertyBoundCommandCompleter<TSource>(_source, predicateProperty);
 		}
 
 		/// <summary>
@@ -57,7 +57,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 		/// <typeparam name="TChild">The type of child object</typeparam>
 		/// <param name="collection">The collection whose items determine whether a command can execute</param>
 		/// <returns>A builder for a command bound to a child property</returns>
-		public ChildBoundCommandBuilder<TSource, TChild> DependsOnCollection<TChild>(Expression<Func<TSource, IEnumerable<TChild>>> collection)
+		public IChildBoundCommandBuilder<TSource, TChild> DependsOnCollection<TChild>(Expression<Func<TSource, IEnumerable<TChild>>> collection)
 			where TChild : INotifyPropertyChanged
 		{
 			if (collection == null)
