@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2015 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,9 +12,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
-using System.Diagnostics;
 using System.Windows.Input;
 
 namespace SharpEssentials.Controls.Mvvm.Commands
@@ -43,7 +42,6 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		#region ICommand Members
 
 		/// <see cref="ICommand.CanExecute"/>
-		[DebuggerStepThrough]
 		public override bool CanExecute(object parameter)
 		{
 			if (_canExecute == null)
@@ -89,13 +87,12 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		#region ICommand Members
 
 		/// <see cref="ICommand.CanExecute"/>
-		[DebuggerStepThrough]
 		public override bool CanExecute(object parameter)
 		{
 			if (_canExecute == null)
 				return true;
 
-			if (parameter is T)
+			if (parameter is T || parameter == null)
 				return _canExecute((T)parameter);
 
 			return false;

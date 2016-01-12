@@ -161,19 +161,19 @@
     <Compile Include="SharpEssentials\InputOutput\FileSystemInfoPathEqualityComparerTests.cs" />
     <Compile Include="SharpEssentials\InputOutput\StreamExtensionsTests.cs" />
     <Compile Include="SharpEssentials\InputOutput\TemporaryFileTests.cs" />
-    <Compile Include="SharpEssentials\Mvvm\Commands\BoundRelayCommandTests.cs" />
-    <Compile Include="SharpEssentials\Mvvm\Commands\AggregateBoundRelayCommandTests.cs" />
-    <Compile Include="SharpEssentials\Mvvm\Commands\CancelTaskCommandTests.cs" />
-    <Compile Include="SharpEssentials\Mvvm\Commands\AsyncRelayCommandTests.cs" />
-    <Compile Include="SharpEssentials\Mvvm\Commands\DependentBoundRelayCommandTests.cs" />
-    <Compile Include="SharpEssentials\Mvvm\Commands\RelayCommandTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Mvvm\Commands\BoundRelayCommandTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Mvvm\Commands\AggregateBoundRelayCommandTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Mvvm\Commands\CancelTaskCommandTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Mvvm\Commands\AsyncRelayCommandTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Mvvm\Commands\DependentBoundRelayCommandTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Mvvm\Commands\RelayCommandTests.cs" />
     <Compile Include="SharpEssentials\Net\UriEqualityComparerTests.cs" />
     <Compile Include="SharpEssentials\OptionTests.cs" />
     <Compile Include="SharpEssentials\Observable\PropertyTests.cs" />
     <Compile Include="SharpEssentials\Reflection\EnumsTests.cs" />
     <Compile Include="SharpEssentials\Reflection\ReflectionExtensionsTests.cs" />
     <Compile Include="SharpEssentials\Reflection\ReflectTests.cs" />
-    <Compile Include="SharpEssentials\WeakEventHandlerTests.cs" />
+    <Compile Include="SharpEssentials\Weak\WeakEventHandlerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpEssentials.Controls\SharpEssentials.Controls.csproj">

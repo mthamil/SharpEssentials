@@ -7,9 +7,8 @@ using SharpEssentials.Controls.Mvvm.Commands;
 using SharpEssentials.Observable;
 using SharpEssentials.Testing;
 using Xunit;
-using Xunit.Extensions;
 
-namespace SharpEssentials.Tests.Unit.SharpEssentials.Mvvm.Commands
+namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Mvvm.Commands
 {
 	public class AggregateBoundRelayCommandTests
 	{
@@ -182,7 +181,6 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Mvvm.Commands
 				var command = Command.For(parent)
 				                     .DependsOnCollection(p => p.Items)
 				                     .When(c => c.Any(p => p.BoolValue))
-									 .Asynchronously()
 									 .Executes(async () =>
 									 {
 										 await Task.Delay(TimeSpan.FromMilliseconds(100));

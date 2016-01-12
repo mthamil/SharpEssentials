@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2015 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,9 +24,10 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 	/// Class that allows specification of a child property that a parent property's
 	/// value depends on.
 	/// </summary>
-	/// <typeparam name="TParent">The type of the parent object</typeparam>
-	/// <typeparam name="TChild">The type of the child objects that the parent depends on</typeparam>
-	public class DependentChildPropertyCommandBuilder<TParent, TChild> where TChild : INotifyPropertyChanged
+	/// <typeparam name="TParent">The type of the parent object.</typeparam>
+	/// <typeparam name="TChild">The type of the child objects that the parent depends on.</typeparam>
+	internal class DependentChildPropertyCommandBuilder<TParent, TChild> : IDependentChildPropertyCommandBuilder<TChild> 
+        where TChild : INotifyPropertyChanged
 	{
 		/// <summary>
 		/// Initializes a new <see cref="DependentChildPropertyCommandBuilder{TParent,TChild}"/>.
@@ -54,7 +55,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 			var parentPropertyGetter = _parentProperty.Compile();
 			Func<bool> canExecute = () => parentPropertyGetter(_parent);
 
-			return new ChildBoundCommandCompleter<TParent, TChild>(_parent, _collectionGetter, childProperty, canExecute);
+			return new ChildBoundCommandCompleter<TChild>(_collectionGetter, childProperty, canExecute);
 		}
 
 		private readonly TParent _parent;

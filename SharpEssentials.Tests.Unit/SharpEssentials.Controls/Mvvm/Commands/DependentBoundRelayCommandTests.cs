@@ -5,9 +5,8 @@ using SharpEssentials.Controls.Mvvm.Commands;
 using SharpEssentials.Observable;
 using SharpEssentials.Testing;
 using Xunit;
-using Xunit.Extensions;
 
-namespace SharpEssentials.Tests.Unit.SharpEssentials.Mvvm.Commands
+namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Mvvm.Commands
 {
 	public class DependentBoundRelayCommandTests
 	{

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using SharpEssentials.Controls.Mvvm.Commands;
 using Xunit;
 
-namespace SharpEssentials.Tests.Unit.SharpEssentials.Mvvm.Commands
+namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Mvvm.Commands
 {
 	public class AsyncRelayCommandTests : IDisposable
 	{

@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2015 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace SharpEssentials.Controls.Mvvm.Commands.Builder
@@ -37,5 +38,19 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 		/// <param name="operation">The operation to be executed</param>
 		/// <returns>A new command</returns>
 		ICommand Executes(Action<object> operation);
-	}
+
+        /// <summary>
+        /// Sets the asynchronous operation that a command will execute.
+        /// </summary>
+        /// <param name="operation">The parameterless, asynchronous operation to be executed</param>
+        /// <returns>A new command</returns>
+        IAsyncCommand Executes(Func<Task> operation);
+
+        /// <summary>
+        /// Sets the asynchronous operation that a command will execute.
+        /// </summary>
+        /// <param name="operation">The asynchronous operation to be executed</param>
+        /// <returns>A new command</returns>
+        IAsyncCommand Executes(Func<object, Task> operation);
+    }
 }
