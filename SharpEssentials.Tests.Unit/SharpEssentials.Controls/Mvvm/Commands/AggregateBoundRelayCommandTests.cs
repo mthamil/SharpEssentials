@@ -181,7 +181,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Mvvm.Commands
 				var command = Command.For(parent)
 				                     .DependsOnCollection(p => p.Items)
 				                     .When(c => c.Any(p => p.BoolValue))
-									 .Executes(async () =>
+									 .ExecutesAsync(async () =>
 									 {
 										 await Task.Delay(TimeSpan.FromMilliseconds(100));
 										 resetEvent.Set();

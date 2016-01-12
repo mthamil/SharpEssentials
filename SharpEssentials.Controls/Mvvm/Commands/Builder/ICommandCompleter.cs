@@ -44,13 +44,13 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
         /// </summary>
         /// <param name="operation">The parameterless, asynchronous operation to be executed</param>
         /// <returns>A new command</returns>
-        IAsyncCommand Executes(Func<Task> operation);
+        IAsyncCommand ExecutesAsync(Func<Task> operation);
 
         /// <summary>
         /// Sets the asynchronous operation that a command will execute.
         /// </summary>
         /// <param name="operation">The asynchronous operation to be executed</param>
         /// <returns>A new command</returns>
-        IAsyncCommand Executes(Func<object, Task> operation);
+        IAsyncCommand ExecutesAsync(Func<object, Task> operation);
     }
 }

@@ -39,7 +39,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Mvvm.Commands
 
 				var command = Command.For(propertyOwner)
 				                     .DependsOn(p => p.BoolValue)
-				                     .Executes(async () =>
+				                     .ExecutesAsync(async () =>
 				                     {
 					                     await Task.Delay(TimeSpan.FromMilliseconds(100));
 					                     resetEvent.Set();
