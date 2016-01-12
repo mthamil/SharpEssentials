@@ -105,6 +105,7 @@
     <Compile Include="DisposableBase.cs" />
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="EventHandler.cs" />
+    <Compile Include="InitializationSupportExtensions.cs" />
     <Compile Include="InputOutput\AsyncStream.cs" />
     <Compile Include="InputOutput\DirectoryMonitor.cs" />
     <Compile Include="InputOutput\FileSystemInfoPathEqualityComparer.cs" />

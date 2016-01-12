@@ -221,11 +221,22 @@ namespace SharpEssentials.Collections
 		/// <typeparam name="T">The type of items</typeparam>
 		/// <param name="source">The items to iterate over</param>
 		/// <param name="destination">An existing collection to add items to</param>
-		public static void AddTo<T>(this IEnumerable<T> source, ICollection<T> destination)
+		public static void ToSink<T>(this IEnumerable<T> source, ICollection<T> destination)
 		{
 			foreach (var item in source)
 				destination.Add(item);
 		}
+
+        /// <summary>
+        /// Concatenates the items of a collection into a string.
+        /// </summary>
+        /// <typeparam name="T">The type of items in the collection.</typeparam>
+        /// <param name="items">The items to join.</param>
+        /// <param name="delimiter">The separator to use between items.</param>
+	    public static string ToDelimitedString<T>(this IEnumerable<T> items, string delimiter = ",")
+	    {
+	        return String.Join(delimiter, items);
+	    }
 
 		/// <summary>
 		/// Returns the first element of a sequence or <see cref="Option&lt;T>.None"/> if the sequence is empty.
