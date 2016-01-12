@@ -83,6 +83,8 @@
     <Compile Include="Behaviors\TreeViewItemExpandedCommandBehavior.cs" />
     <Compile Include="Behaviors\TreeViewItemSelectedCommandBehavior.cs" />
     <Compile Include="Behaviors\WindowBehaviors.cs" />
+    <Compile Include="Clipboard\ClipboardWrapper.cs" />
+    <Compile Include="Clipboard\IClipboard.cs" />
     <Compile Include="Commands\BrowseToCommand.cs" />
     <Compile Include="Commands\CloseWindowCommand.cs" />
     <Compile Include="Commands\DependencyCommandBase.cs" />

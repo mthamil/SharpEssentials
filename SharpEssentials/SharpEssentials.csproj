@@ -58,7 +58,6 @@
     <DocumentationFile>bin\Release\SharpEssentials.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -78,8 +77,6 @@
     <Compile Include="Chronology\SystemClock.cs" />
     <Compile Include="Chronology\SystemTimer.cs" />
     <Compile Include="Chronology\TimerBase.cs" />
-    <Compile Include="Clipboard\ClipboardWrapper.cs" />
-    <Compile Include="Clipboard\IClipboard.cs" />
     <Compile Include="Collections\AsyncEnumerableExtensions.cs" />
     <Compile Include="Collections\CollectionExtensions.cs" />
     <Compile Include="Collections\CollectionMirror.cs" />
