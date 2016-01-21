@@ -17,6 +17,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Markup;
 
 [assembly: AssemblyProduct("SharpEssentials.Controls")]
 [assembly: AssemblyCopyright("Copyright © Matt Hamilton 2015")]
@@ -37,6 +38,18 @@ using System.Windows;
 	//(used if a resource is not found in the page, 
 	// app, or any theme specific resource dictionaries)
 )]
+
+[assembly: XmlnsPrefix("https://github.com/mthamil/SharpEssentials/xaml", "se")]
+[assembly: XmlnsDefinition("https://github.com/mthamil/SharpEssentials/xaml", "SharpEssentials.Controls")]
+[assembly: XmlnsDefinition("https://github.com/mthamil/SharpEssentials/xaml", "SharpEssentials.Controls.Behaviors")]
+[assembly: XmlnsDefinition("https://github.com/mthamil/SharpEssentials/xaml", "SharpEssentials.Controls.Behaviors.Clickable")]
+[assembly: XmlnsDefinition("https://github.com/mthamil/SharpEssentials/xaml", "SharpEssentials.Controls.Behaviors.GridSplitterExpanderSupport")]
+[assembly: XmlnsDefinition("https://github.com/mthamil/SharpEssentials/xaml", "SharpEssentials.Controls.Behaviors.Interactivity")]
+[assembly: XmlnsDefinition("https://github.com/mthamil/SharpEssentials/xaml", "SharpEssentials.Controls.Commands")]
+[assembly: XmlnsDefinition("https://github.com/mthamil/SharpEssentials/xaml", "SharpEssentials.Controls.Converters")]
+[assembly: XmlnsDefinition("https://github.com/mthamil/SharpEssentials/xaml", "SharpEssentials.Controls.Markup")]
+[assembly: XmlnsDefinition("https://github.com/mthamil/SharpEssentials/xaml", "SharpEssentials.Controls.MultiKey")]
+[assembly: XmlnsDefinition("https://github.com/mthamil/SharpEssentials/xaml", "SharpEssentials.Controls.Selectors")]
 
 [assembly: InternalsVisibleTo("SharpEssentials.Tests.Unit")]
 
