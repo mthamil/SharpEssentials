@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using SharpEssentials.Controls.Mvvm.Commands;
 using SharpEssentials.Observable;
@@ -171,28 +169,25 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Mvvm.Commands
 		}
 
 		[Fact]
-		public void Test_Execute_Asynchronously()
+		public async Task Test_Execute_Asynchronously()
 		{
-			// Arrange.
-			using (var resetEvent = new ManualResetEventSlim())
-			{
-				var parent = new TestParent();
+            // Arrange.
+            var parent = new TestParent();
 
-				var command = Command.For(parent)
-				                     .DependsOnCollection(p => p.Items)
-				                     .When(c => c.Any(p => p.BoolValue))
-									 .ExecutesAsync(async () =>
-									 {
-										 await Task.Delay(TimeSpan.FromMilliseconds(100));
-										 resetEvent.Set();
-									 });
-				// Act.
-				command.Execute(null);
+            bool executed = false;
+		    var command = Command.For(parent)
+		                         .DependsOnCollection(p => p.Items)
+		                         .When(c => c.Any(p => p.BoolValue))
+		                         .ExecutesAsync(() =>
+		                         {
+		                             executed = true;
+		                             return Task.CompletedTask;
+		                         });
+			// Act.
+			await command.ExecuteAsync(null);
 
-				// Assert.
-				resetEvent.Wait();
-				Assert.True(resetEvent.IsSet);
-			}
+			// Assert.
+			Assert.True(executed);
 		}
 
 		private class TestParent : ObservableObject

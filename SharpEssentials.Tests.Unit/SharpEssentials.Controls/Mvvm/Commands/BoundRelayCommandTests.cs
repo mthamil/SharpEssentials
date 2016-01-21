@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using SharpEssentials.Controls.Mvvm;
 using SharpEssentials.Controls.Mvvm.Commands;
 using SharpEssentials.Observable;
@@ -14,10 +12,10 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Mvvm.Commands
 		[Fact]
 		public void Test_Execute()
 		{
-			// Arrange.
-			var propertyOwner = new TestClass();
+            // Arrange.
+            bool executed = false;
+            var propertyOwner = new TestClass();
 
-			bool executed = false;
 			var command = Command.For(propertyOwner)
 			                     .DependsOn(p => p.BoolValue)
 			                     .Executes(() => executed = true);
@@ -29,32 +27,69 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Mvvm.Commands
 			Assert.True(executed);
 		}
 
-		[Fact]
-		public void Test_Execute_Asynchronously()
+        [Fact]
+        public void Test_Execute_With_Parameter()
+        {
+            // Arrange.
+            int result = 0;
+            var propertyOwner = new TestClass();
+
+            var command = Command.For(propertyOwner)
+                                 .DependsOn(p => p.BoolValue)
+                                 .Executes((int x) => result = x);
+
+            // Act.
+            command.Execute(2);
+
+            // Assert.
+            Assert.Equal(2, result);
+        }
+
+        [Fact]
+		public async Task Test_Execute_Asynchronously()
 		{
-			// Arrange.
-			using (var resetEvent = new ManualResetEventSlim())
-			{
-				var propertyOwner = new TestClass();
+            // Arrange.
+            bool executed = false;
+            var propertyOwner = new TestClass();
 
-				var command = Command.For(propertyOwner)
-				                     .DependsOn(p => p.BoolValue)
-				                     .ExecutesAsync(async () =>
-				                     {
-					                     await Task.Delay(TimeSpan.FromMilliseconds(100));
-					                     resetEvent.Set();
-				                     });
+            var command = Command.For(propertyOwner)
+                                 .DependsOn(p => p.BoolValue)
+                                 .ExecutesAsync(() =>
+                                 {
+                                     executed = true;
+                                     return Task.CompletedTask;
+                                 });
 
-				// Act.
-				command.Execute(null);
+			// Act.
+			await command.ExecuteAsync(null);
 
-				// Assert.
-				resetEvent.Wait();
-				Assert.True(resetEvent.IsSet);
-			}
-		}
+            // Assert.
+            Assert.True(executed);
+        }
 
-		[Fact]
+        [Fact]
+        public async Task Test_Execute_Asynchronously_With_Parameter()
+        {
+            // Arrange.
+            int result = 0;
+            var propertyOwner = new TestClass();
+
+            var command = Command.For(propertyOwner)
+                                 .DependsOn(p => p.BoolValue)
+                                 .ExecutesAsync((int x) =>
+                                 {
+                                     result = x;
+                                     return Task.CompletedTask;
+                                 });
+
+            // Act.
+            await command.ExecuteAsync(2);
+
+            // Assert.
+            Assert.Equal(2, result);
+        }
+
+        [Fact]
 		public void Test_CanExecute()
 		{
 			foreach (var value in new [] { true, false })
@@ -120,7 +155,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Mvvm.Commands
 				set { _boolValue2.Value = value; }
 			}
 
-			private readonly Property<bool> _boolValue;
+            private readonly Property<bool> _boolValue;
 			private readonly Property<bool> _boolValue2;
 		}
 	}

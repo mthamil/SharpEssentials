@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2015 Matthew Hamilton - matthamilton@live.com
+// Copyright 2016 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,14 +22,14 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
     /// <summary>
     /// Asynchronous relay command whose ability to execute can be externally triggered.
     /// </summary>
-    internal class TriggeredAsyncRelayCommand : AsyncRelayCommand<object>, ITriggerableCommand
+    internal class TriggeredAsyncRelayCommand<T> : AsyncRelayCommand<T>, ITriggerableCommand
     {
         /// <summary>
-        /// Initializes a new <see cref="TriggeredRelayCommand"/>.
+        /// Initializes a new <see cref="TriggeredRelayCommand{T}"/>.
         /// </summary>
         /// <param name="execute">The operation to execute.</param>
         /// <param name="canExecute">Determines whether a command can execute.</param>
-        public TriggeredAsyncRelayCommand(Func<object, Task> execute, Predicate<object> canExecute)
+        public TriggeredAsyncRelayCommand(Func<T, Task> execute, Predicate<T> canExecute)
             : base(execute, canExecute)
         {
         }

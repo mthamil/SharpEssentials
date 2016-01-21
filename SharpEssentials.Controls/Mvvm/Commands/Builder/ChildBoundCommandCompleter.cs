@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2015 Matthew Hamilton - matthamilton@live.com
+// Copyright 2016 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 			_canExecute = canExecute;
 		}
 
-		protected override Predicate<object> CanExecute() => _ => _canExecute();
+		protected override Predicate<T> CanExecute<T>() => _ => _canExecute();
 
 	    protected override TCommand Configure<TCommand>(TCommand command)
 	    {

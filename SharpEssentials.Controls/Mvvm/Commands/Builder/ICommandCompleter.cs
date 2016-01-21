@@ -37,7 +37,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 		/// </summary>
 		/// <param name="operation">The operation to be executed</param>
 		/// <returns>A new command</returns>
-		ICommand Executes(Action<object> operation);
+		ICommand Executes<T>(Action<T> operation);
 
         /// <summary>
         /// Sets the asynchronous operation that a command will execute.
@@ -51,6 +51,6 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
         /// </summary>
         /// <param name="operation">The asynchronous operation to be executed</param>
         /// <returns>A new command</returns>
-        IAsyncCommand ExecutesAsync(Func<object, Task> operation);
+        IAsyncCommand ExecutesAsync<T>(Func<T, Task> operation);
     }
 }

@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2015 Matthew Hamilton - matthamilton@live.com
+// Copyright 2016 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Windows.Input;
 using SharpEssentials.Reflection;
 
@@ -37,21 +36,17 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 		public PropertyBoundCommandCompleter(TSource source, Expression<Func<TSource, bool>> predicateProperty)
 		{
 			_source = source;
-			_property = new Lazy<PropertyInfo>(() => Reflect.PropertyOf(predicateProperty));
-			_canExecutePredicate = new Lazy<Predicate<object>>(() =>
-			{
-				Func<TSource, bool> func = predicateProperty.Compile();
-				return _ => func(_source);
-			});
+		    _predicateProperty = new Lazy<Func<TSource, bool>>(predicateProperty.Compile);
+		    _propertyName = Reflect.PropertyOf(predicateProperty).Name;
 		}
 
-		protected override Predicate<object> CanExecute() => _canExecutePredicate.Value;
+		protected override Predicate<T> CanExecute<T>() => _ => _predicateProperty.Value(_source);
 
 	    protected override TCommand Configure<TCommand>(TCommand command)
 	    {
             _source.PropertyChanged += (o, e) =>
             {
-                if (e.PropertyName == _property.Value.Name)
+                if (e.PropertyName == _propertyName)
                     command.RaiseCanExecuteChanged();
             };
             return command;
@@ -59,7 +54,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 
 
         private readonly TSource _source;
-		private readonly Lazy<PropertyInfo> _property;
-		private readonly Lazy<Predicate<object>> _canExecutePredicate;
+	    private readonly Lazy<Func<TSource, bool>> _predicateProperty;
+	    private readonly string _propertyName;
 	}
 }
