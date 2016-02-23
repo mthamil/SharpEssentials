@@ -127,6 +127,7 @@
     <Compile Include="ServiceProviderExtensions.cs" />
     <Compile Include="Weak\WeakEventManagerExtensions.cs" />
     <Compile Include="Weak\WeakEventHandler.cs" />
+    <Compile Include="Weak\WeakReferenceExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
