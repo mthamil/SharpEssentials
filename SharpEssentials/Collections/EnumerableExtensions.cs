@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2015 Matthew Hamilton - matthamilton@live.com
+// Copyright 2016 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -238,26 +238,26 @@ namespace SharpEssentials.Collections
 	        return String.Join(delimiter, items);
 	    }
 
-		/// <summary>
-		/// Returns the first element of a sequence or <see cref="Option&lt;T>.None"/> if the sequence is empty.
-		/// </summary>
-		/// <typeparam name="T">The type of items in the sequence</typeparam>
-		/// <param name="source">The source items to query</param>
-		/// <returns>An <see cref="Option&lt;T>.Some"/> containing the first element of the sequence or <see cref="Option&lt;T>.None"/></returns>
-		public static Option<T> FirstOrNone<T>(this IEnumerable<T> source)
+        /// <summary>
+        /// Returns the first element of a sequence or <see cref="Option.None{T}"/> if the sequence is empty.
+        /// </summary>
+        /// <typeparam name="T">The type of items in the sequence</typeparam>
+        /// <param name="source">The source items to query</param>
+        /// <returns>An <see cref="Option.Some{T}"/> containing the first element of the sequence or <see cref="Option.None{T}"/></returns>
+        public static Option<T> FirstOrNone<T>(this IEnumerable<T> source)
 		{
 			return source.FirstOrNone(x => true);
 		}
 
-		/// <summary>
-		/// Returns the first element of a sequence that satisfies a condition or <see cref="Option&lt;T>.None"/> if no such
-		/// element is found.
-		/// </summary>
-		/// <typeparam name="T">The type of items in the sequence</typeparam>
-		/// <param name="source">The source items to query</param>
-		/// <param name="predicate">The condition an item must satisfy</param>
-		/// <returns>An <see cref="Option&lt;T>.Some"/> containing the first element of the sequence meeting the condition or <see cref="Option&lt;T>.None"/></returns>
-		public static Option<T> FirstOrNone<T>(this IEnumerable<T> source, Func<T, bool> predicate)
+        /// <summary>
+        /// Returns the first element of a sequence that satisfies a condition or <see cref="Option.None{T}"/> if no such
+        /// element is found.
+        /// </summary>
+        /// <typeparam name="T">The type of items in the sequence</typeparam>
+        /// <param name="source">The source items to query</param>
+        /// <param name="predicate">The condition an item must satisfy</param>
+        /// <returns>An <see cref="Option.Some{T}"/> containing the first element of the sequence meeting the condition or <see cref="Option.None{T}"/></returns>
+        public static Option<T> FirstOrNone<T>(this IEnumerable<T> source, Func<T, bool> predicate)
 		{
 			if (source == null)
 				throw new ArgumentNullException(nameof(source));
@@ -267,10 +267,10 @@ namespace SharpEssentials.Collections
 			foreach (var item in source)
 			{
 				if (predicate(item))
-					return Option<T>.Some(item);
+					return Option.Some(item);
 			}
 
-			return Option<T>.None();
+			return Option.None<T>();
 		}
 
 		/// <summary>

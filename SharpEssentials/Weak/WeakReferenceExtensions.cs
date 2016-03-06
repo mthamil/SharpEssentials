@@ -30,7 +30,7 @@ namespace SharpEssentials.Weak
             T target;
             return reference.TryGetTarget(out target)
                 ? target
-                : Option<T>.None();
+                : Option.None<T>();
         } 
     }
 }

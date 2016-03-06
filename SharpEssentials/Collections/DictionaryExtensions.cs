@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2016 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System.Collections.Generic;
 
 namespace SharpEssentials.Collections
@@ -34,8 +34,8 @@ namespace SharpEssentials.Collections
 		{
 			TValue value;
 			return dictionary.TryGetValue(key, out value) 
-				? Option<TValue>.Some(value) 
-				: Option<TValue>.None();
+				? Option.Some(value) 
+				: Option.None<TValue>();
 		}
 	}
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using SharpEssentials;
 using Xunit;
-using Xunit.Extensions;
 
 namespace SharpEssentials.Tests.Unit.SharpEssentials
 {
@@ -12,7 +10,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 		public void Test_Some()
 		{
 			// Arrange.
-			var some = Option<string>.Some("some");
+			var some = Option.Some("some");
 
 			// Act.
 			bool hasValue = some.HasValue;
@@ -27,7 +25,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 		public void Test_None()
 		{
 			// Arrange.
-			var stringNone = Option<string>.None();
+			var stringNone = Option.None<string>();
 
 			// Act/Assert.
 			Assert.False(stringNone.HasValue);
@@ -37,31 +35,31 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 		[Fact]
 		public void Test_None_Equality()
 		{
-			var stringNone = Option<string>.None();
-			var intNone = Option<int>.None();
+			var stringNone = Option.None<string>();
+			var intNone = Option.None<int>();
 
 			Assert.NotSame(stringNone, intNone);
 			Assert.False(stringNone.Equals(intNone));
 
-			Assert.Same(Option<string>.None(), Option<string>.None());
-			Assert.Equal(Option<string>.None(), Option<string>.None());
+			Assert.Same(Option.None<string>(), Option.None<string>());
+			Assert.Equal(Option.None<string>(), Option.None<string>());
 		}
 
 		[Fact]
 		public void Test_Some_Equality()
 		{
-			var some = Option<string>.Some("some");
+			var some = Option.Some("some");
 			Assert.Equal(some, some);
 
 			// Test that equality is determined by Some's value.
-			var some2 = Option<string>.Some("some");
+			var some2 = Option.Some("some");
 			Assert.NotSame(some, some2);
 			Assert.Equal(some, some2);
 
-			some2 = Option<string>.Some("some2");
+			some2 = Option.Some("some2");
 			Assert.NotEqual(some, some2);
 
-			var intSome = Option<int>.Some(3);
+			var intSome = Option.Some(3);
 			Assert.Equal(3, intSome.Value);
 			Assert.False(intSome.Equals(some2));
 		}
@@ -129,7 +127,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 		public void Test_Option_From(bool expectValue, string value)
 		{
 			// Act.
-			Option<string> option = Option<string>.From(value);
+			Option<string> option = Option.From(value);
 
 			// Assert.
 			Assert.Equal(expectValue, option.HasValue);
@@ -256,7 +254,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 			var result = someInt.OrElse(() =>
 			{ 
 				invoked = true;
-				return Option<int>.None();
+				return Option.None<int>();
 			});
 
 			// Assert.
@@ -287,7 +285,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 		public void Test_None_Select()
 		{
 			// Arrange.
-			var noneInt = Option<int>.None();
+			var noneInt = Option.None<int>();
 
 			// Act.
 			Option<string> result = noneInt.Select(x => x.ToString(CultureInfo.InvariantCulture));
@@ -302,7 +300,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 		public void Test_None_SelectMany()
 		{
 			// Arrange.
-			var noneInt = Option<int>.None();
+			var noneInt = Option.None<int>();
 
 			// Act.
 			Option<string> result = noneInt.SelectMany(x => new ReturnsOption(x).Get(true));
@@ -320,7 +318,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 		public void Test_None_Where()
 		{
 			// Arrange.
-			var noneInt = Option<int>.None();
+			var noneInt = Option.None<int>();
 
 			// Act.
 			var result = noneInt.Where(x => x % 2 == 0);
@@ -338,7 +336,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 		public void Test_None_Apply()
 		{
 			// Arrange.
-			var noneInt = Option<int>.None();
+			var noneInt = Option.None<int>();
 			int sum = 2;
 
 			// Act.
@@ -352,14 +350,14 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 		public void Test_None_OrElse()
 		{
 			// Arrange.
-			var noneInt = Option<int>.None();
+			var noneInt = Option.None<int>();
 			bool invoked = false;
 
 			// Act.
 			var result = noneInt.OrElse(() =>
 			{
 				invoked = true;
-				return Option<int>.Some(5);
+				return Option.Some(5);
 			});
 
 			// Assert.
@@ -371,7 +369,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 		public void Test_None_GetOrElse()
 		{
 			// Arrange.
-			var noneInt = Option<int>.None();
+			var noneInt = Option.None<int>();
 			bool invoked = false;
 
 			// Act.
@@ -398,9 +396,9 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 			public Option<string> Get(bool shouldHaveValue)
 			{
 				if (shouldHaveValue)
-					return Option<string>.Some(_val.ToString(CultureInfo.InvariantCulture));
+					return Option.Some(_val.ToString(CultureInfo.InvariantCulture));
 
-				return Option<string>.None();
+				return Option.None<string>();
 			}
 		}
 	}

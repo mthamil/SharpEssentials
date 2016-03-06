@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2016 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,6 +17,29 @@ using System;
 
 namespace SharpEssentials
 {
+    /// <summary>
+    /// Provides factory methods for <see cref="Option{T}"/>s.
+    /// </summary>
+    public static class Option
+    {
+        /// <summary>
+	    /// Returns a None Option of a given type.
+	    /// </summary>
+	    public static Option<T> None<T>() => SharpEssentials.None<T>.Instance;
+
+        /// <summary>
+        /// Creates a Some Option with the given value.
+        /// </summary>
+        public static Option<T> Some<T>(T value) => new Some<T>(value);
+
+        /// <summary>
+        /// Creates an Option from a value that may be null.
+        /// None will be returned if the value is null, otherwise
+        /// Some.
+        /// </summary>
+        public static Option<T> From<T>(T value) => value == null ? None<T>() : Some(value);
+    }
+
 	/// <summary>
 	/// Provides a safe method for handling objects where it is expected that a value may not exist.
 	/// This is similar to a Nullable type, but it is also usable with reference types using the 
@@ -31,27 +54,9 @@ namespace SharpEssentials
 		internal Option() { }
 
 	    /// <summary>
-	    /// Returns a None Option of a given type.
-	    /// </summary>
-	    public static Option<T> None() => none;
-		private static readonly Option<T> none = new None<T>();	// this can be a singleton for each type because None has no mutable state
-
-		/// <summary>
-		/// Creates a Some Option with the given value.
-		/// </summary>
-		public static Option<T> Some(T value) => new Some<T>(value);
-
-		/// <summary>
-		/// Creates an Option from a value that may be null.
-		/// None will be returned if the value is null, otherwise
-		/// Some.
-		/// </summary>
-		public static Option<T> From(T value) => value == null ? None() : Some(value);
-
-	    /// <summary>
 	    /// Converts a value to an Option type.
 	    /// </summary>
-	    public static implicit operator Option<T>(T value) => From(value);
+	    public static implicit operator Option<T>(T value) => Option.From(value);
 
 		/// <summary>
 		/// True if a value exists.
@@ -120,6 +125,16 @@ namespace SharpEssentials
 	/// </summary>
 	internal class None<T> : Option<T>
 	{
+        /// <summary>
+        /// Singleton instance.
+        /// </summary>
+        internal static Option<T> Instance { get; } = new None<T>();
+
+        /// <summary>
+        /// Prevent instantiation.
+        /// </summary>
+        private None() { } 
+
 		/// <summary>
 		/// Always returns false.
 		/// </summary>
@@ -137,24 +152,24 @@ namespace SharpEssentials
 		/// Returns None of the result type.
 		/// </summary>
 		public override Option<TResult> Select<TResult>(Func<T, TResult> selector) 
-            => Option<TResult>.None();
+            => Option.None<TResult>();
 
 		/// <summary>
 		/// Returns None of the result type.
 		/// </summary>
 		public override Option<TResult> SelectMany<TResult>(Func<T, Option<TResult>> optionSelector) 
-            => Option<TResult>.None();
+            => Option.None<TResult>();
 
 		/// <summary>
 		/// Returns None of the result type.
 		/// </summary>
 		public override Option<TResult> SelectMany<TIntermediate, TResult>(Func<T, Option<TIntermediate>> optionSelector, Func<T, TIntermediate, TResult> resultSelector) 
-            => Option<TResult>.None();
+            => Option.None<TResult>();
 
 	    /// <summary>
 		/// Returns None.
 		/// </summary>
-		public override Option<T> Where(Func<T, bool> predicate) => None();
+		public override Option<T> Where(Func<T, bool> predicate) => Option.None<T>();
 
 	    /// <summary>
 		/// Does nothing.
@@ -206,7 +221,7 @@ namespace SharpEssentials
 		/// Applies a mapping function to a Some's value.
 		/// </summary>
 		public override Option<TResult> Select<TResult>(Func<T, TResult> selector)
-            => Option<TResult>.From(selector(Value));
+            => Option.From(selector(Value));
 
 	    /// <summary>
 		/// Applies a mapping function to a Some's value.
@@ -221,15 +236,15 @@ namespace SharpEssentials
 		{
 			var intermediate = optionSelector(Value);
 			if (intermediate.HasValue)
-				return Option<TResult>.From(resultSelector(Value, intermediate.Value));
+				return Option.From(resultSelector(Value, intermediate.Value));
 
-			return Option<TResult>.None();
+			return Option.None<TResult>();
 		}
 
 		/// <summary>
 		/// Returns this Option if its value meets the given condition.
 		/// </summary>
-		public override Option<T> Where(Func<T, bool> predicate) => predicate(Value) ? this : None();
+		public override Option<T> Where(Func<T, bool> predicate) => predicate(Value) ? this : Option.None<T>();
 
 	    /// <summary>
 		/// Performs an action on the Option's value.

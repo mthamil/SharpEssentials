@@ -466,8 +466,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 		    {
 		        { "2",					 new [] { "1", "2", "3", "4" } },
 		        { "4",					 new [] { "4", "3", "2", "1" } },
-		        { Option<string>.None(), new [] { "1", "3", "5", "7" } },
-		        { Option<string>.None(), Enumerable.Empty<string>() },
+		        { Option.None<string>(), new [] { "1", "3", "5", "7" } },
+		        { Option.None<string>(), Enumerable.Empty<string>() },
 		    };
 
 	    [Theory]
@@ -500,7 +500,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 		    {
 		        { "1",					 new [] { "1", "2", "3", "4" } },
 		        { "4",					 new [] { "4" } },
-		        { Option<string>.None(), Enumerable.Empty<string>() },
+		        { Option.None<string>(), Enumerable.Empty<string>() },
 		    };
 
 	    [Theory]
