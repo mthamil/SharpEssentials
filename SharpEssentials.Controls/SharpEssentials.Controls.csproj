@@ -98,6 +98,7 @@
     <Compile Include="Converters\DirectoryInfoToUriConverter.cs" />
     <Compile Include="Converters\FileInfoToUriConverter.cs" />
     <Compile Include="Converters\FileSystemInfoToDirectoryInfoConverter.cs" />
+    <Compile Include="Converters\GreaterThanConverter.cs" />
     <Compile Include="Converters\NegatingConverter.cs" />
     <Compile Include="Converters\NullToFalseValueConverter.cs" />
     <Compile Include="Converters\ObjectGetTypeConverter.cs" />
@@ -166,6 +167,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Compile Include="Localization\LocalizeExtension.Binding.cs" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

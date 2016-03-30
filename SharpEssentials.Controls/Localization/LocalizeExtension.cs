@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2016 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,7 +26,6 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Interop;
 using System.Windows.Markup;
@@ -53,7 +52,7 @@ namespace SharpEssentials.Controls.Localization
     /// </summary>
     [MarkupExtensionReturnType(typeof(object))]
     [ContentProperty("Children")]
-    public class LocalizeExtension : ManagedMarkupExtension
+    public partial class LocalizeExtension : ManagedMarkupExtension
     {
         /// <summary>
         /// This global event allows a designer or preview application (such as Globalizer.NET) to
@@ -106,13 +105,15 @@ namespace SharpEssentials.Controls.Localization
                     if (_defaultResxName == null)
                     {
                         WeakReference targetRef = TargetObjects.FirstOrDefault(target => target.IsAlive);
-                        if (targetRef != null)
+                        var targetDependencyObject = targetRef?.Target as DependencyObject;
+                        if (targetDependencyObject != null)
                         {
-	                        var targetDependencyObject = targetRef.Target as DependencyObject;
-	                        if (targetDependencyObject != null)
-                            {
-                               _defaultResxName = targetDependencyObject.GetValue(DefaultResxNameProperty) as string;
-                            }
+                            _defaultResxName = targetDependencyObject.GetValue(DefaultResxNameProperty) as string;
+                            //if (_defaultResxName == null)
+                            //{
+                            //    var inferredName = targetDependencyObject.GetType().FullName + "Resources";
+                            //    SetDefaultResxName(targetDependencyObject, inferredName);
+                            //}
                         }
                     }
                     result = _defaultResxName;
@@ -124,6 +125,11 @@ namespace SharpEssentials.Controls.Localization
                 _resxName = value; 
             }
         }
+
+        /// <summary>
+		/// The explicitly set embedded Resx Name (if any).
+		/// </summary>
+		private string _resxName;
 
         /// <summary>
 		/// The key used to retrieve the resource.
@@ -151,231 +157,6 @@ namespace SharpEssentials.Controls.Localization
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Collection<LocalizeExtension> Children => _children;
 
-        #region Delegated Binding properties
-
-        /// <summary>
-        /// The associated binding for the extension.
-        /// </summary>
-        public Binding Binding => _binding.Value;
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.ElementName"/>.
-        /// </summary>
-        [DefaultValue(null)]
-        public string BindingElementName
-        {
-            get { return Binding.ElementName; }
-            set { Binding.ElementName = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.Path"/>.
-        /// </summary>
-        [DefaultValue(null)]
-        public PropertyPath BindingPath
-        {
-            get { return Binding.Path; }
-            set { Binding.Path = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.RelativeSource"/>.
-        /// </summary>
-        [DefaultValue(null)]
-        public RelativeSource BindingRelativeSource
-        {
-            get { return Binding.RelativeSource; }
-            set { Binding.RelativeSource = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.Source"/>.
-        /// </summary>
-        [DefaultValue(null)]
-        public object BindingSource
-        {
-            get { return Binding.Source; }
-            set { Binding.Source = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.XPath"/>.
-        /// </summary>
-        [DefaultValue(null)]
-        public string BindingXPath
-        {
-            get { return Binding.XPath; }
-            set { Binding.XPath = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.Converter"/>.
-        /// </summary>
-        [DefaultValue(null)]
-        public IValueConverter BindingConverter
-        {
-            get { return Binding.Converter; }
-            set { Binding.Converter = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.BindingBase.BindingGroupName"/>.
-        /// </summary>
-        [DefaultValue(null)]
-        public string BindingGroupName
-        {
-            get { return Binding.BindingGroupName; }
-            set { Binding.BindingGroupName = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.ConverterCulture"/>.
-        /// </summary>
-        [DefaultValue(null)]
-        public CultureInfo BindingConverterCulture
-        {
-            get { return Binding.ConverterCulture; }
-            set { Binding.ConverterCulture = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.ConverterParameter"/>.
-        /// </summary>
-        [DefaultValue(null)]
-        public object BindingConverterParameter
-        {
-            get { return Binding.ConverterParameter; }
-            set { Binding.ConverterParameter = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.BindsDirectlyToSource"/>.
-        /// </summary>
-        [DefaultValue(false)]
-        public bool BindsDirectlyToSource
-        {
-            get { return Binding.BindsDirectlyToSource; }
-            set { Binding.BindsDirectlyToSource = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.Mode"/>.
-        /// </summary>
-        [DefaultValue(BindingMode.Default)]
-        public BindingMode BindingMode
-        {
-            get { return Binding.Mode; }
-            set { Binding.Mode = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.NotifyOnSourceUpdated"/>.
-        /// </summary>
-        [DefaultValue(false)]
-        public bool BindingNotifyOnSourceUpdated
-        {
-            get { return Binding.NotifyOnSourceUpdated; }
-            set { Binding.NotifyOnSourceUpdated = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.NotifyOnTargetUpdated"/>.
-        /// </summary>
-        [DefaultValue(false)]
-        public bool BindingNotifyOnTargetUpdated
-        {
-            get { return Binding.NotifyOnTargetUpdated; }
-            set { Binding.NotifyOnTargetUpdated = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.NotifyOnValidationError"/>.
-        /// </summary>
-        [DefaultValue(false)]
-        public bool BindingNotifyOnValidationError
-        {
-            get { return Binding.NotifyOnValidationError; }
-            set { Binding.NotifyOnValidationError = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.AsyncState"/>.
-        /// </summary>
-        [DefaultValue(null)]
-        public object BindingAsyncState
-        {
-            get { return Binding.AsyncState; }
-            set { Binding.AsyncState = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.IsAsync"/>.
-        /// </summary>
-        [DefaultValue(false)]
-        public bool BindingIsAsync
-        {
-            get { return Binding.IsAsync; }
-            set { Binding.IsAsync = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.BindingBase.FallbackValue"/>.
-        /// </summary>
-        [DefaultValue(null)]
-        public object BindingFallbackValue
-        {
-            get { return Binding.FallbackValue; }
-            set { Binding.FallbackValue = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.BindingBase.TargetNullValue"/>.
-        /// </summary>
-        [DefaultValue(null)]
-        public object BindingTargetNullValue
-        {
-            get { return Binding.TargetNullValue; }
-            set { Binding.TargetNullValue = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.ValidatesOnDataErrors"/>.
-        /// </summary>
-        [DefaultValue(false)]
-        public bool BindingValidatesOnDataErrors
-        {
-            get { return Binding.ValidatesOnDataErrors; }
-            set { Binding.ValidatesOnDataErrors = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.ValidatesOnExceptions"/>.
-        /// </summary>
-        [DefaultValue(false)]
-        public bool BindingValidatesOnExceptions
-        {
-            get { return Binding.ValidatesOnExceptions; }
-            set { Binding.ValidatesOnExceptions = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.UpdateSourceTrigger"/>.
-        /// </summary>
-        [DefaultValue(UpdateSourceTrigger.Default)]
-        public UpdateSourceTrigger BindingUpdateSourceTrigger
-        {
-            get { return Binding.UpdateSourceTrigger; }
-            set { Binding.UpdateSourceTrigger = value; }
-        }
-
-        /// <summary>
-        /// Use the Resx value to format bound data.  See <see cref="System.Windows.Data.Binding.ValidationRules"/>.
-        /// </summary>
-        [DefaultValue(false)]
-        public Collection<ValidationRule> BindingValidationRules => Binding.ValidationRules;
-
-        #endregion
-
         /// <summary>
         /// Returns the value for this instance of the Markup Extension.
         /// </summary>
@@ -387,7 +168,7 @@ namespace SharpEssentials.Controls.Localization
             RegisterTarget(serviceProvider);
 
             if (String.IsNullOrEmpty(Key) && !IsBindingExpression)
-                throw new ArgumentException("You must set the resource Key or Binding properties");
+                throw new ArgumentException($"You must set the resource {nameof(Key)} or {nameof(Binding)} properties.");
 
             // If the extension is used in a template or as a child of another
             // extension (for multi-binding) then return this.
@@ -458,7 +239,8 @@ namespace SharpEssentials.Controls.Localization
 		{
 			if (DesignerProperties.GetIsInDesignMode(element))
 			{
-				var applicableExtensions = MarkupExtensionManager.For<LocalizeExtension>(CleanupInterval).ActiveExtensions
+				var applicableExtensions = MarkupExtensionManager.For<LocalizeExtension>(CleanupInterval)
+                                                                 .ActiveExtensions
 																 .OfType<LocalizeExtension>()
 															     .Where(extension => extension.IsTarget(element));
 				foreach (var extension in applicableExtensions)
@@ -470,6 +252,11 @@ namespace SharpEssentials.Controls.Localization
 				}
 			}
 		}
+
+        /// <summary>
+		/// The default resx name (based on the attached property).
+		/// </summary>
+		private string _defaultResxName;
 
         #region Local Methods
 
@@ -851,16 +638,6 @@ namespace SharpEssentials.Controls.Localization
         }
 
         #endregion
-
-		/// <summary>
-		/// The explicitly set embedded Resx Name (if any).
-		/// </summary>
-		private string _resxName;
-
-		/// <summary>
-		/// The default resx name (based on the attached property).
-		/// </summary>
-		private string _defaultResxName;
 
         /// <summary>
 		/// The resource manager to use for this extension.  Holding a strong reference to the
