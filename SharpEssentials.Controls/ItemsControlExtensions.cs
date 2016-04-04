@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
@@ -66,5 +67,18 @@ namespace SharpEssentials.Controls
                 } while (next != null);
             }
         }
+
+        /// <summary>
+        /// Iterates over the generated items in an <see cref="ItemsControl"/>.
+        /// </summary>
+        public static IEnumerable<DependencyObject> GetItems(this ItemsControl items)
+        {
+            for (int i = 0; i < items.ItemContainerGenerator.Items.Count; i++)
+            {
+                var item = items.ItemContainerGenerator.ContainerFromIndex(i);
+                if (item != null)
+                    yield return item;
+            }
+        } 
     }
 }

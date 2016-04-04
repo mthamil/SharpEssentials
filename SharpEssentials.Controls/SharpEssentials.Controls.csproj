@@ -73,6 +73,7 @@
     <Compile Include="Behaviors\GridSplitterExpanderSupport\GridSplitterExpanderSupportBehavior.cs" />
     <Compile Include="Behaviors\GridSplitterExpanderSupport\RowExpanderSize.cs" />
     <Compile Include="Behaviors\Interactivity\Interactions.cs" />
+    <Compile Include="Behaviors\ItemDragReordering.cs" />
     <Compile Include="Behaviors\LoadDependentBehavior.cs" />
     <Compile Include="Behaviors\SelectedItemPath.cs" />
     <Compile Include="Behaviors\TabWheelScrolling.cs" />
