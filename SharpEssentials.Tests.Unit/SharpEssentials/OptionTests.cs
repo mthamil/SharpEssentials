@@ -237,10 +237,11 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 			int sum = 2;
 
 			// Act.
-			someInt.Apply(x => sum += x);
+			var result = someInt.Apply(x => sum += x);
 
 			// Assert.
 			Assert.Equal(7, sum);
+            Assert.Equal(someInt, result);
 		}
 
 		[Fact]
@@ -262,7 +263,22 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 			Assert.Equal(someInt.Value, result.Value);
 		}
 
-		[Fact]
+        [Fact]
+        public void Test_Some_OrElse_No_Alternative()
+        {
+            // Arrange.
+            Option<int> someInt = 5;
+            bool invoked = false;
+
+            // Act.
+            var result = someInt.OrElse(() => invoked = true);
+
+            // Assert.
+            Assert.False(invoked);
+            Assert.Equal(someInt.Value, result.Value);
+        }
+
+        [Fact]
 		public void Test_Some_GetOrElse()
 		{
 			// Arrange.
@@ -340,10 +356,11 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 			int sum = 2;
 
 			// Act.
-			noneInt.Apply(x => sum += x);
+			var result = noneInt.Apply(x => sum += x);
 
 			// Assert.
 			Assert.Equal(2, sum);
+            Assert.Equal(noneInt, result);
 		}
 
 		[Fact]
@@ -365,7 +382,21 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
 			Assert.Equal(5, result.Value);
 		}
 
-		[Fact]
+	    [Fact] public void Test_None_OrElse_No_Alternative()
+        {
+            // Arrange.
+            var noneInt = Option.None<int>();
+            bool invoked = false;
+
+            // Act.
+            var result = noneInt.OrElse(() => invoked = true);
+
+            // Assert.
+            Assert.True(invoked);
+            Assert.Equal(noneInt, result);
+        }
+
+        [Fact]
 		public void Test_None_GetOrElse()
 		{
 			// Arrange.

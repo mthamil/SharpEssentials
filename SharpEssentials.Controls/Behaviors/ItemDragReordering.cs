@@ -1,4 +1,19 @@
-﻿using System;
+﻿// Sharp Essentials
+// Copyright 2016 Matthew Hamilton - matthamilton@live.com
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//      http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+using System;
 using System.Collections;
 using System.Linq;
 using System.Windows;
@@ -6,6 +21,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interactivity;
+using SharpEssentials.Controls.Rendering;
 
 namespace SharpEssentials.Controls.Behaviors
 {
@@ -20,6 +36,31 @@ namespace SharpEssentials.Controls.Behaviors
             AssociatedObject.ItemContainerGenerator.StatusChanged += ItemContainerGenerator_StatusChanged;
         }
 
+        /// <see cref="Behavior.OnDetaching"/>
+        protected override void OnDetaching()
+        {
+            AssociatedObject.ItemContainerGenerator.StatusChanged -= ItemContainerGenerator_StatusChanged;
+        }
+
+        /// <summary>
+        /// Whether to use a ghosted image of the item being dragged as the cursor.
+        /// </summary>
+        public bool ShowItemBeingDragged
+        {
+            get { return (bool)GetValue(ShowItemBeingDraggedProperty); }
+            set { SetValue(ShowItemBeingDraggedProperty, value); }
+        }
+
+        /// <summary>
+        /// Dependency property for the <see cref="ShowItemBeingDragged"/> property.
+        /// </summary>
+        public static readonly DependencyProperty ShowItemBeingDraggedProperty = 
+            DependencyProperty.Register(
+                nameof(ShowItemBeingDragged), 
+                typeof(bool), 
+                typeof(ItemDragReordering), 
+                new PropertyMetadata(false));
+
         private void ItemContainerGenerator_StatusChanged(object sender, EventArgs e)
         {
             if (AssociatedObject.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
@@ -33,6 +74,7 @@ namespace SharpEssentials.Controls.Behaviors
                     foreach (var item in items)
                     {
                         item.AllowDrop = true;
+                        item.GiveFeedback += Item_GiveFeedback;
                         item.PreviewMouseLeftButtonDown += Item_PreviewMouseLeftButtonDown;
                         item.PreviewMouseMove += Item_PreviewMouseMove;
                         item.DragEnter += Item_DragEnter;
@@ -40,6 +82,24 @@ namespace SharpEssentials.Controls.Behaviors
                     }
                 }));
             }
+        }
+
+        private void Item_GiveFeedback(object sender, GiveFeedbackEventArgs e)
+        {
+            if (!ShowItemBeingDragged)
+                return;
+
+            if (e.Effects.HasFlag(DragDropEffects.Move))
+            {
+                e.UseDefaultCursors = false;
+                Mouse.SetCursor(((UIElement)e.Source).ToCursor(opacity: 0.75));
+            }
+            else
+            {
+                e.UseDefaultCursors = true;
+            }
+
+            e.Handled = true;
         }
 
         private void Item_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
