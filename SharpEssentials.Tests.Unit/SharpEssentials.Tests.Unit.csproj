@@ -122,6 +122,8 @@
     <Compile Include="SharpEssentials.Controls\Behaviors\CollectionViewSourceFilterActionTests.cs" />
     <Compile Include="SharpEssentials.Controls\Behaviors\AutoSelectOnFocusBehaviorTests.cs" />
     <Compile Include="SharpEssentials.Controls\Behaviors\TreeViewBindableSelectedItemBehaviorTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Collections\CollectionMirrorGenericTests.cs" />
+    <Compile Include="SharpEssentials.Controls\Collections\CollectionMirrorTests.cs" />
     <Compile Include="SharpEssentials.Controls\Commands\CloseWindowCommandTests.cs" />
     <Compile Include="SharpEssentials.Controls\Commands\OpenContextMenuCommandTests.cs" />
     <Compile Include="SharpEssentials.Controls\Converters\BooleanToVisibilityValueConverterTests.cs" />
@@ -142,8 +144,6 @@
     <Compile Include="SharpEssentials.Controls\Selectors\TypeMapDataTemplateSelectorTests.cs" />
     <Compile Include="SharpEssentials\Collections\AsyncEnumerableExtensionsTests.cs" />
     <Compile Include="SharpEssentials\Collections\CollectionExtensionTests.cs" />
-    <Compile Include="SharpEssentials\Collections\CollectionMirrorGenericTests.cs" />
-    <Compile Include="SharpEssentials\Collections\CollectionMirrorTests.cs" />
     <Compile Include="SharpEssentials\Collections\DictionaryExtensionsTests.cs" />
     <Compile Include="SharpEssentials\Collections\EnumerableExtensionsTests.cs" />
     <Compile Include="SharpEssentials\Collections\ReverseComparerTests.cs" />

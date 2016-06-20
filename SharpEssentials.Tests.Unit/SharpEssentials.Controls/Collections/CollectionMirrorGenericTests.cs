@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Moq;
-using SharpEssentials.Collections;
+using SharpEssentials.Controls.Collections;
 using SharpEssentials.Testing;
 using Xunit;
 
-namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
+namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Collections
 {
-	public class CollectionMirrorTests
+	public class CollectionMirrorGenericTests
 	{
 		[Fact]
 		public void Test_InitialSynchronization()
@@ -19,7 +19,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			var target = new ObservableCollection<string> { "4", "5", "6" };
 
 			// Act.
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Assert.
 			AssertThat.SequenceEqual(new[] { "1", "2", "3" }, source);
@@ -32,7 +32,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string>();
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Act.
 			source.Add("1");
@@ -48,7 +48,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string>();
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Act.
 			target.Add("1");
@@ -64,7 +64,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "3" };
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Act.
 			source.Insert(1, "2");
@@ -80,7 +80,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "3" };
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Act.
 			target.Insert(1, "2");
@@ -96,7 +96,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Act.
 			source.Remove("2");
@@ -112,7 +112,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Act.
 			target.Remove("2");
@@ -128,7 +128,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Act.
 			source.RemoveAt(2);
@@ -144,7 +144,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Act.
 			target.RemoveAt(2);
@@ -160,7 +160,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Act.
 			source[0] = "0";
@@ -176,7 +176,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Act.
 			target[0] = "0";
@@ -192,7 +192,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Act.
 			source.Move(0, 2);
@@ -208,7 +208,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Act.
 			target.Move(0, 2);
@@ -224,7 +224,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Act.
 			source.Clear();
@@ -240,7 +240,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Act.
 			target.Clear();
@@ -254,11 +254,11 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 		public void Test_RemoveMultiple()
 		{
 			// Arrange.
-			var source = new Mock<IObservableList> { DefaultValue = DefaultValue.Empty };
-			source.Setup(s => s.GetEnumerator()).Returns(new [] { "1", "2", "3" }.GetEnumerator());
+			var source = new Mock<IObservableList<string>> { DefaultValue = DefaultValue.Empty };
+			source.Setup(s => s.GetEnumerator()).Returns(new List<string> { "1", "2", "3" }.GetEnumerator());
 
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source.Object, target);
+			var mirror = new CollectionMirror<string>(source.Object, target);
 
 			// Act.
 			source.Raise(s => s.CollectionChanged += null, 
@@ -272,11 +272,11 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 		public void Test_AddMultiple()
 		{
 			// Arrange.
-			var source = new Mock<IObservableList> { DefaultValue = DefaultValue.Empty };
-			source.Setup(s => s.GetEnumerator()).Returns(new[] { "1", "2", "3" }.GetEnumerator());
+			var source = new Mock<IObservableList<string>> { DefaultValue = DefaultValue.Empty };
+			source.Setup(s => s.GetEnumerator()).Returns(new List<string> { "1", "2", "3" }.GetEnumerator());
 
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source.Object, target);
+			var mirror = new CollectionMirror<string>(source.Object, target);
 
 			// Act.
 			source.Raise(s => s.CollectionChanged += null,
@@ -292,7 +292,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<string>();
-			var mirror = new CollectionMirror(source, target);
+			var mirror = new CollectionMirror<string>(source, target);
 
 			// Act.
 			mirror.Dispose();
@@ -312,8 +312,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			var target = new ObservableCollection<int> { 4, 5, 6 };
 
 			// Act.
-			var mirror = new CollectionMirror(source, target, 
-				obj => Int32.Parse((string)obj), 
+			var mirror = new CollectionMirror<string, int>(source, target, 
+				obj => Int32.Parse(obj), 
 				obj => obj.ToString());
 
 			// Assert.
@@ -327,8 +327,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string>();
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -345,8 +345,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string>();
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -363,8 +363,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "3" };
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -381,8 +381,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "3" };
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -399,8 +399,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -417,8 +417,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -435,8 +435,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -453,8 +453,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -471,8 +471,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -489,8 +489,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -507,8 +507,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -525,8 +525,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -543,8 +543,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -561,8 +561,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			// Arrange.
 			var source = new ObservableCollection<string> { "1", "2", "3" };
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -577,12 +577,12 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 		public void Test_RemoveMultiple_WithMapping()
 		{
 			// Arrange.
-			var source = new Mock<IObservableList> { DefaultValue = DefaultValue.Empty };
-			source.Setup(s => s.GetEnumerator()).Returns(new[] { "1", "2", "3" }.GetEnumerator());
+			var source = new Mock<IObservableList<string>> { DefaultValue = DefaultValue.Empty };
+			source.Setup(s => s.GetEnumerator()).Returns(new List<string> { "1", "2", "3" }.GetEnumerator());
 
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source.Object, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source.Object, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -597,12 +597,12 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 		public void Test_AddMultiple_WithMapping()
 		{
 			// Arrange.
-			var source = new Mock<IObservableList> { DefaultValue = DefaultValue.Empty };
-			source.Setup(s => s.GetEnumerator()).Returns(new[] { "1", "2", "3" }.GetEnumerator());
+			var source = new Mock<IObservableList<string>> { DefaultValue = DefaultValue.Empty };
+			source.Setup(s => s.GetEnumerator()).Returns(new List<string> { "1", "2", "3" }.GetEnumerator());
 
 			var target = new ObservableCollection<int>();
-			var mirror = new CollectionMirror(source.Object, target,
-				obj => Int32.Parse((string)obj),
+			var mirror = new CollectionMirror<string, int>(source.Object, target,
+				obj => Int32.Parse(obj),
 				obj => obj.ToString());
 
 			// Act.
@@ -613,6 +613,6 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 			AssertThat.SequenceEqual(new[] { 1, 2, 3, 4, 5 }, target);
 		}
 
-		internal interface IObservableList : INotifyCollectionChanged, IList { }
+        internal interface IObservableList<T> : INotifyCollectionChanged, IList<T> { }
 	}
 }

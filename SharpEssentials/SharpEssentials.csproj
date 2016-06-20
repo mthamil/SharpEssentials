@@ -71,7 +71,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Chronology\DispatcherTimerAdapter.cs" />
     <Compile Include="Chronology\IClock.cs" />
     <Compile Include="Chronology\ITimer.cs" />
     <Compile Include="Chronology\SystemClock.cs" />
@@ -79,8 +78,6 @@
     <Compile Include="Chronology\TimerBase.cs" />
     <Compile Include="Collections\AsyncEnumerableExtensions.cs" />
     <Compile Include="Collections\CollectionExtensions.cs" />
-    <Compile Include="Collections\CollectionMirror.cs" />
-    <Compile Include="Collections\CollectionMirrorGeneric.cs" />
     <Compile Include="Collections\DictionaryExtensions.cs" />
     <Compile Include="Collections\EnumerableExtensions.cs" />
     <Compile Include="Collections\ReverseComparer.cs" />
@@ -125,7 +122,6 @@
     <Compile Include="Reflection\Reflect.cs" />
     <Compile Include="Reflection\ReflectionExtensions.cs" />
     <Compile Include="ServiceProviderExtensions.cs" />
-    <Compile Include="Weak\WeakEventManagerExtensions.cs" />
     <Compile Include="Weak\WeakEventHandler.cs" />
     <Compile Include="Weak\WeakReferenceExtensions.cs" />
   </ItemGroup>

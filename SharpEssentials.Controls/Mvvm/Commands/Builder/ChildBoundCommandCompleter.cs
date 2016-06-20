@@ -20,7 +20,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using SharpEssentials.Reflection;
-using static SharpEssentials.Weak.WeakEventManagerExtensions;
+using static SharpEssentials.Controls.Weak.WeakEventManagerExtensions;
 
 namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 {

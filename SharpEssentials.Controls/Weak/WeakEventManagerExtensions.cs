@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2015 Matthew Hamilton - matthamilton@live.com
+// Copyright 2016 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 using System;
 using System.Windows;
 
-namespace SharpEssentials.Weak
+namespace SharpEssentials.Controls.Weak
 {
     public static class WeakEventManagerExtensions
     {

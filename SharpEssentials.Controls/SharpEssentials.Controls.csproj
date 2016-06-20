@@ -83,8 +83,11 @@
     <Compile Include="Behaviors\TreeViewItemExpandedCommandBehavior.cs" />
     <Compile Include="Behaviors\TreeViewItemSelectedCommandBehavior.cs" />
     <Compile Include="Behaviors\WindowBehaviors.cs" />
+    <Compile Include="Chronology\DispatcherTimerAdapter.cs" />
     <Compile Include="Clipboard\ClipboardWrapper.cs" />
     <Compile Include="Clipboard\IClipboard.cs" />
+    <Compile Include="Collections\CollectionMirror.cs" />
+    <Compile Include="Collections\CollectionMirrorGeneric.cs" />
     <Compile Include="Commands\BrowseToCommand.cs" />
     <Compile Include="Commands\CloseWindowCommand.cs" />
     <Compile Include="Commands\DependencyCommandBase.cs" />
@@ -162,6 +165,7 @@
     <Compile Include="Selectors\TypeBasedStyleSelector.cs" />
     <Compile Include="TreeViewExtensions.cs" />
     <Compile Include="VisualTreeExtensions.cs" />
+    <Compile Include="Weak\WeakEventManagerExtensions.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -189,6 +193,7 @@
       <Name>SharpEssentials</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
