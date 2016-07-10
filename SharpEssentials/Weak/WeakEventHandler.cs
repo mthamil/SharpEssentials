@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2016 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
 // limitations under the License.
 
 using System;
+using System.Reflection;
 
 namespace SharpEssentials.Weak
 {
@@ -52,7 +53,7 @@ namespace SharpEssentials.Weak
 		public WeakEventHandler(EventHandler<TArgs> eventHandler, UnregisterCallback<TArgs> unregister)
 		{
 			_targetRef = new WeakReference(eventHandler.Target);
-			_openHandler = (OpenEventHandler)Delegate.CreateDelegate(openEventHandlerType, null, eventHandler.Method);
+		    _openHandler = (OpenEventHandler)eventHandler.GetMethodInfo().CreateDelegate(OpenEventHandlerType, null);
 			_handler = Invoke;
 			_unregister = unregister;
 		}
@@ -64,7 +65,7 @@ namespace SharpEssentials.Weak
 		/// <param name="e">The event args</param>
 		public void Invoke(object sender, TArgs e)
 		{
-			TTarget target = (TTarget)_targetRef.Target;
+			var target = (TTarget)_targetRef.Target;
 
 		    if (target != null)
 		    {
@@ -97,7 +98,7 @@ namespace SharpEssentials.Weak
 		private readonly EventHandler<TArgs> _handler;
 		private UnregisterCallback<TArgs> _unregister;
 
-		private static readonly Type openEventHandlerType = typeof(OpenEventHandler);
+		private static readonly Type OpenEventHandlerType = typeof(OpenEventHandler);
 	}
 
 	/// <summary>
@@ -118,10 +119,10 @@ namespace SharpEssentials.Weak
 			if (eventHandler == null)
 				throw new ArgumentNullException(nameof(eventHandler));
 
-			if (eventHandler.Method.IsStatic || eventHandler.Target == null)
+			if (eventHandler.GetMethodInfo().IsStatic || eventHandler.Target == null)
 				throw new ArgumentException(@"Only instance methods are supported.", nameof(eventHandler));
 
-			var closedWeakHandlerType = openWeakEventHandlerType.MakeGenericType(eventHandler.Method.DeclaringType, typeof(TArgs));
+			var closedWeakHandlerType = OpenWeakEventHandlerType.MakeGenericType(eventHandler.GetMethodInfo().DeclaringType, typeof(TArgs));
 			var handlerConstructor = closedWeakHandlerType.GetConstructor(new[] { typeof(EventHandler<TArgs>), typeof(UnregisterCallback<TArgs>) });
 
 			var weakEventHandler = (IWeakEventHandler<TArgs>)handlerConstructor.Invoke(new object[] { eventHandler, unregister });
@@ -129,6 +130,6 @@ namespace SharpEssentials.Weak
 			return weakEventHandler.Handler;
 		}
 
-		private static readonly Type openWeakEventHandlerType = typeof(WeakEventHandler<,>);
+		private static readonly Type OpenWeakEventHandlerType = typeof(WeakEventHandler<,>);
 	}
 }

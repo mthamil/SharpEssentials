@@ -6,12 +6,25 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Weak
 {
 	public class WeakEventHandlerTests
 	{
-		[Fact]
-		public void Test_WeakEventHandler()
+        [Fact]
+        public void Test_WeakEventHandler_Subscribe()
+        {
+            // Arrange.
+            var test = Setup();
+
+            // Act.
+            test.OnEvent();
+
+            // Assert.
+            Assert.True(test.HasSubscribers);
+        }
+
+        [Fact]
+		public void Test_WeakEventHandler_Unsubscribes_When_Collected()
 		{
 			// Arrange.
 			var test = Setup();
-
+                
 			// Act.
 			GC.Collect();
 			GC.WaitForPendingFinalizers();
@@ -24,13 +37,13 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Weak
 		private TestEventOwner Setup()
 		{
 			var owner = new TestEventOwner();
-			new TestEventSubscriber(this, owner);
+			new TestEventSubscriber(owner);
 			return owner;
 		}
 
 		public class TestEventSubscriber
 		{
-			public TestEventSubscriber(WeakEventHandlerTests test, TestEventOwner owner)
+			public TestEventSubscriber(TestEventOwner owner)
 			{
 				owner.Event += new EventHandler<EventArgs>(owner_Event)
 					.MakeWeak(eh => { owner.Event -= eh; });

@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2016 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
+using System.Reflection;
 
 namespace SharpEssentials.Reflection
 {
@@ -30,7 +31,7 @@ namespace SharpEssentials.Reflection
 		/// <returns>A default value for the type</returns>
 		public static object GetDefaultValue(this Type type)
 		{
-			if (type.IsValueType && type != VoidType)	// can't create an instance of Void
+			if (type.GetTypeInfo().IsValueType && type != VoidType)	// can't create an instance of Void
 				return Activator.CreateInstance(type);
 
 			return null;
@@ -54,7 +55,7 @@ namespace SharpEssentials.Reflection
             if (!openGenericType.IsGenericTypeDefinition)
                 throw new ArgumentException("Must be an open generic type.", nameof(openGenericType));
 
-            return type.IsGenericType && type.GetGenericTypeDefinition() == openGenericType;
+            return type.GetTypeInfo().IsGenericType && type.GetTypeInfo().GetGenericTypeDefinition() == openGenericType;
         }
 	}
 }
