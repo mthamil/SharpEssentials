@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2016 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,9 +12,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
@@ -155,7 +156,7 @@ namespace SharpEssentials.Observable
 	/// Encapsulates a property.
 	/// </summary>
 	/// <typeparam name="V">The type of the property value</typeparam>
-	public class Property<V>
+	public class Property<V> : INotifyPropertyChanged
 	{
 		/// <summary>
 		/// Creates a new property.
@@ -174,8 +175,8 @@ namespace SharpEssentials.Observable
 		/// <param name="equalityComparison">An optional custom equality comparison, if Object.Equals is not suitable for comparing objects of type V</param>
 		public Property(string propertyName, Action<string> propertyChangedRaiser, IEnumerable<string> dependentPropertyNames, Func<V, V, bool> equalityComparison)
 		{
-			_propertyChangedRaiser = propertyChangedRaiser;
-			_name = propertyName;
+            PropertyChanged += (o, e) => propertyChangedRaiser(e.PropertyName);
+            _name = propertyName;
 			_dependentPropertyNames = dependentPropertyNames;
 			if (equalityComparison != null)
 				_equalityComparison = equalityComparison;
@@ -201,9 +202,9 @@ namespace SharpEssentials.Observable
 			if (!_equalityComparison(_value, newValue))
 			{
 				_value = newValue;
-				_propertyChangedRaiser(_name);
+                OnPropertyChanged(_name);
 				foreach (var dependentPropertyName in _dependentPropertyNames)
-					_propertyChangedRaiser(dependentPropertyName);
+                    OnPropertyChanged(dependentPropertyName);
 
 				return true;
 			}
@@ -211,14 +212,21 @@ namespace SharpEssentials.Observable
 			return false;
 		}
 
-		/// <summary>
-		/// The property's name.
-		/// </summary>
-		public string Name => _name;
+        /// <see cref="INotifyPropertyChanged.PropertyChanged"/>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// The property's name.
+        /// </summary>
+        public string Name => _name;
 
 	    private readonly string _name;
 		private V _value;
-		private readonly Action<string> _propertyChangedRaiser;
 		private readonly IEnumerable<string> _dependentPropertyNames;
 		private readonly Func<V, V, bool> _equalityComparison = (x, y) => EqualityComparer<V>.Default.Equals(x, y);
 	}
