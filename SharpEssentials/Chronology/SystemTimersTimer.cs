@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2016 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,16 +12,16 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.Timers;
 
 namespace SharpEssentials.Chronology
 {
 	/// <summary>
-	/// Wraps a timer based on the windows threading timer.
+	/// A timer based on <see cref="System.Timers.Timer"/>
 	/// </summary>
-	public class SystemTimer : TimerBase, IDisposable
+	public class SystemTimersTimer : TimerBase, IDisposable
 	{
 		#region ITimer Members
 
