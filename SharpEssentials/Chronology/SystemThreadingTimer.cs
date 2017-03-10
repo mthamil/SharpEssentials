@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 20176 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ namespace SharpEssentials.Chronology
         /// </summary>
         public SystemThreadingTimer()
         {
-            _timer = new Timer(_ => OnElapsed(DateTime.Now, _state));
+            _timer = new Timer(_ => OnElapsed(DateTime.Now, _state), null, TimeSpan.Zero, TimeSpan.Zero);
         }
 
         /// <see cref="ITimer.TryStart"/>

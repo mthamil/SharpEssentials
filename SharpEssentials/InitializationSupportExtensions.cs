@@ -14,6 +14,8 @@
 // limitations under the License.
 
 using System;
+
+#if !NETSTANDARD1_3
 using System.ComponentModel;
 
 namespace SharpEssentials
@@ -52,3 +54,4 @@ namespace SharpEssentials
         }
     }
 }
+#endif

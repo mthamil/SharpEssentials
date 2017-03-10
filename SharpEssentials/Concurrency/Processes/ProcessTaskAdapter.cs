@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -117,8 +117,8 @@ namespace SharpEssentials.Concurrency.Processes
 					var writeInputTask = WriteInput(process, input, cancellationToken);
 
 					await Task.WhenAll(readErrorTask, readOutputTask, writeInputTask).ConfigureAwait(false);
-					process.StandardOutput.Close();
-					process.StandardError.Close();
+					process.StandardOutput.Dispose();
+					process.StandardError.Dispose();
 
 					await _taskFactory.StartNew(() => process.WaitForExit(), cancellationToken, TaskCreationOptions.None, _taskScheduler).ConfigureAwait(false);
 					cancellationToken.ThrowIfCancellationRequested();
@@ -136,14 +136,14 @@ namespace SharpEssentials.Concurrency.Processes
 		private static async Task WriteInput(Process process, Stream input, CancellationToken cancellationToken)
 		{
 			await input.CopyToAsync(process.StandardInput.BaseStream, BUFFER_SIZE, cancellationToken).ConfigureAwait(false);
-			process.StandardInput.Close();
+			process.StandardInput.Dispose();
 		}
 
 		private static void WriteErrorData(Stream stream, string errorData)
 		{
 			if (errorData != null)
 			{
-				var bytes = Encoding.Default.GetBytes(errorData + Environment.NewLine);
+				var bytes = Encoding.GetEncoding(0).GetBytes(errorData + Environment.NewLine);
 				stream.Write(bytes, 0, bytes.Length);
 			}
 		}
@@ -152,7 +152,7 @@ namespace SharpEssentials.Concurrency.Processes
 		{
 			errorStream.Position = 0;
 			string error;
-			using (var reader = new StreamReader(errorStream, Encoding.Default))
+			using (var reader = new StreamReader(errorStream, Encoding.GetEncoding(0)))
 				error = reader.ReadToEnd();
 
 			return new ProcessErrorException(error);

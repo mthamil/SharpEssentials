@@ -1,149 +1,34 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{573D5F8C-4C19-42C3-B84B-BC585008B505}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpEssentials</RootNamespace>
-    <AssemblyName>SharpEssentials</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <PackageId>SharpEssentials</PackageId>
+    <Authors>Matt Hamilton</Authors>
+    <Company />
+    <Product>SharpEssentials</Product>
+    <Description>Commonly used utility code for C#.</Description>
+    <Copyright>Copyright © Matt Hamilton 2017</Copyright>
+    <RepositoryUrl>https://github.com/mthamil/SharpEssentials</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/mthamil/SharpEssentials/blob/master/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Debug\SharpEssentials.xml</DocumentationFile>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard1.3\SharpEssentials.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Release\SharpEssentials.xml</DocumentationFile>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.3\SharpEssentials.xml</DocumentationFile>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml" />
+    <PackageReference Include="System.ComponentModel" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel.EventBasedAsync" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+    <PackageReference Include="System.IO.FileSystem.Watcher" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
+    <PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Chronology\IClock.cs" />
-    <Compile Include="Chronology\ITimer.cs" />
-    <Compile Include="Chronology\SystemClock.cs" />
-    <Compile Include="Chronology\SystemThreadingTimer.cs" />
-    <Compile Include="Chronology\SystemTimersTimer.cs" />
-    <Compile Include="Chronology\TimerBase.cs" />
-    <Compile Include="Collections\AsyncEnumerableExtensions.cs" />
-    <Compile Include="Collections\CollectionExtensions.cs" />
-    <Compile Include="Collections\DictionaryExtensions.cs" />
-    <Compile Include="Collections\EnumerableExtensions.cs" />
-    <Compile Include="Collections\ReverseComparer.cs" />
-    <Compile Include="Concurrency\Processes\ProcessResult.cs" />
-    <Compile Include="Concurrency\ProgressExtensions.cs" />
-    <Compile Include="Concurrency\Processes\IProcessTaskAdapter.cs" />
-    <Compile Include="Concurrency\Processes\ProcessErrorException.cs" />
-    <Compile Include="Concurrency\Processes\ProcessTaskAdapter.cs" />
-    <Compile Include="Concurrency\Processes\ProcessTaskExtensions.cs" />
-    <Compile Include="Concurrency\ReaderWriterLockSlimExtensions.cs" />
-    <Compile Include="Concurrency\SynchronousSynchronizationContext.cs" />
-    <Compile Include="Concurrency\SynchronousTaskScheduler.cs" />
-    <Compile Include="Concurrency\TaskCompletionSourceExtensions.cs" />
-    <Compile Include="Concurrency\TaskExtensions.cs" />
-    <Compile Include="Concurrency\Tasks.cs" />
-    <Compile Include="Concurrency\WaitHandleExtensions.cs" />
-    <Compile Include="Diagnostics\ExceptionExtensions.cs" />
-    <Compile Include="DisposableAdapter.cs" />
-    <Compile Include="DisposableBase.cs" />
-    <Compile Include="DisposableExtensions.cs" />
-    <Compile Include="EventHandler.cs" />
-    <Compile Include="InitializationSupportExtensions.cs" />
-    <Compile Include="InputOutput\AsyncStream.cs" />
-    <Compile Include="InputOutput\DirectoryMonitor.cs" />
-    <Compile Include="InputOutput\FileSystemInfoPathEqualityComparer.cs" />
-    <Compile Include="InputOutput\FileInfoExtensions.cs" />
-    <Compile Include="InputOutput\FileSystemWatcherAdapter.cs" />
-    <Compile Include="InputOutput\IDirectoryMonitor.cs" />
-    <Compile Include="InputOutput\IFileSystemWatcher.cs" />
-    <Compile Include="InputOutput\StreamExtensions.cs" />
-    <Compile Include="InputOutput\TemporaryFile.cs" />
-    <Compile Include="Net\AsyncWebClient.cs" />
-    <Compile Include="Net\IAsyncWebClient.cs" />
-    <Compile Include="Net\UriEqualityComparer.cs" />
-    <Compile Include="Net\WebClientExtensions.cs" />
-    <Compile Include="Observable\PropertyBuilderEqualityExtensions.cs" />
-    <Compile Include="Option.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Observable\Property.cs" />
-    <Compile Include="Observable\ObservableObject.cs" />
-    <Compile Include="Reflection\Enums.cs" />
-    <Compile Include="Reflection\Reflect.cs" />
-    <Compile Include="Reflection\ReflectionExtensions.cs" />
-    <Compile Include="ServiceProviderExtensions.cs" />
-    <Compile Include="Weak\WeakEventHandler.cs" />
-    <Compile Include="Weak\WeakReferenceExtensions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

@@ -47,7 +47,7 @@ namespace SharpEssentials.InputOutput
         /// <remarks>This object is returned to enable a more fluent syntax.</remarks>
         public TemporaryFile Touch()
         {
-            File.Create().Close();
+            File.Create().Dispose();
             return this;
         }
 
