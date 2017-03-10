@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -20,45 +20,45 @@ using System.Windows.Data;
 
 namespace SharpEssentials.Controls.Converters
 {
-	/// <summary>
-	/// Chains several value converters together.
-	/// </summary>
-	public class ComposingConverter : IValueConverter
+    /// <summary>
+    /// Chains several value converters together.
+    /// </summary>
+    public class ComposingConverter : IValueConverter
     {
-		#region IValueConverter Members
+        #region IValueConverter Members
 
-		/// <see cref="IValueConverter.Convert"/>
+        /// <see cref="IValueConverter.Convert"/>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-			object converted = value;
+            object converted = value;
             for (int i = 0; i < _converters.Count; i++)
             {
-				converted = _converters[i].Convert(converted, targetType, parameter, culture);
+                converted = _converters[i].Convert(converted, targetType, parameter, culture);
             }
-			return converted;
+            return converted;
         }
 
-		/// <see cref="IValueConverter.ConvertBack"/>
+        /// <see cref="IValueConverter.ConvertBack"/>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-			object converted = value;
+            object converted = value;
             for (int i = _converters.Count - 1; i >= 0; i--)
             {
-				converted = _converters[i].ConvertBack(converted, targetType, parameter, culture);
+                converted = _converters[i].ConvertBack(converted, targetType, parameter, culture);
             }
-			return converted;
+            return converted;
         }
 
         #endregion
 
-		/// <summary>
-		/// The converters to compose.
-		/// </summary>
-		public Collection<IValueConverter> Converters
-		{
-			get { return _converters; }
-		}
+        /// <summary>
+        /// The converters to compose.
+        /// </summary>
+        public Collection<IValueConverter> Converters
+        {
+            get { return _converters; }
+        }
 
-		private readonly Collection<IValueConverter> _converters = new Collection<IValueConverter>();
+        private readonly Collection<IValueConverter> _converters = new Collection<IValueConverter>();
     }
 }

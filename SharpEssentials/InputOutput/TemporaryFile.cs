@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2015 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,19 +17,19 @@ using System.IO;
 
 namespace SharpEssentials.InputOutput
 {
-	/// <summary>
-	/// Class that manages a temporary file and aids in clean up
-	/// after its use.
-	/// </summary>
-	public class TemporaryFile : DisposableBase
-	{
-		/// <summary>
-		/// Initializes a new <see cref="TemporaryFile"/>.
-		/// </summary>
-		public TemporaryFile()
-		{
-			File = new FileInfo(Path.GetTempFileName());
-		}
+    /// <summary>
+    /// Class that manages a temporary file and aids in clean up
+    /// after its use.
+    /// </summary>
+    public class TemporaryFile : DisposableBase
+    {
+        /// <summary>
+        /// Initializes a new <see cref="TemporaryFile"/>.
+        /// </summary>
+        public TemporaryFile()
+        {
+            File = new FileInfo(Path.GetTempFileName());
+        }
 
         /// <summary>
         /// Initializes a new <see cref="TemporaryFile"/> with the given name
@@ -41,39 +41,39 @@ namespace SharpEssentials.InputOutput
             File = new FileInfo(Path.Combine(Path.GetTempPath(), fileName));
         }
 
-		/// <summary>
-		/// Creates an empty temporary file for the file path represented by this <see cref="TemporaryFile"/>.
-		/// </summary>
-		/// <remarks>This object is returned to enable a more fluent syntax.</remarks>
-		public TemporaryFile Touch()
-		{
-			File.Create().Close();
-			return this;
-		}
+        /// <summary>
+        /// Creates an empty temporary file for the file path represented by this <see cref="TemporaryFile"/>.
+        /// </summary>
+        /// <remarks>This object is returned to enable a more fluent syntax.</remarks>
+        public TemporaryFile Touch()
+        {
+            File.Create().Close();
+            return this;
+        }
 
-		/// <summary>
-		/// Populates a temporary file with the given content.
-		/// </summary>
-		/// <param name="content">The content to write to the temporary file</param>
-		/// <remarks>This object is returned to enable a more fluent syntax.</remarks>
-		public TemporaryFile WithContent(string content)
-		{
-			using (var writer = File.CreateText())
-				writer.Write(content);
+        /// <summary>
+        /// Populates a temporary file with the given content.
+        /// </summary>
+        /// <param name="content">The content to write to the temporary file</param>
+        /// <remarks>This object is returned to enable a more fluent syntax.</remarks>
+        public TemporaryFile WithContent(string content)
+        {
+            using (var writer = File.CreateText())
+                writer.Write(content);
 
-			return this;
-		}
+            return this;
+        }
 
-		/// <summary>
-		/// The actual temporary file.
-		/// </summary>
-		public FileInfo File { get; }
+        /// <summary>
+        /// The actual temporary file.
+        /// </summary>
+        public FileInfo File { get; }
 
-	    /// <see cref="DisposableBase.OnDisposing"/>
-	    protected override void OnDisposing()
-	    {
+        /// <see cref="DisposableBase.OnDisposing"/>
+        protected override void OnDisposing()
+        {
             if (File.Exists)
                 File.Delete();
         }
-	}
+    }
 }

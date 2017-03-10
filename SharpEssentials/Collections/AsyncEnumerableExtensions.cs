@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2015 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@ using System.Threading.Tasks;
 namespace SharpEssentials.Collections
 {
     /// <summary>
-	/// Contains extension methods pertaining to the combination of tasks and enumerables.
-	/// </summary>
+    /// Contains extension methods pertaining to the combination of tasks and enumerables.
+    /// </summary>
     public static class AsyncEnumerableExtensions
     {
         /// <summary>
@@ -53,7 +53,7 @@ namespace SharpEssentials.Collections
         /// <param name="first">The first asynchronous sequence to concatenate.</param>
         /// <param name="second">The asynchronous sequence to concatenate to the first sequence.</param>
         /// <returns>A task representing the concatenated elements of the two input sequences.</returns>
-	    public static async Task<IEnumerable<T>> Concat<T>(this Task<IEnumerable<T>> first, Task<IEnumerable<T>> second)
+        public static async Task<IEnumerable<T>> Concat<T>(this Task<IEnumerable<T>> first, Task<IEnumerable<T>> second)
         {
             return (await first.ConfigureAwait(false)).Concat(
                     await second.ConfigureAwait(false));

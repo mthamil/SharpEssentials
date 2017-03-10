@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2016 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,25 +19,25 @@ using System.Reflection;
 
 namespace SharpEssentials.Reflection
 {
-	/// <summary>
-	/// Contains extension methods for reflection types.
-	/// </summary>
-	public static class ReflectionExtensions
-	{
-		/// <summary>
-		/// If a type is a primitive such as int, returns its default, otherwise
-		/// null is returned.
-		/// </summary>
-		/// <param name="type">The type to create a value for.</param>
-		/// <returns>A default value for the type.</returns>
-		public static object GetDefaultValue(this Type type)
-		{
-			if (type.GetTypeInfo().IsValueType && type != VoidType)	// can't create an instance of Void
-				return Activator.CreateInstance(type);
+    /// <summary>
+    /// Contains extension methods for reflection types.
+    /// </summary>
+    public static class ReflectionExtensions
+    {
+        /// <summary>
+        /// If a type is a primitive such as int, returns its default, otherwise
+        /// null is returned.
+        /// </summary>
+        /// <param name="type">The type to create a value for.</param>
+        /// <returns>A default value for the type.</returns>
+        public static object GetDefaultValue(this Type type)
+        {
+            if (type.GetTypeInfo().IsValueType && type != VoidType)	// can't create an instance of Void
+                return Activator.CreateInstance(type);
 
-			return null;
-		}
-		private static readonly Type VoidType = typeof(void);
+            return null;
+        }
+        private static readonly Type VoidType = typeof(void);
 
         /// <summary>
         /// Checks whether another type is the generic type definition of this type.
@@ -65,12 +65,12 @@ namespace SharpEssentials.Reflection
         /// <param name="type">The type to search.</param>
         /// <param name="parameters">The desired constructor parameters</param>
         /// <returns>A matching constructor or null if one is not found.</returns>
-	    public static ConstructorInfo GetDeclaredConstructor(this Type type, params Type[] parameters)
+        public static ConstructorInfo GetDeclaredConstructor(this Type type, params Type[] parameters)
         {
             return type.GetTypeInfo()
                        .DeclaredConstructors
                        .SingleOrDefault(c => c.GetParameters().Select(p => p.ParameterType)
                                               .SequenceEqual(parameters));
         }
-	}
+    }
 }

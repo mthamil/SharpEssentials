@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -71,7 +71,7 @@ namespace SharpEssentials.Controls.Localization
         public void CleanupInactiveExtensions()
         {
             var newExtensions = new List<ManagedMarkupExtension>(_extensions.Count);
-			newExtensions.AddRange(_extensions.Where(extension => extension.IsTargetAlive));
+            newExtensions.AddRange(_extensions.Where(extension => extension.IsTargetAlive));
             _extensions = newExtensions;
         }
 
@@ -93,40 +93,40 @@ namespace SharpEssentials.Controls.Localization
             _cleanupCount++;
         }
 
-		/// <summary>
-		/// Factory method that retrieves a markup extension manager (which may be cached/shared) for a given markup extension type.
-		/// </summary>
-		/// <typeparam name="TExtension">The type of markup extension</typeparam>
-		/// <param name="cleanupInterval">The interval at which to cleanup and remove extensions.</param>
-		public static MarkupExtensionManager For<TExtension>(int cleanupInterval) where TExtension : ManagedMarkupExtension
-		{
-			return managers.GetOrAdd(typeof(TExtension), extensionType => 
-				ManagerFactory(extensionType, cleanupInterval));
-		}
+        /// <summary>
+        /// Factory method that retrieves a markup extension manager (which may be cached/shared) for a given markup extension type.
+        /// </summary>
+        /// <typeparam name="TExtension">The type of markup extension</typeparam>
+        /// <param name="cleanupInterval">The interval at which to cleanup and remove extensions.</param>
+        public static MarkupExtensionManager For<TExtension>(int cleanupInterval) where TExtension : ManagedMarkupExtension
+        {
+            return managers.GetOrAdd(typeof(TExtension), extensionType => 
+                ManagerFactory(extensionType, cleanupInterval));
+        }
 
-		/// <summary>
-		/// List of active extensions.
-		/// </summary>
-		private ICollection<ManagedMarkupExtension> _extensions = new List<ManagedMarkupExtension>();
+        /// <summary>
+        /// List of active extensions.
+        /// </summary>
+        private ICollection<ManagedMarkupExtension> _extensions = new List<ManagedMarkupExtension>();
 
-		/// <summary>
-		/// The number of extensions added since the last cleanup.
-		/// </summary>
-		private int _cleanupCount;
+        /// <summary>
+        /// The number of extensions added since the last cleanup.
+        /// </summary>
+        private int _cleanupCount;
 
-		/// <summary>
-		/// The interval at which to cleanup and remove extensions.
-		/// </summary>
-		private readonly int _cleanupInterval = 40;
+        /// <summary>
+        /// The interval at which to cleanup and remove extensions.
+        /// </summary>
+        private readonly int _cleanupInterval = 40;
 
-		/// <summary>
-		/// Cached/shared markup extension managers.
-		/// </summary>
-		private static readonly ConcurrentDictionary<Type, MarkupExtensionManager> managers = new ConcurrentDictionary<Type, MarkupExtensionManager>();
+        /// <summary>
+        /// Cached/shared markup extension managers.
+        /// </summary>
+        private static readonly ConcurrentDictionary<Type, MarkupExtensionManager> managers = new ConcurrentDictionary<Type, MarkupExtensionManager>();
 
-		/// <summary>
-		/// Function used to create new <see cref="MarkupExtensionManager"/>s.
-		/// </summary>
-		internal static Func<Type, int, MarkupExtensionManager> ManagerFactory = (extensionType, cleanupInterval) => new MarkupExtensionManager(cleanupInterval); 
+        /// <summary>
+        /// Function used to create new <see cref="MarkupExtensionManager"/>s.
+        /// </summary>
+        internal static Func<Type, int, MarkupExtensionManager> ManagerFactory = (extensionType, cleanupInterval) => new MarkupExtensionManager(cleanupInterval); 
     }
 }

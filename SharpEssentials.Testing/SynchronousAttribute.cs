@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2015 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,23 +12,22 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
 
 using SharpEssentials.Concurrency;
 
 namespace SharpEssentials.Testing
 {
-	/// <summary>
-	/// Sets the current synchronization context to a context that is synchronous.
-	/// </summary>
-	public class SynchronousAttribute : SynchronizationContextAttribute
-	{
+    /// <summary>
+    /// Sets the current synchronization context to a context that is synchronous.
+    /// </summary>
+    public class SynchronousAttribute : SynchronizationContextAttribute
+    {
         /// <summary>
         /// Initializes a new instance of <see cref="SynchronousAttribute"/>.
         /// </summary>
         public SynchronousAttribute() 
             : base(typeof(SynchronousSynchronizationContext))
-	    {
-	    }
-	}
+        {
+        }
+    }
 }

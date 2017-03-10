@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2015 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
 
 using System;
 using System.Reflection;
@@ -22,9 +21,9 @@ using Xunit.Sdk;
 namespace SharpEssentials.Testing
 {
     /// <summary>
-	/// Sets the current synchronization context to an instance of the specified type.
-	/// </summary>
-	public class SynchronizationContextAttribute : BeforeAfterTestAttribute
+    /// Sets the current synchronization context to an instance of the specified type.
+    /// </summary>
+    public class SynchronizationContextAttribute : BeforeAfterTestAttribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SynchronizationContextAttribute"/> class.

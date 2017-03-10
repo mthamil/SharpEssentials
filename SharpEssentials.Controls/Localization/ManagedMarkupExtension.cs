@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -69,8 +69,8 @@ namespace SharpEssentials.Controls.Localization
         /// <param name="serviceProvider">The service provider</param>
         protected virtual void RegisterTarget(IServiceProvider serviceProvider)
         {
-			var provideValueTarget = serviceProvider.GetService<IProvideValueTarget>();
-	        object target = provideValueTarget.TargetObject;
+            var provideValueTarget = serviceProvider.GetService<IProvideValueTarget>();
+            object target = provideValueTarget.TargetObject;
 
             // Check if the target is a SharedDp which indicates the target is a template
             // In this case we don't register the target and ProvideValue returns this
@@ -88,20 +88,20 @@ namespace SharpEssentials.Controls.Localization
         /// <param name="target">The target to update</param>
         protected virtual void UpdateTarget(object target)
         {
-	        var dependencyProperty = _targetProperty as DependencyProperty;
-	        if (dependencyProperty != null)
+            var dependencyProperty = _targetProperty as DependencyProperty;
+            if (dependencyProperty != null)
             {
                 var dependencyObject = target as DependencyObject;
                 dependencyObject?.SetValue(dependencyProperty, GetValue());
             }
             else
-	        {
-		        var property = _targetProperty as PropertyInfo;
-	            property?.SetValue(target, GetValue(), null);
-	        }
+            {
+                var property = _targetProperty as PropertyInfo;
+                property?.SetValue(target, GetValue(), null);
+            }
         }
 
-	    /// <summary>
+        /// <summary>
         /// Update the associated targets
         /// </summary>
         public void UpdateTargets()
@@ -122,10 +122,10 @@ namespace SharpEssentials.Controls.Localization
         /// <returns>True if the object is one of the targets for this extension</returns>
         public bool IsTarget(object target)
         {
-	        return _targetObjects.Any(reference => reference.IsAlive && reference.Target == target);
+            return _targetObjects.Any(reference => reference.IsAlive && reference.Target == target);
         }
 
-	    /// <summary>
+        /// <summary>
         /// Is an associated target still alive, ie. not garbage collected.
         /// </summary>
         public bool IsTargetAlive
@@ -142,7 +142,7 @@ namespace SharpEssentials.Controls.Localization
                     return true;
                 
                 // Otherwise, just check whether the referenced target(s) are alive.
-				return _targetObjects.Any(reference => reference.IsAlive);
+                return _targetObjects.Any(reference => reference.IsAlive);
             } 
         }
 
@@ -153,10 +153,10 @@ namespace SharpEssentials.Controls.Localization
         {
             get
             {
-				return _targetObjects
-		            .Select(reference => reference.Target)
-		            .OfType<DependencyObject>()
-		            .Any(element => element != null && DesignerProperties.GetIsInDesignMode(element));
+                return _targetObjects
+                    .Select(reference => reference.Target)
+                    .OfType<DependencyObject>()
+                    .Any(element => element != null && DesignerProperties.GetIsInDesignMode(element));
             }
         }
 
@@ -185,24 +185,24 @@ namespace SharpEssentials.Controls.Localization
             get
             {
                 if (_targetProperty is DependencyProperty)
-					return ((DependencyProperty)_targetProperty).PropertyType;
-	            if (_targetProperty is PropertyInfo)
-		            return ((PropertyInfo)_targetProperty).PropertyType;
+                    return ((DependencyProperty)_targetProperty).PropertyType;
+                if (_targetProperty is PropertyInfo)
+                    return ((PropertyInfo)_targetProperty).PropertyType;
                 return _targetProperty?.GetType();
             }
         }
 
-	    /// <summary>
+        /// <summary>
         /// Returns the value associated with the key from the resource manager.
         /// </summary>
         /// <returns>The value from the resources if possible otherwise the default value</returns>
         protected abstract object GetValue();
 
-		/// <summary>
-		/// The target property 
-		/// </summary>
-		private object _targetProperty;
-		
+        /// <summary>
+        /// The target property 
+        /// </summary>
+        private object _targetProperty;
+        
         /// <summary>
         /// List of weak reference to the target DependencyObjects to allow them to 
         /// be garbage collected

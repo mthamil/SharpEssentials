@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2016 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,14 +22,14 @@ using System.Windows.Interactivity;
 
 namespace SharpEssentials.Controls.Behaviors
 {
-	/// <summary>
-	/// Behavior that adds support for scrolling with a mouse wheel in a tab control's tab strip.
-	/// </summary>
-	public class TabWheelScrolling : LoadDependentBehavior<TabControl>
-	{
-		/// <see cref="LoadDependentBehavior{T}.OnLoaded"/>
-		protected override void OnLoaded()
-		{
+    /// <summary>
+    /// Behavior that adds support for scrolling with a mouse wheel in a tab control's tab strip.
+    /// </summary>
+    public class TabWheelScrolling : LoadDependentBehavior<TabControl>
+    {
+        /// <see cref="LoadDependentBehavior{T}.OnLoaded"/>
+        protected override void OnLoaded()
+        {
             // If the tab panel is not found, no tab panel may exist yet because there are no tabs.
             // Therefore, subscribe to the event that will occur when a tab is finally added.
             _tabPanel = AssociatedObject.FindVisualChild<TabPanel>()
@@ -37,82 +37,82 @@ namespace SharpEssentials.Controls.Behaviors
                     tp.MouseWheel += tabPanel_MouseWheel)
                 .OrElse(() => 
                     AssociatedObject.ItemContainerGenerator.StatusChanged += ItemContainerGenerator_StatusChanged);
-		}
+        }
 
-		private void ItemContainerGenerator_StatusChanged(object sender, EventArgs e)
-		{
-			// The status here is important because the event will fire more than once at different stages.
-			// The tab panel will only exist after container generation has completed.
-			if (AssociatedObject.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
-			{
-				AssociatedObject.ItemContainerGenerator.StatusChanged -= ItemContainerGenerator_StatusChanged;
-				OnLoaded();
-			}
-		}
+        private void ItemContainerGenerator_StatusChanged(object sender, EventArgs e)
+        {
+            // The status here is important because the event will fire more than once at different stages.
+            // The tab panel will only exist after container generation has completed.
+            if (AssociatedObject.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
+            {
+                AssociatedObject.ItemContainerGenerator.StatusChanged -= ItemContainerGenerator_StatusChanged;
+                OnLoaded();
+            }
+        }
 
-		/// <see cref="Behavior.OnDetaching"/>
-		protected override void OnDetaching()
-		{
-			_tabPanel.Apply(tp => tp.MouseWheel -= tabPanel_MouseWheel);
-		}
+        /// <see cref="Behavior.OnDetaching"/>
+        protected override void OnDetaching()
+        {
+            _tabPanel.Apply(tp => tp.MouseWheel -= tabPanel_MouseWheel);
+        }
 
-		/// <summary>
-		/// Whether to invert the tab scrolling direction. If true, scrolling down will move to the next tab and
-		/// scrolling up will move to the previous tab. If false, scrolling down will move to the previous tab
-		/// and scrolling up will move to the next tab.
-		/// </summary>
-		public bool InvertScrollDirection
-		{
-			get { return (bool)GetValue(InvertScrollDirectionProperty); }
-			set { SetValue(InvertScrollDirectionProperty, value); }
-		}
+        /// <summary>
+        /// Whether to invert the tab scrolling direction. If true, scrolling down will move to the next tab and
+        /// scrolling up will move to the previous tab. If false, scrolling down will move to the previous tab
+        /// and scrolling up will move to the next tab.
+        /// </summary>
+        public bool InvertScrollDirection
+        {
+            get { return (bool)GetValue(InvertScrollDirectionProperty); }
+            set { SetValue(InvertScrollDirectionProperty, value); }
+        }
 
-		/// <summary>
-		/// The InvertScrollDirection dependency property.
-		/// </summary>
-		public static readonly DependencyProperty InvertScrollDirectionProperty =
-			DependencyProperty.Register(nameof(InvertScrollDirection),
-				typeof(bool),
-				typeof(TabWheelScrolling),
-				new PropertyMetadata(false));
+        /// <summary>
+        /// The InvertScrollDirection dependency property.
+        /// </summary>
+        public static readonly DependencyProperty InvertScrollDirectionProperty =
+            DependencyProperty.Register(nameof(InvertScrollDirection),
+                typeof(bool),
+                typeof(TabWheelScrolling),
+                new PropertyMetadata(false));
 
-		/// <summary>
-		/// Whether tab scrolling should wrap around the ends of the tab strip.
-		/// </summary>
-		public bool ScrollWrapsAround
-		{
-			get { return (bool)GetValue(ScrollWrapsAroundProperty); }
-			set { SetValue(ScrollWrapsAroundProperty, value); }
-		}
+        /// <summary>
+        /// Whether tab scrolling should wrap around the ends of the tab strip.
+        /// </summary>
+        public bool ScrollWrapsAround
+        {
+            get { return (bool)GetValue(ScrollWrapsAroundProperty); }
+            set { SetValue(ScrollWrapsAroundProperty, value); }
+        }
 
-		/// <summary>
-		/// The ScrollWrapsAround dependency property.
-		/// </summary>
-		public static readonly DependencyProperty ScrollWrapsAroundProperty =
-			DependencyProperty.Register(nameof(ScrollWrapsAround),
-				typeof(bool),
-				typeof(TabWheelScrolling),
-				new PropertyMetadata(false));
+        /// <summary>
+        /// The ScrollWrapsAround dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ScrollWrapsAroundProperty =
+            DependencyProperty.Register(nameof(ScrollWrapsAround),
+                typeof(bool),
+                typeof(TabWheelScrolling),
+                new PropertyMetadata(false));
 
-		void tabPanel_MouseWheel(object sender, MouseWheelEventArgs e)
-		{
-			bool nextTab = InvertScrollDirection ? e.Delta < 0 : e.Delta > 0;
-			if (nextTab)
-			{
-				if (AssociatedObject.SelectedIndex < (AssociatedObject.Items.Count - 1))
-					AssociatedObject.SelectedIndex++;
-				else if (ScrollWrapsAround)
-					AssociatedObject.SelectedIndex = 0;
-			}
-			else
-			{
-				if (AssociatedObject.SelectedIndex > 0)
-					AssociatedObject.SelectedIndex--;
-				else if (ScrollWrapsAround)
-					AssociatedObject.SelectedIndex = AssociatedObject.Items.Count - 1;
-			}
-		}
+        void tabPanel_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            bool nextTab = InvertScrollDirection ? e.Delta < 0 : e.Delta > 0;
+            if (nextTab)
+            {
+                if (AssociatedObject.SelectedIndex < (AssociatedObject.Items.Count - 1))
+                    AssociatedObject.SelectedIndex++;
+                else if (ScrollWrapsAround)
+                    AssociatedObject.SelectedIndex = 0;
+            }
+            else
+            {
+                if (AssociatedObject.SelectedIndex > 0)
+                    AssociatedObject.SelectedIndex--;
+                else if (ScrollWrapsAround)
+                    AssociatedObject.SelectedIndex = AssociatedObject.Items.Count - 1;
+            }
+        }
 
-		private Option<TabPanel> _tabPanel;
-	}
+        private Option<TabPanel> _tabPanel;
+    }
 }

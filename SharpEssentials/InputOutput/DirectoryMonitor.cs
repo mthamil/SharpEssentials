@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.Collections.Concurrent;
 using System.IO;
@@ -20,175 +20,175 @@ using SharpEssentials.Chronology;
 
 namespace SharpEssentials.InputOutput
 {
-	/// <summary>
-	/// Monitors a directory for changes.  Provides
-	/// a higher-level of abstraction over a FileSystemWatcher.
-	/// </summary>
-	public class DirectoryMonitor : DisposableBase, IDirectoryMonitor
-	{
+    /// <summary>
+    /// Monitors a directory for changes.  Provides
+    /// a higher-level of abstraction over a FileSystemWatcher.
+    /// </summary>
+    public class DirectoryMonitor : DisposableBase, IDirectoryMonitor
+    {
         /// <summary>
         /// Initializes a new <see cref="DirectoryMonitor"/>.
         /// </summary>
         /// <param name="fileSystemWatcher">The file system watcher to use</param>
         /// <param name="timerFactory">Creates timers</param>
-		public DirectoryMonitor(IFileSystemWatcher fileSystemWatcher, Func<ITimer> timerFactory)
-		{
-			_fileSystemWatcher = fileSystemWatcher;
-			_timerFactory = timerFactory;
+        public DirectoryMonitor(IFileSystemWatcher fileSystemWatcher, Func<ITimer> timerFactory)
+        {
+            _fileSystemWatcher = fileSystemWatcher;
+            _timerFactory = timerFactory;
 
-			_fileSystemWatcher.Created += fileSystemWatcher_Created;
-			_fileSystemWatcher.Deleted += fileSystemWatcher_Deleted;
-			_fileSystemWatcher.Changed += fileSystemWatcher_Changed;
-			_fileSystemWatcher.Renamed += fileSystemWatcher_Renamed;
-		}
+            _fileSystemWatcher.Created += fileSystemWatcher_Created;
+            _fileSystemWatcher.Deleted += fileSystemWatcher_Deleted;
+            _fileSystemWatcher.Changed += fileSystemWatcher_Changed;
+            _fileSystemWatcher.Renamed += fileSystemWatcher_Renamed;
+        }
 
-		/// <see cref="IDirectoryMonitor.Filter"/>
-		public string Filter 
-		{
-			get { return _fileSystemWatcher.Filter; }
-			set { _fileSystemWatcher.Filter = value; }
-		}
+        /// <see cref="IDirectoryMonitor.Filter"/>
+        public string Filter 
+        {
+            get { return _fileSystemWatcher.Filter; }
+            set { _fileSystemWatcher.Filter = value; }
+        }
 
-		/// <see cref="IDirectoryMonitor.MonitoredDirectory"/>
-		public DirectoryInfo MonitoredDirectory { get; private set; }
+        /// <see cref="IDirectoryMonitor.MonitoredDirectory"/>
+        public DirectoryInfo MonitoredDirectory { get; private set; }
 
-		/// <see cref="IDirectoryMonitor.StartMonitoring"/>
-		public void StartMonitoring(DirectoryInfo directory)
-		{
-			_fileSystemWatcher.Path = directory.FullName;
-			MonitoredDirectory = directory;
-			_fileSystemWatcher.EnableRaisingEvents = true;
-		}
+        /// <see cref="IDirectoryMonitor.StartMonitoring"/>
+        public void StartMonitoring(DirectoryInfo directory)
+        {
+            _fileSystemWatcher.Path = directory.FullName;
+            MonitoredDirectory = directory;
+            _fileSystemWatcher.EnableRaisingEvents = true;
+        }
 
-		/// <see cref="IDirectoryMonitor.RestartMonitoring"/>
-		public void RestartMonitoring()
-		{
-			if (MonitoredDirectory == null)
-				throw new InvalidOperationException("No directory was previously monitored.");
+        /// <see cref="IDirectoryMonitor.RestartMonitoring"/>
+        public void RestartMonitoring()
+        {
+            if (MonitoredDirectory == null)
+                throw new InvalidOperationException("No directory was previously monitored.");
 
-			StartMonitoring(MonitoredDirectory);
-		}
+            StartMonitoring(MonitoredDirectory);
+        }
 
-		/// <see cref="IDirectoryMonitor.StopMonitoring"/>
-		public void StopMonitoring()
-		{
-			_fileSystemWatcher.EnableRaisingEvents = false;
-		}
+        /// <see cref="IDirectoryMonitor.StopMonitoring"/>
+        public void StopMonitoring()
+        {
+            _fileSystemWatcher.EnableRaisingEvents = false;
+        }
 
-		/// <see cref="IDirectoryMonitor.Changed"/>
-		public event EventHandler<FileSystemEventArgs> Changed;
+        /// <see cref="IDirectoryMonitor.Changed"/>
+        public event EventHandler<FileSystemEventArgs> Changed;
 
-		void fileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
-		{
-			ITimer timer;
-			if (fileCreationTimers.TryGetValue(e.FullPath, out timer))
-				timer.Restart(e.FullPath);	// The created file is still changing, reset the timer.
+        void fileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            ITimer timer;
+            if (fileCreationTimers.TryGetValue(e.FullPath, out timer))
+                timer.Restart(e.FullPath);	// The created file is still changing, reset the timer.
 
-			OnChanged(e);
-		}
+            OnChanged(e);
+        }
 
-		private void OnChanged(FileSystemEventArgs args)
-		{
+        private void OnChanged(FileSystemEventArgs args)
+        {
             Changed?.Invoke(this, args);
-		}
+        }
 
-		/// <see cref="IDirectoryMonitor.Created"/>
-		public event EventHandler<FileSystemEventArgs> Created;
+        /// <see cref="IDirectoryMonitor.Created"/>
+        public event EventHandler<FileSystemEventArgs> Created;
 
-		void fileSystemWatcher_Created(object sender, FileSystemEventArgs e)
-		{
-			fileCreationTimers.GetOrAdd(e.FullPath, path =>
-			{
-				var timer = _timerFactory();
-				timer.Interval = FileCreationWaitTimeout;
-				timer.Elapsed += fileTimer_Elapsed;
-				timer.Restart(path);
-				return timer;
-			});
-		}
+        void fileSystemWatcher_Created(object sender, FileSystemEventArgs e)
+        {
+            fileCreationTimers.GetOrAdd(e.FullPath, path =>
+            {
+                var timer = _timerFactory();
+                timer.Interval = FileCreationWaitTimeout;
+                timer.Elapsed += fileTimer_Elapsed;
+                timer.Restart(path);
+                return timer;
+            });
+        }
 
-		private void OnCreated(FileSystemEventArgs args)
-		{
+        private void OnCreated(FileSystemEventArgs args)
+        {
             Created?.Invoke(this, args);
-		}
+        }
 
-		void fileTimer_Elapsed(object sender, TimerElapsedEventArgs e)
-		{
-			var path = (string)e.State;
-			ITimer creationTimer;
-			if (fileCreationTimers.TryRemove(path, out creationTimer))
-			{
-				creationTimer.TryStop();
-				creationTimer.Elapsed -= fileTimer_Elapsed;
-				if (File.Exists(path))
-					OnCreated(new FileSystemEventArgs(WatcherChangeTypes.Created, Path.GetDirectoryName(path), Path.GetFileName(path)));
-			}
-		}
+        void fileTimer_Elapsed(object sender, TimerElapsedEventArgs e)
+        {
+            var path = (string)e.State;
+            ITimer creationTimer;
+            if (fileCreationTimers.TryRemove(path, out creationTimer))
+            {
+                creationTimer.TryStop();
+                creationTimer.Elapsed -= fileTimer_Elapsed;
+                if (File.Exists(path))
+                    OnCreated(new FileSystemEventArgs(WatcherChangeTypes.Created, Path.GetDirectoryName(path), Path.GetFileName(path)));
+            }
+        }
 
-		/// <see cref="IDirectoryMonitor.Deleted"/>
-		public event EventHandler<FileSystemEventArgs> Deleted;
+        /// <see cref="IDirectoryMonitor.Deleted"/>
+        public event EventHandler<FileSystemEventArgs> Deleted;
 
-		void fileSystemWatcher_Deleted(object sender, FileSystemEventArgs e)
-		{
-			ITimer creationTimer;
-			if (fileCreationTimers.TryRemove(e.FullPath, out creationTimer))
-			{
-				creationTimer.TryStop();
-				creationTimer.Elapsed -= fileTimer_Elapsed;
-			}
+        void fileSystemWatcher_Deleted(object sender, FileSystemEventArgs e)
+        {
+            ITimer creationTimer;
+            if (fileCreationTimers.TryRemove(e.FullPath, out creationTimer))
+            {
+                creationTimer.TryStop();
+                creationTimer.Elapsed -= fileTimer_Elapsed;
+            }
 
-			OnDeleted(e);
-		}
+            OnDeleted(e);
+        }
 
-		private void OnDeleted(FileSystemEventArgs args)
-		{
+        private void OnDeleted(FileSystemEventArgs args)
+        {
             Deleted?.Invoke(this, args);
-		}
+        }
 
-		/// <see cref="IDirectoryMonitor.Renamed"/>
-		public event EventHandler<RenamedEventArgs> Renamed;
+        /// <see cref="IDirectoryMonitor.Renamed"/>
+        public event EventHandler<RenamedEventArgs> Renamed;
 
-		void fileSystemWatcher_Renamed(object sender, RenamedEventArgs e)
-		{
-			OnRenamed(e);
-		}
+        void fileSystemWatcher_Renamed(object sender, RenamedEventArgs e)
+        {
+            OnRenamed(e);
+        }
 
-		private void OnRenamed(RenamedEventArgs args)
-		{
+        private void OnRenamed(RenamedEventArgs args)
+        {
             Renamed?.Invoke(this, args);
-		}
+        }
 
-		/// <summary>
-		/// The maximum amount of time to wait for a file to be created after receiving
-		/// the Created event.
-		/// </summary>
-		public TimeSpan FileCreationWaitTimeout { get; set; }
+        /// <summary>
+        /// The maximum amount of time to wait for a file to be created after receiving
+        /// the Created event.
+        /// </summary>
+        public TimeSpan FileCreationWaitTimeout { get; set; }
 
-		#region DisposableBase Members
+        #region DisposableBase Members
 
-		/// <see cref="DisposableBase.OnDisposing"/>
-		protected override void OnDisposing()
-		{
-			_fileSystemWatcher.Created -= fileSystemWatcher_Created;
-			_fileSystemWatcher.Deleted -= fileSystemWatcher_Deleted;
-			_fileSystemWatcher.Changed -= fileSystemWatcher_Changed;
-			_fileSystemWatcher.Renamed -= fileSystemWatcher_Renamed;
-		}
+        /// <see cref="DisposableBase.OnDisposing"/>
+        protected override void OnDisposing()
+        {
+            _fileSystemWatcher.Created -= fileSystemWatcher_Created;
+            _fileSystemWatcher.Deleted -= fileSystemWatcher_Deleted;
+            _fileSystemWatcher.Changed -= fileSystemWatcher_Changed;
+            _fileSystemWatcher.Renamed -= fileSystemWatcher_Renamed;
+        }
 
-		/// <see cref="DisposableBase.OnDispose"/>
-		protected override void OnDispose()
-		{
-			_fileSystemWatcher.Dispose();
-		}
+        /// <see cref="DisposableBase.OnDispose"/>
+        protected override void OnDispose()
+        {
+            _fileSystemWatcher.Dispose();
+        }
 
-		#endregion
+        #endregion
 
-		/// <summary>
-		/// Timers used to track file changes.
-		/// </summary>
-		private readonly ConcurrentDictionary<string, ITimer> fileCreationTimers = new ConcurrentDictionary<string, ITimer>();
+        /// <summary>
+        /// Timers used to track file changes.
+        /// </summary>
+        private readonly ConcurrentDictionary<string, ITimer> fileCreationTimers = new ConcurrentDictionary<string, ITimer>();
 
-		private readonly IFileSystemWatcher _fileSystemWatcher;
-		private readonly Func<ITimer> _timerFactory;
-	}
+        private readonly IFileSystemWatcher _fileSystemWatcher;
+        private readonly Func<ITimer> _timerFactory;
+    }
 }

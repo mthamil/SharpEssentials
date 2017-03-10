@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.Globalization;
 using System.Windows;
@@ -20,12 +20,12 @@ using System.Windows.Data;
 
 namespace SharpEssentials.Controls.Converters
 {
-	/// <summary>
-	/// A multi-value converter that uses text input to determine Visibility.
-	/// </summary>
+    /// <summary>
+    /// A multi-value converter that uses text input to determine Visibility.
+    /// </summary>
     public class TextInputToVisibilityConverter : IMultiValueConverter
     {
-		/// <see cref="IMultiValueConverter.Convert"/>
+        /// <see cref="IMultiValueConverter.Convert"/>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             // Always test MultiValueConverter inputs for non-null
@@ -42,8 +42,8 @@ namespace SharpEssentials.Controls.Converters
             return Visibility.Visible;
         }
 
-		/// <see cref="IMultiValueConverter.ConvertBack"/>
-		/// <exception cref="NotImplementedException">Always throws</exception>
+        /// <see cref="IMultiValueConverter.ConvertBack"/>
+        /// <exception cref="NotImplementedException">Always throws</exception>
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

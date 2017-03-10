@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2015 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,25 +19,25 @@ using System.Windows.Input;
 
 namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 {
-	/// <summary>
-	/// Interface for a builder object that finishes constructing a command by specifying the
-	/// actual operation that the command will execute.
-	/// </summary>
-	public interface ICommandCompleter
-	{
-		/// <summary>
-		/// Sets the operation that a command will execute.
-		/// </summary>
-		/// <param name="operation">The parameterless operation to be executed</param>
-		/// <returns>A new command</returns>
-		ICommand Executes(Action operation);
+    /// <summary>
+    /// Interface for a builder object that finishes constructing a command by specifying the
+    /// actual operation that the command will execute.
+    /// </summary>
+    public interface ICommandCompleter
+    {
+        /// <summary>
+        /// Sets the operation that a command will execute.
+        /// </summary>
+        /// <param name="operation">The parameterless operation to be executed</param>
+        /// <returns>A new command</returns>
+        ICommand Executes(Action operation);
 
-		/// <summary>
-		/// Sets the operation that a command will execute.
-		/// </summary>
-		/// <param name="operation">The operation to be executed</param>
-		/// <returns>A new command</returns>
-		ICommand Executes<T>(Action<T> operation);
+        /// <summary>
+        /// Sets the operation that a command will execute.
+        /// </summary>
+        /// <param name="operation">The operation to be executed</param>
+        /// <returns>A new command</returns>
+        ICommand Executes<T>(Action<T> operation);
 
         /// <summary>
         /// Sets the asynchronous operation that a command will execute.

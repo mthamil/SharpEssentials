@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.Windows;
 using System.Windows.Markup;
@@ -36,26 +36,26 @@ namespace SharpEssentials.Controls.Localization
         /// element to the current <see cref="ICultureManager.UICulture"/> property value.
         /// </summary>
         public UICultureExtension()
-			: this(MarkupExtensionManager.For<UICultureExtension>(2), CultureManager.Default)  { }
+            : this(MarkupExtensionManager.For<UICultureExtension>(2), CultureManager.Default)  { }
 
-		/// <summary>
-		/// Initializes an instance of the extension to set the language property for an
-		/// element to the current <see cref="ICultureManager.UICulture"/> property value.
-		/// </summary>
-		internal UICultureExtension(MarkupExtensionManager markupExtensionManager, ICultureManager cultureManager)
-			: base(markupExtensionManager)
-	    {
-		    _cultureManager = cultureManager;
+        /// <summary>
+        /// Initializes an instance of the extension to set the language property for an
+        /// element to the current <see cref="ICultureManager.UICulture"/> property value.
+        /// </summary>
+        internal UICultureExtension(MarkupExtensionManager markupExtensionManager, ICultureManager cultureManager)
+            : base(markupExtensionManager)
+        {
+            _cultureManager = cultureManager;
 
-			WeakEventManager<ICultureManager, EventArgs>.AddHandler(_cultureManager, "UICultureChanged", cultureManager_UICultureChanged);
-	    }
+            WeakEventManager<ICultureManager, EventArgs>.AddHandler(_cultureManager, "UICultureChanged", cultureManager_UICultureChanged);
+        }
 
-		private void cultureManager_UICultureChanged(object sender, EventArgs eventArgs)
-		{
-			UpdateTargets();
-		}
+        private void cultureManager_UICultureChanged(object sender, EventArgs eventArgs)
+        {
+            UpdateTargets();
+        }
 
-	    /// <summary>
+        /// <summary>
         /// Return the <see cref="XmlLanguage"/> to use for the associated Markup element.
         /// </summary>
         /// <returns>
@@ -64,9 +64,9 @@ namespace SharpEssentials.Controls.Localization
         /// </returns>
         protected override object GetValue()
         {
-			return XmlLanguage.GetLanguage(_cultureManager.UICulture.IetfLanguageTag);
+            return XmlLanguage.GetLanguage(_cultureManager.UICulture.IetfLanguageTag);
         }
 
-		private readonly ICultureManager _cultureManager;
+        private readonly ICultureManager _cultureManager;
     }
 }

@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2016 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,32 +24,32 @@ using static SharpEssentials.Controls.Weak.WeakEventManagerExtensions;
 
 namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 {
-	/// <summary>
-	/// Class that completes construction of a command that depends on a child collection.
-	/// </summary>
-	/// <typeparam name="TChild">The type of child object the parent depends on</typeparam>
-	public class ChildBoundCommandCompleter<TChild> : BaseCommandCompleter where TChild : INotifyPropertyChanged
-	{
-		/// <summary>
-		/// Initializes a new <see cref="ChildBoundCommandCompleter{TChild}"/>.
-		/// </summary>
-		/// <param name="collectionGetter">Function that retrieves the collection whose items determine whether a command can execute</param>
-		/// <param name="childProperty">A child property that the parent is somehow dependent upon for determining whether a command can execute</param>
-		/// <param name="canExecute">The actual predicate that determines whether a command can execute</param>
-		public ChildBoundCommandCompleter(
-			Func<IEnumerable<TChild>> collectionGetter, 
-			Expression<Func<TChild, bool>> childProperty,
-			Func<bool> canExecute)
-		{
-			_collectionGetter = collectionGetter;
-			_childProperty = childProperty;
-			_canExecute = canExecute;
-		}
+    /// <summary>
+    /// Class that completes construction of a command that depends on a child collection.
+    /// </summary>
+    /// <typeparam name="TChild">The type of child object the parent depends on</typeparam>
+    public class ChildBoundCommandCompleter<TChild> : BaseCommandCompleter where TChild : INotifyPropertyChanged
+    {
+        /// <summary>
+        /// Initializes a new <see cref="ChildBoundCommandCompleter{TChild}"/>.
+        /// </summary>
+        /// <param name="collectionGetter">Function that retrieves the collection whose items determine whether a command can execute</param>
+        /// <param name="childProperty">A child property that the parent is somehow dependent upon for determining whether a command can execute</param>
+        /// <param name="canExecute">The actual predicate that determines whether a command can execute</param>
+        public ChildBoundCommandCompleter(
+            Func<IEnumerable<TChild>> collectionGetter, 
+            Expression<Func<TChild, bool>> childProperty,
+            Func<bool> canExecute)
+        {
+            _collectionGetter = collectionGetter;
+            _childProperty = childProperty;
+            _canExecute = canExecute;
+        }
 
-		protected override Predicate<T> CanExecute<T>() => _ => _canExecute();
+        protected override Predicate<T> CanExecute<T>() => _ => _canExecute();
 
-	    protected override TCommand Configure<TCommand>(TCommand command)
-	    {
+        protected override TCommand Configure<TCommand>(TCommand command)
+        {
             var childPropertyName = Reflect.PropertyOf(_childProperty).Name;
             EventHandler<PropertyChangedEventArgs> propertyChangedHandler = (o, e) =>
             {
@@ -84,8 +84,8 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
             return command;
         }
 
-	    private readonly Func<IEnumerable<TChild>> _collectionGetter;
-		private readonly Expression<Func<TChild, bool>> _childProperty;
-		private readonly Func<bool> _canExecute;
-	}
+        private readonly Func<IEnumerable<TChild>> _collectionGetter;
+        private readonly Expression<Func<TChild, bool>> _childProperty;
+        private readonly Func<bool> _canExecute;
+    }
 }

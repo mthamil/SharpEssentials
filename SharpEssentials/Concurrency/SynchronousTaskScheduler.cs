@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,30 +12,30 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SharpEssentials.Concurrency
 {
-	/// <summary>
-	/// Implementation of a task scheduler that always executes tasks synchronously
-	/// </summary>
-	public class SynchronousTaskScheduler : TaskScheduler
-	{
-		/// <see cref="TaskScheduler.GetScheduledTasks"/>
-		protected override IEnumerable<Task> GetScheduledTasks() => Enumerable.Empty<Task>();
+    /// <summary>
+    /// Implementation of a task scheduler that always executes tasks synchronously
+    /// </summary>
+    public class SynchronousTaskScheduler : TaskScheduler
+    {
+        /// <see cref="TaskScheduler.GetScheduledTasks"/>
+        protected override IEnumerable<Task> GetScheduledTasks() => Enumerable.Empty<Task>();
 
-	    /// <see cref="TaskScheduler.MaximumConcurrencyLevel"/>
-		public override int MaximumConcurrencyLevel => 1;
+        /// <see cref="TaskScheduler.MaximumConcurrencyLevel"/>
+        public override int MaximumConcurrencyLevel => 1;
 
-	    /// <see cref="TaskScheduler.QueueTask"/>
-		protected override void QueueTask(Task task) 
+        /// <see cref="TaskScheduler.QueueTask"/>
+        protected override void QueueTask(Task task) 
             => TryExecuteTask(task);
 
-	    /// <see cref="TaskScheduler.TryExecuteTaskInline"/>
-		protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued) 
+        /// <see cref="TaskScheduler.TryExecuteTaskInline"/>
+        protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued) 
             => TryExecuteTask(task);
-	}
+    }
 }

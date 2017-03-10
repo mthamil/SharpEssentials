@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
@@ -23,19 +23,19 @@ namespace SharpEssentials.Observable
     /// <summary>
     /// Base class for objects that notify observers about changes to their state.
     /// </summary>
-	public abstract class ObservableObject : INotifyPropertyChanged
-	{
-		/// <see cref="INotifyPropertyChanged.PropertyChanged"/>
-		public event PropertyChangedEventHandler PropertyChanged;
+    public abstract class ObservableObject : INotifyPropertyChanged
+    {
+        /// <see cref="INotifyPropertyChanged.PropertyChanged"/>
+        public event PropertyChangedEventHandler PropertyChanged;
 
-		/// <summary>
-		/// Raises the property changed event.
-		/// </summary>
-		/// <param name="propertyName">The name of the property that changed</param>
-		protected void OnPropertyChanged(string propertyName)
-		{
+        /// <summary>
+        /// Raises the property changed event.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that changed</param>
+        protected void OnPropertyChanged(string propertyName)
+        {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
+        }
 
         /// <summary>
         /// Raises the property changed event.
@@ -55,5 +55,5 @@ namespace SharpEssentials.Observable
         {
             OnPropertyChanged(property);
         }
-	}
+    }
 }

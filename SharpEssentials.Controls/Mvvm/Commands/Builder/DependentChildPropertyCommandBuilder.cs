@@ -1,5 +1,5 @@
 // Sharp Essentials
-// Copyright 2015 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,46 +20,46 @@ using System.Linq.Expressions;
 
 namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 {
-	/// <summary>
-	/// Class that allows specification of a child property that a parent property's
-	/// value depends on.
-	/// </summary>
-	/// <typeparam name="TParent">The type of the parent object.</typeparam>
-	/// <typeparam name="TChild">The type of the child objects that the parent depends on.</typeparam>
-	internal class DependentChildPropertyCommandBuilder<TParent, TChild> : IDependentChildPropertyCommandBuilder<TChild> 
+    /// <summary>
+    /// Class that allows specification of a child property that a parent property's
+    /// value depends on.
+    /// </summary>
+    /// <typeparam name="TParent">The type of the parent object.</typeparam>
+    /// <typeparam name="TChild">The type of the child objects that the parent depends on.</typeparam>
+    internal class DependentChildPropertyCommandBuilder<TParent, TChild> : IDependentChildPropertyCommandBuilder<TChild> 
         where TChild : INotifyPropertyChanged
-	{
-		/// <summary>
-		/// Initializes a new <see cref="DependentChildPropertyCommandBuilder{TParent,TChild}"/>.
-		/// </summary>
-		/// <param name="parent">The parent object</param>
-		/// <param name="collectionGetter">Function that retrieves the collection whose items determine whether a command can execute</param>
-		/// <param name="parentProperty">The property on the parent object that depends on the children</param>
-		public DependentChildPropertyCommandBuilder(
-			TParent parent, 
-			Func<IEnumerable<TChild>> collectionGetter,
-			Expression<Func<TParent, bool>> parentProperty)
-		{
-			_parent = parent;
-			_collectionGetter = collectionGetter;
-			_parentProperty = parentProperty;
-		}
+    {
+        /// <summary>
+        /// Initializes a new <see cref="DependentChildPropertyCommandBuilder{TParent,TChild}"/>.
+        /// </summary>
+        /// <param name="parent">The parent object</param>
+        /// <param name="collectionGetter">Function that retrieves the collection whose items determine whether a command can execute</param>
+        /// <param name="parentProperty">The property on the parent object that depends on the children</param>
+        public DependentChildPropertyCommandBuilder(
+            TParent parent, 
+            Func<IEnumerable<TChild>> collectionGetter,
+            Expression<Func<TParent, bool>> parentProperty)
+        {
+            _parent = parent;
+            _collectionGetter = collectionGetter;
+            _parentProperty = parentProperty;
+        }
 
-		/// <summary>
-		/// Specifies the child property that the parent property's value depends on.
-		/// </summary>
-		/// <param name="childProperty">A child property that the parent property's value depends on</param>
-		/// <returns>A builder that allows specification of the command operation</returns>
-		public ICommandCompleter DependsOn(Expression<Func<TChild, bool>> childProperty)
-		{
-			var parentPropertyGetter = _parentProperty.Compile();
-			Func<bool> canExecute = () => parentPropertyGetter(_parent);
+        /// <summary>
+        /// Specifies the child property that the parent property's value depends on.
+        /// </summary>
+        /// <param name="childProperty">A child property that the parent property's value depends on</param>
+        /// <returns>A builder that allows specification of the command operation</returns>
+        public ICommandCompleter DependsOn(Expression<Func<TChild, bool>> childProperty)
+        {
+            var parentPropertyGetter = _parentProperty.Compile();
+            Func<bool> canExecute = () => parentPropertyGetter(_parent);
 
-			return new ChildBoundCommandCompleter<TChild>(_collectionGetter, childProperty, canExecute);
-		}
+            return new ChildBoundCommandCompleter<TChild>(_collectionGetter, childProperty, canExecute);
+        }
 
-		private readonly TParent _parent;
-		private readonly Func<IEnumerable<TChild>> _collectionGetter;
-		private readonly Expression<Func<TParent, bool>> _parentProperty;
-	}
+        private readonly TParent _parent;
+        private readonly Func<IEnumerable<TChild>> _collectionGetter;
+        private readonly Expression<Func<TParent, bool>> _parentProperty;
+    }
 }

@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,69 +17,69 @@ using System;
 
 namespace SharpEssentials.Chronology
 {
-	/// <summary>
-	/// Provides a convenient base class for timers.
-	/// </summary>
-	public abstract class TimerBase : ITimer
-	{
-		/// <see cref="ITimer.Interval"/>
-		public virtual TimeSpan Interval { get; set; }
+    /// <summary>
+    /// Provides a convenient base class for timers.
+    /// </summary>
+    public abstract class TimerBase : ITimer
+    {
+        /// <see cref="ITimer.Interval"/>
+        public virtual TimeSpan Interval { get; set; }
 
-		/// <see cref="ITimer.Start"/>
-		public void Start(object state = null)
-		{
-			lock (SyncObject)
-			{
-				if (!TryStart(state))
-					throw new InvalidOperationException("Timer is already started.");
-			}
-		}
+        /// <see cref="ITimer.Start"/>
+        public void Start(object state = null)
+        {
+            lock (SyncObject)
+            {
+                if (!TryStart(state))
+                    throw new InvalidOperationException("Timer is already started.");
+            }
+        }
 
-		/// <see cref="ITimer.TryStart"/>
-		public abstract bool TryStart(object state = null);
+        /// <see cref="ITimer.TryStart"/>
+        public abstract bool TryStart(object state = null);
 
-		/// <see cref="ITimer.Stop"/>
-		public void Stop()
-		{
-			lock (SyncObject)
-			{
-				if (!TryStop())
-					throw new InvalidOperationException("Timer is already stopped.");
-			}
-		}
+        /// <see cref="ITimer.Stop"/>
+        public void Stop()
+        {
+            lock (SyncObject)
+            {
+                if (!TryStop())
+                    throw new InvalidOperationException("Timer is already stopped.");
+            }
+        }
 
-		/// <see cref="ITimer.TryStop"/>
-		public abstract bool TryStop();
+        /// <see cref="ITimer.TryStop"/>
+        public abstract bool TryStop();
 
-		/// <see cref="ITimer.Restart"/>
-		public void Restart(object state = null)
-		{
-			lock (SyncObject)
-			{
-				TryStop();
-				Start(state);
-			}
-		}
+        /// <see cref="ITimer.Restart"/>
+        public void Restart(object state = null)
+        {
+            lock (SyncObject)
+            {
+                TryStop();
+                Start(state);
+            }
+        }
 
-		/// <see cref="ITimer.Started"/>
-		public abstract bool Started { get; }
+        /// <see cref="ITimer.Started"/>
+        public abstract bool Started { get; }
 
-		/// <see cref="ITimer.Elapsed"/>
-		public event EventHandler<TimerElapsedEventArgs> Elapsed;
+        /// <see cref="ITimer.Elapsed"/>
+        public event EventHandler<TimerElapsedEventArgs> Elapsed;
 
-		/// <summary>
-		/// Raises the <see cref="ITimer.Elapsed"/> event.
-		/// </summary>
-		/// <param name="elapsedTime">The time at which the timer period elapsed</param>
-		/// <param name="state">Associated user state</param>
-		protected void OnElapsed(DateTime elapsedTime, object state)
-		{
+        /// <summary>
+        /// Raises the <see cref="ITimer.Elapsed"/> event.
+        /// </summary>
+        /// <param name="elapsedTime">The time at which the timer period elapsed</param>
+        /// <param name="state">Associated user state</param>
+        protected void OnElapsed(DateTime elapsedTime, object state)
+        {
             Elapsed?.Invoke(this, new TimerElapsedEventArgs(elapsedTime, state));
-		}
+        }
 
-		/// <summary>
-		/// Object used for locking.
-		/// </summary>
-		protected object SyncObject { get; } = new object();
-	}
+        /// <summary>
+        /// Object used for locking.
+        /// </summary>
+        protected object SyncObject { get; } = new object();
+    }
 }

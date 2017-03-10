@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2015 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -46,6 +46,9 @@ namespace SharpEssentials
         protected override void OnDisposing() => _disposer(Value);
     }
 
+    /// <summary>
+    /// Creates disposable adapters.
+    /// </summary>
     public static class Dispose
     {
         /// <summary>

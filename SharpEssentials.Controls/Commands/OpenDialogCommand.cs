@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,30 +12,30 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 using System.Windows;
 using SharpEssentials.Reflection;
 
 namespace SharpEssentials.Controls.Commands
 {
-	/// <summary>
-	/// Creates and displays a window of a given type.
-	/// </summary>
-	public class OpenDialogCommand : DependencyCommandBase
-	{
-		/// <summary>
-		/// Creates and opens a new instance of the specified Window
-		/// type.
-		/// </summary>
-		/// <param name="parameter">
-		/// The data context to set on the window. If null, 
-		/// the data context will not be set, preventing an override
-		/// of any existing context.
-		/// </param>
-		public override void Execute(object parameter)
-		{
-			var window = (Window)Activator.CreateInstance(Type);
+    /// <summary>
+    /// Creates and displays a window of a given type.
+    /// </summary>
+    public class OpenDialogCommand : DependencyCommandBase
+    {
+        /// <summary>
+        /// Creates and opens a new instance of the specified Window
+        /// type.
+        /// </summary>
+        /// <param name="parameter">
+        /// The data context to set on the window. If null, 
+        /// the data context will not be set, preventing an override
+        /// of any existing context.
+        /// </param>
+        public override void Execute(object parameter)
+        {
+            var window = (Window)Activator.CreateInstance(Type);
             if (parameter != null)
             {
                 // Detect Lazy<T> data contexts.
@@ -50,39 +50,39 @@ namespace SharpEssentials.Controls.Commands
                 window.DataContext = parameter;
             }
 
-			if (Owner != null)
-				window.Owner = Owner;
+            if (Owner != null)
+                window.Owner = Owner;
 
-			window.ShowDialog();
-		}
+            window.ShowDialog();
+        }
 
-		/// <summary>
-		/// The type of window to create.
-		/// </summary>
-		public Type Type { get; set; }
+        /// <summary>
+        /// The type of window to create.
+        /// </summary>
+        public Type Type { get; set; }
 
-		/// <summary>
-		/// The new window's owner.
-		/// </summary>
-		public Window Owner
-		{
-			get { return (Window)GetValue(OwnerProperty); }
-			set { SetValue(OwnerProperty, value); }
-		}
+        /// <summary>
+        /// The new window's owner.
+        /// </summary>
+        public Window Owner
+        {
+            get { return (Window)GetValue(OwnerProperty); }
+            set { SetValue(OwnerProperty, value); }
+        }
 
-		/// <summary>
-		/// The Owner dependency property.
-		/// </summary>
-		public static readonly DependencyProperty OwnerProperty =
-			DependencyProperty.RegisterAttached(nameof(Owner),
-			    typeof(Window),
-			    typeof(OpenDialogCommand),
-			    new FrameworkPropertyMetadata(null));
+        /// <summary>
+        /// The Owner dependency property.
+        /// </summary>
+        public static readonly DependencyProperty OwnerProperty =
+            DependencyProperty.RegisterAttached(nameof(Owner),
+                typeof(Window),
+                typeof(OpenDialogCommand),
+                new FrameworkPropertyMetadata(null));
 
         private static readonly Type LazyType = typeof(Lazy<>);
-	    private const string LazyValueName = nameof(Lazy<object>.Value);
+        private const string LazyValueName = nameof(Lazy<object>.Value);
 
-	    private static readonly Type FuncType = typeof(Func<>);
-	    private const string FuncInvokeName = nameof(Func<object>.Invoke);
-	}
+        private static readonly Type FuncType = typeof(Func<>);
+        private const string FuncInvokeName = nameof(Func<object>.Invoke);
+    }
 }

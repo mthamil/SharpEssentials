@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2017 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,23 +12,23 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
 
 namespace SharpEssentials
 {
-	/// <summary>
-	/// Provides extension methods for IServiceProvider.
-	/// </summary>
-	public static class ServiceProviderExtensions
-	{
-		/// <summary>
-		/// Gets the service of a specified type.
-		/// </summary>
-		/// <typeparam name="TService">The type of service</typeparam>
-		/// <param name="serviceProvider">The service provider</param>
-		/// <returns>A service of the specified type</returns>
-		public static TService GetService<TService>(this IServiceProvider serviceProvider) 
+    /// <summary>
+    /// Provides extension methods for IServiceProvider.
+    /// </summary>
+    public static class ServiceProviderExtensions
+    {
+        /// <summary>
+        /// Gets the service of a specified type.
+        /// </summary>
+        /// <typeparam name="TService">The type of service</typeparam>
+        /// <param name="serviceProvider">The service provider</param>
+        /// <returns>A service of the specified type</returns>
+        public static TService GetService<TService>(this IServiceProvider serviceProvider) 
             => (TService)serviceProvider.GetService(typeof(TService));
-	}
+    }
 }
