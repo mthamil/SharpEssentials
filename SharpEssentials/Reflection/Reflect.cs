@@ -90,7 +90,7 @@ namespace SharpEssentials.Reflection
 				if (unaryExpr != null)
 				{
 					memberExpr = unaryExpr.Operand as MemberExpression;
-					if (memberExpr != null && type.IsAssignableFrom(memberExpr.Member.DeclaringType))
+					if (memberExpr != null && type.GetTypeInfo().IsAssignableFrom(memberExpr.Member.DeclaringType.GetTypeInfo()))
 					{
 						return memberExpr;
 					}

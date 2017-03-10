@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SharpEssentials.Reflection;
+using SharpEssentials.Testing;
 using Xunit;
 using Xunit.Extensions;
 
@@ -61,5 +63,29 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Reflection
             Assert.Throws<ArgumentException>(() =>
                 closed.IsClosedTypeOf(open));
         }
-	}
+
+        [Fact]
+	    public void Test_GetDeclaredConstructor_Succeeds()
+	    {
+	        // Act.
+            var constructor = typeof(string).GetDeclaredConstructor(typeof(char), typeof(int));
+
+            // Assert.
+            Assert.NotNull(constructor);
+            Assert.Equal(typeof(string), constructor.DeclaringType);
+            Assert.True(constructor.IsConstructor);
+            AssertThat.SequenceEqual(constructor.GetParameters().Select(p => p.ParameterType), 
+                                     new[] { typeof(char), typeof(int) });
+	    }
+
+        [Fact]
+        public void Test_GetDeclaredConstructor_Fails()
+        {
+            // Act.
+            var constructor = typeof(string).GetDeclaredConstructor(typeof(long), typeof(int));
+
+            // Assert.
+            Assert.Null(constructor);
+        }
+    }
 }

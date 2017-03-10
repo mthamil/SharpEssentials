@@ -15,6 +15,7 @@
 
 using System;
 using System.Reflection;
+using SharpEssentials.Reflection;
 
 namespace SharpEssentials.Weak
 {
@@ -123,7 +124,7 @@ namespace SharpEssentials.Weak
 				throw new ArgumentException(@"Only instance methods are supported.", nameof(eventHandler));
 
 			var closedWeakHandlerType = OpenWeakEventHandlerType.MakeGenericType(eventHandler.GetMethodInfo().DeclaringType, typeof(TArgs));
-			var handlerConstructor = closedWeakHandlerType.GetConstructor(new[] { typeof(EventHandler<TArgs>), typeof(UnregisterCallback<TArgs>) });
+			var handlerConstructor = closedWeakHandlerType.GetDeclaredConstructor(typeof(EventHandler<TArgs>), typeof(UnregisterCallback<TArgs>));
 
 			var weakEventHandler = (IWeakEventHandler<TArgs>)handlerConstructor.Invoke(new object[] { eventHandler, unregister });
 
