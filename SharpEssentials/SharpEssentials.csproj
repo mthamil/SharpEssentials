@@ -7,9 +7,11 @@
     <Company />
     <Product>SharpEssentials</Product>
     <Description>Commonly used utility code for C#.</Description>
-    <Copyright>Copyright © Matt Hamilton 2017</Copyright>
+    <Copyright>Matt Hamilton 2017</Copyright>
     <RepositoryUrl>https://github.com/mthamil/SharpEssentials</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/mthamil/SharpEssentials/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl>https://opensource.org/licenses/Apache-2.0</PackageLicenseUrl>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
