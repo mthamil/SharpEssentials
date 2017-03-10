@@ -131,8 +131,10 @@ namespace SharpEssentials.Observable
 
         private static Action<string> CreateRaiseFunction(T owner)
         {
-            var raiseMethod = owner.GetType().GetMethod(DefaultPropertyChangedRaiserName,
-                                                        BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            var raiseMethod = owner.GetType()
+                .GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
+                .Single(m => m.Name == DefaultPropertyChangedRaiserName && 
+                             m.GetParameters().Select(p => p.ParameterType).SequenceEqual(new[] { typeof(string) }));
 
             if (raiseMethod == null)
                 throw new ArgumentException("A property changed event raising function must be supplied.");
