@@ -36,8 +36,6 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
     <ReferencePath>..\..\packages\xunit.abstractions.2.0.1\lib\net35\;..\..\packages\xunit.assert.2.2.0\lib\netstandard1.1\;..\..\packages\xunit.extensibility.core.2.2.0\lib\netstandard1.1\;..\..\packages\xunit.runner.reporters.2.2.0\lib\net452\;..\..\packages\xunit.runner.utility.2.2.0\lib\net452\;..\..\packages\xunit.extensibility.execution.2.2.0\lib\net452\;..\..\packages\Moq.4.2.1507.0118\lib\net40\;..\..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\</ReferencePath>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -188,26 +186,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
