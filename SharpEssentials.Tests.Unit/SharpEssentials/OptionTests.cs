@@ -68,7 +68,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials
         public void Test_Some_CannotBeNull()
         {
             // Act/Assert.
-            Assert.Throws<ArgumentNullException>(() => new Some<string>(null));
+            Assert.Throws<ArgumentNullException>(() => Option.Some<string>(null));
         }
 
         [Fact]
