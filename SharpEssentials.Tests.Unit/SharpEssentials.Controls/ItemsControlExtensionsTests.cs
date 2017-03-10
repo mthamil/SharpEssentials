@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using SharpEssentials.Controls;
@@ -90,7 +91,29 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls
             var path = _underTest.GetItemPath(targetItem);
 
             // Assert.
-            AssertThat.SequenceEqual(new[] { "0", "2", "b" }, path.Cast<TreeViewItem>().Select(i => i.DataContext).Cast<Node>().Select(n => n.Name));
+            AssertThat.SequenceEqual(new[] { "0", "2", "b" }, path.Cast<FrameworkElement>().Select(i => i.DataContext).Cast<Node>().Select(n => n.Name));
+        }
+
+        [WpfFact]
+        public void Test_GetItems()
+        {
+            // Arrange.
+            var nodes = new List<Node>
+            {
+                new Node("0"),
+                new Node("1"),
+                new Node("2"),
+                new Node("3")
+            };
+
+            PopulateTree(_underTest, nodes, new List<TreeViewItem>());
+            _underTest.GenerateItems();
+
+            // Act.
+            var items = _underTest.GetItems().Cast<FrameworkElement>();
+
+            // Assert.
+            AssertThat.SequenceEqual(new [] {"0", "1", "2", "3"}, items.Select(n => ((Node)n.DataContext).Name));
         }
 
         private static void PopulateTree<T>(ItemsControl tree, IEnumerable<Node> nodes, ICollection<T> collector) where T : ItemsControl, new()

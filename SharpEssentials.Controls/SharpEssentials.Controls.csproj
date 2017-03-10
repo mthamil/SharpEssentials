@@ -73,6 +73,7 @@
     <Compile Include="Behaviors\GridSplitterExpanderSupport\GridSplitterExpanderSupportBehavior.cs" />
     <Compile Include="Behaviors\GridSplitterExpanderSupport\RowExpanderSize.cs" />
     <Compile Include="Behaviors\Interactivity\Interactions.cs" />
+    <Compile Include="Behaviors\ItemDragReordering.cs" />
     <Compile Include="Behaviors\LoadDependentBehavior.cs" />
     <Compile Include="Behaviors\SelectedItemPath.cs" />
     <Compile Include="Behaviors\TabWheelScrolling.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Behaviors\TreeViewItemSelectedCommandBehavior.cs" />
     <Compile Include="Behaviors\WindowBehaviors.cs" />
     <Compile Include="Chronology\DispatcherTimerAdapter.cs" />
+    <Compile Include="Rendering\BitmapExtensions.cs" />
     <Compile Include="Clipboard\ClipboardWrapper.cs" />
     <Compile Include="Clipboard\IClipboard.cs" />
     <Compile Include="Collections\CollectionMirror.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="Converters\DirectoryInfoToUriConverter.cs" />
     <Compile Include="Converters\FileInfoToUriConverter.cs" />
     <Compile Include="Converters\FileSystemInfoToDirectoryInfoConverter.cs" />
+    <Compile Include="Converters\GreaterThanConverter.cs" />
     <Compile Include="Converters\NegatingConverter.cs" />
     <Compile Include="Converters\NullToFalseValueConverter.cs" />
     <Compile Include="Converters\ObjectGetTypeConverter.cs" />
@@ -166,10 +169,12 @@
     <Compile Include="TreeViewExtensions.cs" />
     <Compile Include="VisualTreeExtensions.cs" />
     <Compile Include="Weak\WeakEventManagerExtensions.cs" />
+    <Compile Include="Rendering\UIElementExtensions.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Compile Include="Localization\LocalizeExtension.Binding.cs" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

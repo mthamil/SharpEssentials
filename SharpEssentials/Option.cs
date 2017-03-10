@@ -103,7 +103,7 @@ namespace SharpEssentials
 		/// otherwise no action is performed.
 		/// </summary>
 		/// <param name="action">The action to perform</param>
-		public abstract void Apply(Action<T> action);
+		public abstract Option<T> Apply(Action<T> action);
 
 		/// <summary>
 		/// Returns Option.Some if an Option is Some, otherwise if None,
@@ -112,12 +112,19 @@ namespace SharpEssentials
 		/// <param name="fallbackAction">The alternative function</param>
 		public abstract Option<T> OrElse(Func<Option<T>> fallbackAction);
 
-		/// <summary>
-		/// Retrieves an Option's value if it is Some.  Otherwise if None, the given function
-		/// is executed to return an alternative value.
-		/// </summary>
-		/// <param name="fallbackAction">The alternative function</param>
-		public abstract T GetOrElse(Func<T> fallbackAction);
+        /// <summary>
+        /// Returns Option.Some if an Option is Some, otherwise if None,
+        /// the given function is executed. 
+        /// </summary>
+        /// <param name="fallbackAction">The alternative function</param>
+        public abstract Option<T> OrElse(Action fallbackAction);
+
+        /// <summary>
+        /// Retrieves an Option's value if it is Some.  Otherwise if None, the given function
+        /// is executed to return an alternative value.
+        /// </summary>
+        /// <param name="fallbackAction">The alternative function</param>
+        public abstract T GetOrElse(Func<T> fallbackAction);
 	}
 
 	/// <summary>
@@ -174,15 +181,23 @@ namespace SharpEssentials
 	    /// <summary>
 		/// Does nothing.
 		/// </summary>
-		public override void Apply(Action<T> action)
-		{
-			// Do nothing.
-		}
+		public override Option<T> Apply(Action<T> action) => this;
 
 		/// <summary>
 		/// Executes an alternative function.
 		/// </summary>
 		public override Option<T> OrElse(Func<Option<T>> fallbackAction) => fallbackAction();
+
+	    /// <summary>
+	    /// Returns Option.Some if an Option is Some, otherwise if None,
+	    /// the given function is executed. 
+	    /// </summary>
+	    /// <param name="fallbackAction">The alternative function</param>
+	    public override Option<T> OrElse(Action fallbackAction)
+	    {
+	        fallbackAction();
+	        return this;
+	    }
 
 	    /// <summary>
 		/// Executes an alternative function.
@@ -249,12 +264,23 @@ namespace SharpEssentials
 	    /// <summary>
 		/// Performs an action on the Option's value.
 		/// </summary>
-		public override void Apply(Action<T> action) => action(Value);
+		public override Option<T> Apply(Action<T> action)
+	    {
+	        action(Value);
+            return this;
+	    }
 
 	    /// <summary>
 		/// Returns this.
 		/// </summary>
 		public override Option<T> OrElse(Func<Option<T>> fallbackAction) => this;
+
+	    /// <summary>
+	    /// Returns Option.Some if an Option is Some, otherwise if None,
+	    /// the given function is executed. 
+	    /// </summary>
+	    /// <param name="fallbackAction">The alternative function</param>
+	    public override Option<T> OrElse(Action fallbackAction) => this;
 
 	    /// <summary>
 		/// Returns this Option's value.

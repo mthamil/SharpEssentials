@@ -1,5 +1,5 @@
 ﻿// Sharp Essentials
-// Copyright 2014 Matthew Hamilton - matthamilton@live.com
+// Copyright 2016 Matthew Hamilton - matthamilton@live.com
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,9 +12,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -31,17 +30,13 @@ namespace SharpEssentials.Controls.Behaviors
 		/// <see cref="LoadDependentBehavior{T}.OnLoaded"/>
 		protected override void OnLoaded()
 		{
-			_tabPanel = (
-				from child in AssociatedObject.VisualChildren()
-				from subChild in child.VisualChildren()
-				select subChild).OfType<TabPanel>().SingleOrDefault();
-
-			// If the tab panel is not found, no tab panel may exist because there are no tabs.
-			// Therefore, subscribe to the event that will occur when a tab is finally added.
-			if (_tabPanel == null)
-				AssociatedObject.ItemContainerGenerator.StatusChanged += ItemContainerGenerator_StatusChanged;
-			else
-				_tabPanel.MouseWheel += tabPanel_MouseWheel;
+            // If the tab panel is not found, no tab panel may exist yet because there are no tabs.
+            // Therefore, subscribe to the event that will occur when a tab is finally added.
+            _tabPanel = AssociatedObject.FindVisualChild<TabPanel>()
+                .Apply(tp =>
+                    tp.MouseWheel += tabPanel_MouseWheel)
+                .OrElse(() => 
+                    AssociatedObject.ItemContainerGenerator.StatusChanged += ItemContainerGenerator_StatusChanged);
 		}
 
 		private void ItemContainerGenerator_StatusChanged(object sender, EventArgs e)
@@ -58,7 +53,7 @@ namespace SharpEssentials.Controls.Behaviors
 		/// <see cref="Behavior.OnDetaching"/>
 		protected override void OnDetaching()
 		{
-			_tabPanel.MouseWheel -= tabPanel_MouseWheel;
+			_tabPanel.Apply(tp => tp.MouseWheel -= tabPanel_MouseWheel);
 		}
 
 		/// <summary>
@@ -118,6 +113,6 @@ namespace SharpEssentials.Controls.Behaviors
 			}
 		}
 
-		private TabPanel _tabPanel;
+		private Option<TabPanel> _tabPanel;
 	}
 }
