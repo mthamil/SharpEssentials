@@ -28,6 +28,16 @@ init:
 # build Configuration, i.e. Debug, Release, etc.
 configuration: Release
 
+cache:
+  - packages -> **\packages.config
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*.cs
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+
 nuget:
   project_feed: true
   disable_publish_on_pr: true
@@ -51,7 +61,7 @@ before_build:
 #    - Tests.Unit.dll
 
 test_script:
-  - ps: '&"C:\projects\SharpEssentials\packages\xunit.runner.console*\tools\xunit.console.exe" "C:\projects\SharpEssentials\SharpEssentials.Tests.Unit\bin\Release\SharpEssentials.Tests.Unit.dll" -parallel none -appveyor'
+  - ps: '&"$($env:APPVEYOR_BUILD_FOLDER)\packages\xunit.runner.console*\tools\xunit.console.exe" "$($env:APPVEYOR_BUILD_FOLDER)\SharpEssentials.Tests.Unit\bin\$($env:CONFIGURATION)\SharpEssentials.Tests.Unit.dll" -parallel none -appveyor'
 
 
 #---------------------------------#
@@ -59,7 +69,7 @@ test_script:
 #---------------------------------#
 
 artifacts:
-  - path: '**\$(APPVEYOR_PROJECT_NAME).*.nupkg'
+  - path: '**\$(APPVEYOR_PROJECT_NAME).$(APPVEYOR_BUILD_VERSION).nupkg'
 
 
 #---------------------------------#
