@@ -15,7 +15,7 @@ version: 1.0.{build}
 #---------------------------------#
 
 # Operating system (build VM template)
-os: Visual Studio 2015
+os: Visual Studio 2017
 
 # scripts that are called at very beginning, before repo cloning
 init:
@@ -27,6 +27,9 @@ init:
 
 # build Configuration, i.e. Debug, Release, etc.
 configuration: Release
+
+nuget:
+  project_feed: true
 
 build:
   project: SharpEssentials.sln
@@ -48,3 +51,26 @@ before_build:
 
 test_script:
   - ps: '&"C:\projects\SharpEssentials\packages\xunit.runner.console*\tools\xunit.console.exe" "C:\projects\SharpEssentials\SharpEssentials.Tests.Unit\bin\Release\SharpEssentials.Tests.Unit.dll" -parallel none -appveyor'
+
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+
+artifacts:
+  - path: '**\*.nupkg'
+
+
+#---------------------------------#
+#     deployment configuration    #
+#---------------------------------#
+
+deploy:
+  # Deploying to NuGet feed
+#  - provider: NuGet
+#    server: https://my.nuget.server/feed
+#    api_key:
+#      secure: 
+#    skip_symbols: false
+#    symbol_server: https://your.symbol.server/feed
+#    artifact: MyPackage.nupkg
