@@ -59,7 +59,7 @@ test_script:
 #---------------------------------#
 
 artifacts:
-  - path: '**\SharpEssentials*.nupkg'
+  - path: '**\$(APPVEYOR_PROJECT_NAME).*.nupkg'
 
 
 #---------------------------------#
