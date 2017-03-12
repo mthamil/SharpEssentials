@@ -58,7 +58,7 @@ test_script:
 #---------------------------------#
 
 artifacts:
-  - path: '**\*.nupkg'
+  - path: '**\SharpEssentials*.nupkg'
 
 
 #---------------------------------#
