@@ -1,17 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.3</TargetFramework>
-    <PackageId>SharpEssentials</PackageId>
-    <Authors>Matt Hamilton</Authors>
-    <Company />
-    <Product>SharpEssentials</Product>
-    <Description>Commonly used utility code for C#.</Description>
-    <Copyright>Matt Hamilton 2017</Copyright>
-    <RepositoryUrl>https://github.com/mthamil/SharpEssentials</RepositoryUrl>
-    <PackageLicenseUrl>https://opensource.org/licenses/Apache-2.0</PackageLicenseUrl>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <TargetFrameworks>netstandard1.3;net46</TargetFrameworks>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
