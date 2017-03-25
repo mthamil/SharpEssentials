@@ -78,7 +78,7 @@
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
-    <PackageReference Include="Moq" Version="4.2.1507.0118" />
+    <PackageReference Include="Moq" Version="4.7.8" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.abstractions" Version="2.0.1" />
