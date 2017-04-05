@@ -27,8 +27,11 @@ init:
   - git config --global core.autocrlf true
   - ps: |
       $Env:VersionPrefix = "$($Env:major).$($Env:minor).$($Env:APPVEYOR_BUILD_NUMBER)"
+      Write-Host($Env:VersionPrefix)
       $Env:VersionSuffix = "$(if ($Env:APPVEYOR_REPO_BRANCH -ne 'master') { $Env:APPVEYOR_REPO_BRANCH } else { '' })"
+      Write-Host($Env:VersionSuffix)
       $Env:VersionDelimiter = "$(if ($Env:VersionSuffix -ne '') { '-' } else { '' })"
+      Write-Host($Env:VersionDelimiter)
       appveyor UpdateBuild -Version "$($Env:VersionPrefix)$($Env:VersionDelimiter)$($Env:VersionSuffix)"
 
 #---------------------------------#
