@@ -27,8 +27,9 @@ init:
   - git config --global core.autocrlf true
   - ps: |
       $Env:VersionPrefix = "$($Env:major).$($Env:minor).$($Env:APPVEYOR_BUILD_NUMBER)"
-      $Env:VersionSuffix = "$(if ($Env:APPVEYOR_REPO_BRANCH -ne 'master') { '$($Env:APPVEYOR_REPO_BRANCH)' } else { '' })"
-      appveyor UpdateBuild -Version "$($Env:VersionPrefix)-$($Env:VersionSuffix)"
+      $Env:VersionSuffix = "$(if ($Env:APPVEYOR_REPO_BRANCH -ne 'master') { $Env:APPVEYOR_REPO_BRANCH } else { '' })"
+      $Env:VersionDelimiter = "$(if ($Env:VersionSuffix -ne '') { '-' } else { '' })""
+      appveyor UpdateBuild -Version "$($Env:VersionPrefix)$(Env:VersionDelimiter)$($Env:VersionSuffix)"
 
 #---------------------------------#
 #       build configuration       #
@@ -42,7 +43,7 @@ before_build:
   - nuget restore
 
 build:
-  verbosity: diagnostic               # MSBuild verbosity level
+  verbosity: minimal               # MSBuild verbosity level
 
 cache:
   - packages -> **\packages.config
@@ -72,7 +73,7 @@ test_script:
 #---------------------------------#
 
 artifacts:
-  - path: '**\$(APPVEYOR_PROJECT_NAME).$(APPVEYOR_BUILD_VERSION).nupkg'
+  - path: '**\$(APPVEYOR_PROJECT_NAME).*.nupkg'
 
 
 #---------------------------------#
