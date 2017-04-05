@@ -73,7 +73,7 @@ test_script:
 #---------------------------------#
 
 artifacts:
-  - path: '**\$(APPVEYOR_PROJECT_NAME).*.nupkg'
+  - path: '**\$(APPVEYOR_PROJECT_NAME).$(APPVEYOR_BUILD_VERSION).nupkg'
 
 
 #---------------------------------#
