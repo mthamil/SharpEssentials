@@ -20,16 +20,15 @@ os: Visual Studio 2017
 environment:  
   major: 1
   minor: 0
-  patch: '{build}'
 
 
 # scripts that are called at very beginning, before repo cloning
 init:
   - git config --global core.autocrlf true
   - ps: |
-      $Env:VersionPrefix = "$($Env:major).$($Env:minor).$($Env:patch)"
+      $Env:VersionPrefix = "$($Env:major).$($Env:minor).$($Env:APPVEYOR_BUILD_NUMBER)"
       $Env:VersionSuffix = "$(if ($Env:APPVEYOR_REPO_BRANCH -ne 'master') { '$($Env:APPVEYOR_REPO_BRANCH)' } else { '' })"
-      appveyor UpdateBuild -Version "$($Env:VersionPrefix)-($Env:VersionSuffix)"
+      appveyor UpdateBuild -Version "$($Env:VersionPrefix)-$($Env:VersionSuffix)"
 
 #---------------------------------#
 #       build configuration       #
