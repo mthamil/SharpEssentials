@@ -43,7 +43,7 @@ before_build:
   - nuget restore
 
 build:
-  verbosity: minimal               # MSBuild verbosity level
+  verbosity: diagnostic               # MSBuild verbosity level
 
 cache:
   - packages -> **\packages.config
