@@ -8,7 +8,7 @@
 #---------------------------------#
 
 # version format
-version: 1.0.{build}
+#version: 1.0.{build}
 
 #---------------------------------#
 #    environment configuration    #
@@ -17,9 +17,19 @@ version: 1.0.{build}
 # Operating system (build VM template)
 os: Visual Studio 2017
 
+environment:  
+  major: 1
+  minor: 0
+  patch: '{build}'
+
+
 # scripts that are called at very beginning, before repo cloning
 init:
   - git config --global core.autocrlf true
+  - ps: |
+      $Env:VersionPrefix = "$($Env:major).$($Env:minor).$($Env:patch)"
+      $Env:VersionSuffix = "$(if ($Env:APPVEYOR_REPO_BRANCH -ne 'master') { '$($Env:APPVEYOR_REPO_BRANCH)' } else { '' })"
+      appveyor UpdateBuild -Version "$($Env:VersionPrefix)-($Env:VersionSuffix)"
 
 #---------------------------------#
 #       build configuration       #
@@ -28,37 +38,31 @@ init:
 # build Configuration, i.e. Debug, Release, etc.
 configuration: Release
 
+# scripts to run before build
+before_build:
+  - nuget restore
+
+build:
+  verbosity: minimal               # MSBuild verbosity level
+
 cache:
   - packages -> **\packages.config
 
-assembly_info:
-  patch: true
-  file: AssemblyInfo.*.cs
-  assembly_version: "{version}"
-  assembly_file_version: "{version}"
-  assembly_informational_version: "{version}"
+#assembly_info:
+#  patch: true
+#  file: '**\AssemblyInfo.*'
+#  assembly_version: '$($Env:major).$($Env:minor).$($Env:patch)'
+#  assembly_file_version: '{version}'
+#  assembly_informational_version: '{version}'
 
 nuget:
   project_feed: true
   disable_publish_on_pr: true
 
-build:
-  project: SharpEssentials.sln
-  verbosity: minimal               # MSBuild verbosity level
-
-
-# scripts to run before build
-before_build:
-  - nuget restore
-
 
 #---------------------------------#
 #       tests configuration       #
 #---------------------------------#
-
-#test:
-#  assemblies:
-#    - Tests.Unit.dll
 
 test_script:
   - ps: '&"$($env:APPVEYOR_BUILD_FOLDER)\packages\xunit.runner.console*\tools\xunit.console.exe" "$($env:APPVEYOR_BUILD_FOLDER)\SharpEssentials.Tests.Unit\bin\$($env:CONFIGURATION)\SharpEssentials.Tests.Unit.dll" -parallel none -appveyor'
