@@ -4,13 +4,6 @@
 #   - Section names should be unique on each level.
 
 #---------------------------------#
-#      general configuration      #
-#---------------------------------#
-
-# version format
-#version: 1.0.{build}
-
-#---------------------------------#
 #    environment configuration    #
 #---------------------------------#
 
@@ -48,13 +41,6 @@ build:
 
 cache:
   - packages -> **\packages.config
-
-#assembly_info:
-#  patch: true
-#  file: '**\AssemblyInfo.*'
-#  assembly_version: '$($Env:major).$($Env:minor).$($Env:patch)'
-#  assembly_file_version: '{version}'
-#  assembly_informational_version: '{version}'
 
 nuget:
   project_feed: true
