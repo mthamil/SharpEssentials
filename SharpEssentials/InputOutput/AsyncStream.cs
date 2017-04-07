@@ -80,18 +80,15 @@ namespace SharpEssentials.InputOutput
 		/// </summary>
 		/// <param name="stream">The stream to operate on</param>
 		/// <returns>Asynchronous Stream operations</returns>
-		public static IAsyncStreamOperations Async(this Stream stream)
-		{
-			return AsyncStreamFactory(stream);
-		}
+		public static IAsyncStreamOperations Async(this Stream stream) => AsyncStreamFactory(stream);
 
-		internal static Func<Stream, IAsyncStreamOperations> AsyncStreamFactory = stream => new AsyncStreamOperations(stream);
+	    internal static Func<Stream, IAsyncStreamOperations> AsyncStreamFactory = stream => new AsyncStreamOperations(stream);
 
 		private class AsyncStreamOperations : IAsyncStreamOperations
 		{
 			public AsyncStreamOperations(Stream stream)
 			{
-				_stream = stream;
+			    _stream = stream ?? throw new ArgumentNullException(nameof(stream));
 			}
 
 			#region Implementation of IAsyncStreamOperations

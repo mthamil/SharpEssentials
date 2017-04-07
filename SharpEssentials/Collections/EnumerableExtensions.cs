@@ -38,17 +38,13 @@ namespace SharpEssentials.Collections
         {
             // Optimize for ISet which already contains a method to perform
             // this operation.
-            var subsetSet = subset as ISet<T>;
-            if (subsetSet != null)
+            if (subset is ISet<T> subsetSet)
                 return subsetSet.IsSubsetOf(superset);
 
             // If subtracting the superset from the subset does not remove all items, then
             // the superset does not actually contain everything.
-            IEnumerable<T> subtractedItems = subset.Except(superset);
-            if (subtractedItems.Any())
-                return false;
-
-            return true;
+            var subtractedItems = subset.Except(superset);
+            return !subtractedItems.Any();
         }
 
         /// <summary>
@@ -84,16 +80,13 @@ namespace SharpEssentials.Collections
             if (enumerator == null)
                 throw new ArgumentNullException(nameof(enumerator));
 
-            return enumerator.ToEnumerableImpl();
-        }
+            IEnumerable<T> Impl()
+            {
+                while (enumerator.MoveNext())
+                    yield return enumerator.Current;
+            }
 
-        /// <summary>
-        /// Implementation method that allows for eager argument validation.
-        /// </summary>
-        private static IEnumerable<T> ToEnumerableImpl<T>(this IEnumerator<T> enumerator)
-        {
-            while (enumerator.MoveNext())
-                yield return enumerator.Current;
+            return Impl();
         }
 
         /// <summary>
@@ -118,10 +111,8 @@ namespace SharpEssentials.Collections
         /// <returns>The item from the source that has the maximum value according to its key</returns>
         /// <exception cref="ArgumentNullException">If source or selector are null</exception>
         /// <exception cref="InvalidOperationException">If the source sequence contains no elements</exception>
-        public static TSource MaxBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector)
-        {
-            return source.MaxBy(selector, Comparer<TKey>.Default);
-        }
+        public static TSource MaxBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector) => 
+            source.MaxBy(selector, Comparer<TKey>.Default);
 
         /// <summary>
         /// Returns the item from an enumerable that has the maximum value according
@@ -135,11 +126,8 @@ namespace SharpEssentials.Collections
         /// <returns>The item from the source that has the maximum value according to its key</returns>
         /// <exception cref="ArgumentNullException">If source or selector are null</exception>
         /// <exception cref="InvalidOperationException">If the source sequence contains no elements</exception>
-        public static TSource MaxBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector, IComparer<TKey> comparer)
-        {
-            IComparer<TKey> actualComparer = comparer ?? Comparer<TKey>.Default;
-            return source.ExtremumBy(selector, actualComparer);
-        }
+        public static TSource MaxBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector, IComparer<TKey> comparer) => 
+            source.ExtremumBy(selector, comparer ?? Comparer<TKey>.Default);
 
         /// <summary>
         /// Returns the item from an enumerable that has the minimum value according
@@ -152,10 +140,8 @@ namespace SharpEssentials.Collections
         /// <returns>The item from the source that has the minimum value according to its key</returns>
         /// <exception cref="ArgumentNullException">If source or selector are null</exception>
         /// <exception cref="InvalidOperationException">If the source sequence contains no elements</exception>
-        public static TSource MinBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector)
-        {
-            return source.MinBy(selector, Comparer<TKey>.Default);
-        }
+        public static TSource MinBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector) => 
+            source.MinBy(selector, Comparer<TKey>.Default);
 
         /// <summary>
         /// Returns the item from an enumerable that has the minimum value according
@@ -169,11 +155,8 @@ namespace SharpEssentials.Collections
         /// <returns>The item from the source that has the minimum value according to its key</returns>
         /// <exception cref="ArgumentNullException">If source or selector are null</exception>
         /// <exception cref="InvalidOperationException">If the source sequence contains no elements</exception>
-        public static TSource MinBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector, IComparer<TKey> comparer)
-        {
-            IComparer<TKey> actualComparer = comparer ?? Comparer<TKey>.Default;
-            return source.ExtremumBy(selector, new ReverseComparer<TKey>(actualComparer));
-        }
+        public static TSource MinBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector, IComparer<TKey> comparer) => 
+            source.ExtremumBy(selector, new ReverseComparer<TKey>(comparer ?? Comparer<TKey>.Default));
 
         private static TSource ExtremumBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector, IComparer<TKey> comparer)
         {
@@ -233,10 +216,7 @@ namespace SharpEssentials.Collections
         /// <typeparam name="T">The type of items in the collection.</typeparam>
         /// <param name="items">The items to join.</param>
         /// <param name="delimiter">The separator to use between items.</param>
-        public static string ToDelimitedString<T>(this IEnumerable<T> items, string delimiter = ",")
-        {
-            return String.Join(delimiter, items);
-        }
+        public static string ToDelimitedString<T>(this IEnumerable<T> items, string delimiter = ",") => String.Join(delimiter, items);
 
         /// <summary>
         /// Returns the first element of a sequence or <see cref="Option.None{T}"/> if the sequence is empty.
@@ -244,10 +224,7 @@ namespace SharpEssentials.Collections
         /// <typeparam name="T">The type of items in the sequence</typeparam>
         /// <param name="source">The source items to query</param>
         /// <returns>An <see cref="Option.Some{T}"/> containing the first element of the sequence or <see cref="Option.None{T}"/></returns>
-        public static Option<T> FirstOrNone<T>(this IEnumerable<T> source)
-        {
-            return source.FirstOrNone(x => true);
-        }
+        public static Option<T> FirstOrNone<T>(this IEnumerable<T> source) => source.FirstOrNone(x => true);
 
         /// <summary>
         /// Returns the first element of a sequence that satisfies a condition or <see cref="Option.None{T}"/> if no such

@@ -31,11 +31,9 @@ namespace SharpEssentials.Concurrency
         public override int MaximumConcurrencyLevel => 1;
 
         /// <see cref="TaskScheduler.QueueTask"/>
-        protected override void QueueTask(Task task) 
-            => TryExecuteTask(task);
+        protected override void QueueTask(Task task) => TryExecuteTask(task);
 
         /// <see cref="TaskScheduler.TryExecuteTaskInline"/>
-        protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued) 
-            => TryExecuteTask(task);
+        protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued) => TryExecuteTask(task);
     }
 }

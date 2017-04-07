@@ -36,11 +36,11 @@ namespace SharpEssentials.Concurrency.Processes
 		/// <summary>
 		/// The data read from the output stream.
 		/// </summary>
-		public Stream Output { get; private set; }
+		public Stream Output { get; }
 
 		/// <summary>
 		/// The data read from the error stream.
 		/// </summary>
-		public Stream Error { get; private set; }
+		public Stream Error { get; }
 	}
 }

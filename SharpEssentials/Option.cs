@@ -130,7 +130,7 @@ namespace SharpEssentials
     /// <summary>
     /// Represents an Option with no value.
     /// </summary>
-    internal class None<T> : Option<T>
+    public class None<T> : Option<T>
     {
         /// <summary>
         /// Singleton instance.
@@ -150,28 +150,25 @@ namespace SharpEssentials
         /// <summary>
         /// Throws an exception because no value exists.
         /// </summary>
-        public override T Value
-        {
-            get { throw new InvalidOperationException(); }
-        }
+        public override T Value => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns None of the result type.
         /// </summary>
-        public override Option<TResult> Select<TResult>(Func<T, TResult> selector) 
-            => Option.None<TResult>();
+        public override Option<TResult> Select<TResult>(Func<T, TResult> selector) =>
+            Option.None<TResult>();
 
         /// <summary>
         /// Returns None of the result type.
         /// </summary>
-        public override Option<TResult> SelectMany<TResult>(Func<T, Option<TResult>> optionSelector) 
-            => Option.None<TResult>();
+        public override Option<TResult> SelectMany<TResult>(Func<T, Option<TResult>> optionSelector) =>
+            Option.None<TResult>();
 
         /// <summary>
         /// Returns None of the result type.
         /// </summary>
-        public override Option<TResult> SelectMany<TIntermediate, TResult>(Func<T, Option<TIntermediate>> optionSelector, Func<T, TIntermediate, TResult> resultSelector) 
-            => Option.None<TResult>();
+        public override Option<TResult> SelectMany<TIntermediate, TResult>(Func<T, Option<TIntermediate>> optionSelector, Func<T, TIntermediate, TResult> resultSelector) =>
+            Option.None<TResult>();
 
         /// <summary>
         /// Returns None.
@@ -208,13 +205,13 @@ namespace SharpEssentials
     /// <summary>
     /// Represents an Option that has a value.
     /// </summary>
-    internal class Some<T> : Option<T>
+    public class Some<T> : Option<T>
     {
         /// <summary>
         /// Creates a new Some Option with the given value.
         /// </summary>
         /// <param name="value">The value of the Option</param>
-        public Some(T value)
+        internal Some(T value)
         {
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
@@ -235,14 +232,14 @@ namespace SharpEssentials
         /// <summary>
         /// Applies a mapping function to a Some's value.
         /// </summary>
-        public override Option<TResult> Select<TResult>(Func<T, TResult> selector)
-            => Option.From(selector(Value));
+        public override Option<TResult> Select<TResult>(Func<T, TResult> selector) =>
+            Option.From(selector(Value));
 
         /// <summary>
         /// Applies a mapping function to a Some's value.
         /// </summary>
-        public override Option<TResult> SelectMany<TResult>(Func<T, Option<TResult>> optionSelector) 
-            => optionSelector(Value);
+        public override Option<TResult> SelectMany<TResult>(Func<T, Option<TResult>> optionSelector) =>
+            optionSelector(Value);
 
         /// <summary>
         /// Applies a mapping function to a Some's value.
@@ -298,11 +295,8 @@ namespace SharpEssentials
             if (ReferenceEquals(this, obj))
                 return true;
 
-            Some<T> other = obj as Some<T>;
-            if (other == null)
-                return false;
-
-            return Value.Equals(other.Value);
+            var other = obj as Some<T>;
+            return other != null && Value.Equals(other.Value);
         }
 
         /// <summary>

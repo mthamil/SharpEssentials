@@ -31,10 +31,7 @@ namespace SharpEssentials.Concurrency
         /// </summary>
         /// <param name="handle">The handle to wait on.</param>
         /// <remarks>See http://stackoverflow.com/questions/18756354/wrapping-manualresetevent-as-awaitable-task</remarks>
-        public static Task AsTask(this WaitHandle handle)
-        {
-            return AsTask(handle, Timeout.InfiniteTimeSpan);
-        }
+        public static Task AsTask(this WaitHandle handle) => AsTask(handle, Timeout.InfiniteTimeSpan);
 
         /// <summary>
         /// Returns a <see cref="Task"/> that will complete when the given <see cref="WaitHandle"/> completes

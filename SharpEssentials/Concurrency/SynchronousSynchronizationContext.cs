@@ -24,9 +24,6 @@ namespace SharpEssentials.Concurrency
 	public class SynchronousSynchronizationContext : SynchronizationContext
 	{
 		/// <see cref="SynchronizationContext.Post"/>
-		public override void Post(SendOrPostCallback d, object state)
-		{
-			d(state);
-		}
+		public override void Post(SendOrPostCallback d, object state) => d(state);
 	}
 }

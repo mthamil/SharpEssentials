@@ -43,10 +43,7 @@ namespace SharpEssentials.Net
         /// <summary>
         /// Gets a URI's hash code.
         /// </summary>
-        public int GetHashCode(Uri obj)
-        {
-            return obj.ToString().ToLowerInvariant().TrimEnd('/').GetHashCode();
-        }
+        public int GetHashCode(Uri obj) => obj?.ToString().ToLowerInvariant().TrimEnd('/').GetHashCode() ?? 0;
 
         /// <summary>
         /// Gets a <see cref="UriEqualityComparer"/> equality comparer.

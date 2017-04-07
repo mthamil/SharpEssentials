@@ -66,11 +66,11 @@ namespace SharpEssentials.Reflection
 
 		private static PropertyInfo ExtractProperty(Type type, LambdaExpression propertyAccessor)
 		{
-			MemberExpression memberExpr = ExtractMemberExpression(type, propertyAccessor);
+			var memberExpr = ExtractMemberExpression(type, propertyAccessor);
 			if (memberExpr == null)
 				throw new ArgumentException($"The body of the expression must be a member of {type.Name}", nameof(propertyAccessor));
 
-			PropertyInfo property = memberExpr.Member as PropertyInfo;
+			var property = memberExpr.Member as PropertyInfo;
 			if (property == null)
 				throw new ArgumentException("The body of the expression must be a property invocation.", nameof(propertyAccessor));
 
@@ -79,15 +79,13 @@ namespace SharpEssentials.Reflection
 
 		private static MemberExpression ExtractMemberExpression(Type type, LambdaExpression memberAccessor)
 		{
-			MemberExpression memberExpr = memberAccessor.Body as MemberExpression;
-			if (memberExpr != null)
+			if (memberAccessor.Body is MemberExpression memberExpr)
 				return memberExpr;
 
 			// Value type members may be wrapped in Convert expressions.
 			if (memberAccessor.Body.NodeType == ExpressionType.Convert)
 			{
-				UnaryExpression unaryExpr = memberAccessor.Body as UnaryExpression;
-				if (unaryExpr != null)
+				if (memberAccessor.Body is UnaryExpression unaryExpr)
 				{
 					memberExpr = unaryExpr.Operand as MemberExpression;
 					if (memberExpr != null && type.GetTypeInfo().IsAssignableFrom(memberExpr.Member.DeclaringType.GetTypeInfo()))
