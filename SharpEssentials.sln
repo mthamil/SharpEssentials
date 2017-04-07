@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpEssentials", "SharpEssentials\SharpEssentials.csproj", "{573D5F8C-4C19-42C3-B84B-BC585008B505}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpEssentials", "SharpEssentials\SharpEssentials.csproj", "{573D5F8C-4C19-42C3-B84B-BC585008B505}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpEssentials.Controls", "SharpEssentials.Controls\SharpEssentials.Controls.csproj", "{3BE8D9DC-DDC3-47D8-848F-68CF43026CCA}"
 EndProject

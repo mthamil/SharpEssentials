@@ -12,9 +12,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-// 
+
 using System;
-using System.Runtime.Serialization;
 
 namespace SharpEssentials.Concurrency.Processes
 {
@@ -34,9 +33,5 @@ namespace SharpEssentials.Concurrency.Processes
 		/// <see cref="Exception(string, Exception)"/>
 		public ProcessErrorException(string message, Exception inner) 
 			: base(message, inner) { }
-
-		/// <see cref="Exception(SerializationInfo, StreamingContext)"/>
-		protected ProcessErrorException(SerializationInfo info, StreamingContext context) 
-			: base(info, context) { }
 	}
 }

@@ -14,6 +14,8 @@
 // limitations under the License.
 
 using System;
+
+#if !NETSTANDARD1_3
 using System.Timers;
 
 namespace SharpEssentials.Chronology
@@ -23,7 +25,7 @@ namespace SharpEssentials.Chronology
 	/// </summary>
 	public class SystemTimersTimer : TimerBase, IDisposable
 	{
-		#region ITimer Members
+#region ITimer Members
 
 		/// <see cref="ITimer.TryStart"/>
 		public override bool TryStart(object state = null)
@@ -91,7 +93,7 @@ namespace SharpEssentials.Chronology
 			}
 		}
 
-		#endregion
+#endregion
 
 		private void timer_Elapsed(object sender, ElapsedEventArgs e)
 		{
@@ -120,7 +122,7 @@ namespace SharpEssentials.Chronology
 			OnElapsed(e.SignalTime, _state);
 		}
 
-		#region IDisposable Members
+#region IDisposable Members
 
 		/// <see cref="System.IDisposable.Dispose"/>
 		public void Dispose()
@@ -165,7 +167,7 @@ namespace SharpEssentials.Chronology
 
 		private bool _disposed;
 
-		#endregion
+#endregion
 
 		private object _state;
 
@@ -186,3 +188,5 @@ namespace SharpEssentials.Chronology
 		private readonly Timer _timer = new Timer();
 	}
 }
+
+#endif

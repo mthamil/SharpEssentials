@@ -4,22 +4,26 @@
 #   - Section names should be unique on each level.
 
 #---------------------------------#
-#      general configuration      #
-#---------------------------------#
-
-# version format
-version: 1.0.{build}
-
-#---------------------------------#
 #    environment configuration    #
 #---------------------------------#
 
 # Operating system (build VM template)
-os: Visual Studio 2015
+os: Visual Studio 2017
+
+environment:  
+  major: 1
+  minor: 0
+
 
 # scripts that are called at very beginning, before repo cloning
 init:
   - git config --global core.autocrlf true
+  - ps: |
+      $isBranch = $Env:APPVEYOR_REPO_BRANCH -ne 'master'
+      $versionDelimiter = "$(if ($isBranch) { '-' } else { '' })"
+      $Env:VersionPrefix = "$($Env:major).$($Env:minor).$($Env:APPVEYOR_BUILD_NUMBER)"
+      $Env:VersionSuffix = "$(if ($isBranch) { $Env:APPVEYOR_REPO_BRANCH } else { '' })"
+      appveyor UpdateBuild -Version "$($Env:VersionPrefix)$($versionDelimiter)$($Env:VersionSuffix)"
 
 #---------------------------------#
 #       build configuration       #
@@ -28,23 +32,50 @@ init:
 # build Configuration, i.e. Debug, Release, etc.
 configuration: Release
 
-build:
-  project: SharpEssentials.sln
-  verbosity: minimal               # MSBuild verbosity level
-
-
 # scripts to run before build
 before_build:
   - nuget restore
+
+build:
+  verbosity: minimal               # MSBuild verbosity level
+
+cache:
+  - packages -> **\packages.config
+
+nuget:
+  project_feed: true
+  disable_publish_on_pr: true
 
 
 #---------------------------------#
 #       tests configuration       #
 #---------------------------------#
 
-#test:
-#  assemblies:
-#    - Tests.Unit.dll
-
 test_script:
-  - ps: '&"C:\projects\SharpEssentials\packages\xunit.runner.console*\tools\xunit.console.exe" "C:\projects\SharpEssentials\SharpEssentials.Tests.Unit\bin\Release\SharpEssentials.Tests.Unit.dll" -parallel none -appveyor'
+  - ps: '&"$($env:APPVEYOR_BUILD_FOLDER)\packages\xunit.runner.console*\tools\xunit.console.exe" "$($env:APPVEYOR_BUILD_FOLDER)\SharpEssentials.Tests.Unit\bin\$($env:CONFIGURATION)\SharpEssentials.Tests.Unit.dll" -parallel none -appveyor'
+
+
+#---------------------------------#
+#      artifacts configuration    #
+#---------------------------------#
+
+artifacts:
+  - path: '**\$(APPVEYOR_PROJECT_NAME).$(APPVEYOR_BUILD_VERSION).nupkg'
+  - path: '**\$(APPVEYOR_PROJECT_NAME).$(APPVEYOR_BUILD_VERSION).symbols.nupkg'
+
+
+#---------------------------------#
+#     deployment configuration    #
+#---------------------------------#
+
+deploy:
+  # Deploying to NuGet feed
+  - provider: NuGet
+    on:
+      appveyor_repo_tag: true
+    server: # nuget.org
+    api_key:
+      secure: MD0elo1aBPjhlWEc8wb7obFowwHimaZ+I1fEscOXpTckpHLZFmi4MOHrgyRteF/2
+    skip_symbols: false
+    symbol_server: # SymbolSource.org
+    artifact: '$(APPVEYOR_PROJECT_NAME).$(APPVEYOR_BUILD_VERSION).nupkg'

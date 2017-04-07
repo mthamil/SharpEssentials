@@ -22,9 +22,9 @@ using System.Windows.Markup;
 [assembly: AssemblyProduct("SharpEssentials.Controls")]
 [assembly: AssemblyCopyright("Copyright © Matt Hamilton 2017")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.*")]
-[assembly: AssemblyInformationalVersion("1.0")]
+[assembly: AssemblyVersion("0.0.0.0")]
+[assembly: AssemblyFileVersion("0.0.0.0")]
+[assembly: AssemblyInformationalVersion("0.0")]
 
 [assembly: AssemblyTitle("SharpEssentials.Controls")]
 [assembly: AssemblyCulture("")]
