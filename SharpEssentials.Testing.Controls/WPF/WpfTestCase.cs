@@ -38,6 +38,10 @@ namespace SharpEssentials.Testing.Controls.WPF
     {
         private IXunitTestCase _testCase;
 
+        /// <summary>
+        /// Initializes a new <see cref="WpfTestCase"/>.
+        /// </summary>
+        /// <param name="testCase">The test case to wrap.</param>
         public WpfTestCase(IXunitTestCase testCase)
         {
             _testCase = testCase;
@@ -48,8 +52,14 @@ namespace SharpEssentials.Testing.Controls.WPF
         [Obsolete("Called by the de-serializer", error: true)]
         public WpfTestCase() { }
 
+        /// <summary>
+        /// See <see cref="IXunitTestCase.Method"/>.
+        /// </summary>
         public IMethodInfo Method => _testCase.Method;
 
+        /// <summary>
+        /// See <see cref="IXunitTestCase.RunAsync"/>
+        /// </summary>
         public Task<RunSummary> RunAsync(IMessageSink diagnosticMessageSink,
                                          IMessageBus messageBus,
                                          object[] constructorArguments,
@@ -98,29 +108,56 @@ namespace SharpEssentials.Testing.Controls.WPF
             return tcs.Task;
         }
 
+        /// <summary>
+        /// See <see cref="ITestCase.DisplayName"/>.
+        /// </summary>
         public string DisplayName => _testCase.DisplayName;
 
+        /// <summary>
+        /// See <see cref="ITestCase.SkipReason"/>.
+        /// </summary>
         public string SkipReason => _testCase.SkipReason;
 
+        /// <summary>
+        /// See <see cref="ITestCase.SourceInformation"/>.
+        /// </summary>
         public ISourceInformation SourceInformation
         {
-            get { return _testCase.SourceInformation; }
-            set { _testCase.SourceInformation = value; }
+            get => _testCase.SourceInformation;
+            set => _testCase.SourceInformation = value;
         }
 
+        /// <summary>
+        /// See <see cref="ITestCase.TestMethod"/>.
+        /// </summary>
         public ITestMethod TestMethod => _testCase.TestMethod;
 
+        /// <summary>
+        /// See <see cref="ITestCase.TestMethodArguments"/>.
+        /// </summary>
         public object[] TestMethodArguments => _testCase.TestMethodArguments;
 
+        /// <summary>
+        /// See <see cref="ITestCase.Traits"/>.
+        /// </summary>
         public Dictionary<string, List<string>> Traits => _testCase.Traits;
 
+        /// <summary>
+        /// See <see cref="ITestCase.UniqueID"/>.
+        /// </summary>
         public string UniqueID => _testCase.UniqueID;
 
+        /// <summary>
+        /// See <see cref="IXunitSerializable.Deserialize"/>.
+        /// </summary>
         public void Deserialize(IXunitSerializationInfo info)
         {
             _testCase = info.GetValue<IXunitTestCase>("InnerTestCase");
         }
 
+        /// <summary>
+        /// See <see cref="IXunitSerializable.Serialize"/>.
+        /// </summary>
         public void Serialize(IXunitSerializationInfo info)
         {
             info.AddValue("InnerTestCase", _testCase);
