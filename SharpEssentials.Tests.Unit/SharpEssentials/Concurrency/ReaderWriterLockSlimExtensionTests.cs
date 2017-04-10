@@ -10,79 +10,75 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		[Fact]
 		public void Test_ReadLock()
 		{
-			var readLock = readWriteLock.ReadLock();
+			var readLock = _underTest.ReadLock();
 
-			Assert.True(readWriteLock.IsReadLockHeld);
-			Assert.False(readWriteLock.IsUpgradeableReadLockHeld);
-			Assert.False(readWriteLock.IsWriteLockHeld);
+			Assert.True(_underTest.IsReadLockHeld);
+			Assert.False(_underTest.IsUpgradeableReadLockHeld);
+			Assert.False(_underTest.IsWriteLockHeld);
 
 			readLock.Dispose();
 
-			Assert.False(readWriteLock.IsReadLockHeld);
-			Assert.False(readWriteLock.IsUpgradeableReadLockHeld);
-			Assert.False(readWriteLock.IsWriteLockHeld);
+			Assert.False(_underTest.IsReadLockHeld);
+			Assert.False(_underTest.IsUpgradeableReadLockHeld);
+			Assert.False(_underTest.IsWriteLockHeld);
 		}
 
 		[Fact]
 		public void Test_WriteLock()
 		{
-			var writeLock = readWriteLock.WriteLock();
+			var writeLock = _underTest.WriteLock();
 
-			Assert.False(readWriteLock.IsReadLockHeld);
-			Assert.False(readWriteLock.IsUpgradeableReadLockHeld);
-			Assert.True(readWriteLock.IsWriteLockHeld);
+			Assert.False(_underTest.IsReadLockHeld);
+			Assert.False(_underTest.IsUpgradeableReadLockHeld);
+			Assert.True(_underTest.IsWriteLockHeld);
 
 			writeLock.Dispose();
 
-			Assert.False(readWriteLock.IsReadLockHeld);
-			Assert.False(readWriteLock.IsUpgradeableReadLockHeld);
-			Assert.False(readWriteLock.IsWriteLockHeld);
+			Assert.False(_underTest.IsReadLockHeld);
+			Assert.False(_underTest.IsUpgradeableReadLockHeld);
+			Assert.False(_underTest.IsWriteLockHeld);
 		}
 
 		[Fact]
 		public void Test_UpgradeableReadLock()
 		{
-			var upgradeableReadLock = readWriteLock.UpgradeableReadLock();
+			var upgradeableReadLock = _underTest.UpgradeableReadLock();
 
-			Assert.False(readWriteLock.IsReadLockHeld);
-			Assert.True(readWriteLock.IsUpgradeableReadLockHeld);
-			Assert.False(readWriteLock.IsWriteLockHeld);
+			Assert.False(_underTest.IsReadLockHeld);
+			Assert.True(_underTest.IsUpgradeableReadLockHeld);
+			Assert.False(_underTest.IsWriteLockHeld);
 
 			upgradeableReadLock.Dispose();
 
-			Assert.False(readWriteLock.IsReadLockHeld);
-			Assert.False(readWriteLock.IsUpgradeableReadLockHeld);
-			Assert.False(readWriteLock.IsWriteLockHeld);
+			Assert.False(_underTest.IsReadLockHeld);
+			Assert.False(_underTest.IsUpgradeableReadLockHeld);
+			Assert.False(_underTest.IsWriteLockHeld);
 		}
 
 		[Fact]
 		public void Test_UpgradeableReadLock_Upgrade()
 		{
-			using (readWriteLock.UpgradeableReadLock())
+			using (_underTest.UpgradeableReadLock())
 			{
-				var upgradedLock = readWriteLock.WriteLock();
+				var upgradedLock = _underTest.WriteLock();
 
-				Assert.False(readWriteLock.IsReadLockHeld);
-				Assert.True(readWriteLock.IsUpgradeableReadLockHeld);
-				Assert.True(readWriteLock.IsWriteLockHeld);
+				Assert.False(_underTest.IsReadLockHeld);
+				Assert.True(_underTest.IsUpgradeableReadLockHeld);
+				Assert.True(_underTest.IsWriteLockHeld);
 
 				upgradedLock.Dispose();
 
-				Assert.False(readWriteLock.IsReadLockHeld);
-				Assert.True(readWriteLock.IsUpgradeableReadLockHeld);
-				Assert.False(readWriteLock.IsWriteLockHeld);
+				Assert.False(_underTest.IsReadLockHeld);
+				Assert.True(_underTest.IsUpgradeableReadLockHeld);
+				Assert.False(_underTest.IsWriteLockHeld);
 			}
 		}
 
-		private readonly ReaderWriterLockSlim readWriteLock = new ReaderWriterLockSlim();
-
-		#region Implementation of IDisposable
+		private readonly ReaderWriterLockSlim _underTest = new ReaderWriterLockSlim();
 
 		public void Dispose()
 		{
-			readWriteLock.Dispose();
+			_underTest.Dispose();
 		}
-
-		#endregion
 	}
 }

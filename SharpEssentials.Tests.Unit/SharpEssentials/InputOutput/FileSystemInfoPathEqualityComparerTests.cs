@@ -30,7 +30,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
         public void Test_Equals(bool expected, FileSystemInfo first, FileSystemInfo second)
 		{
 			// Act.
-			bool actual = comparer.Equals(first, second);
+			bool actual = _underTest.Equals(first, second);
 
 			// Assert.
 			Assert.Equal(expected, actual);
@@ -43,15 +43,15 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
 		{
 			// Arrange.
 			var file = new FileInfo(path);
-			var expected = comparer.GetHashCode(new FileInfo(@"c:\test.txt"));
+			var expected = _underTest.GetHashCode(new FileInfo(@"c:\test.txt"));
 
 			// Act.
-			int actual = comparer.GetHashCode(file);
+			int actual = _underTest.GetHashCode(file);
 
 			// Assert.
 			Assert.Equal(expected, actual);
 		}
 
-		private readonly FileSystemInfoPathEqualityComparer comparer = new FileSystemInfoPathEqualityComparer();
+		private readonly FileSystemInfoPathEqualityComparer _underTest = new FileSystemInfoPathEqualityComparer();
 	}
 }
