@@ -10,7 +10,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 		public void Test_TryGetValue_Key_Exists()
 		{
 			// Arrange.
-			var dict = new Dictionary<int, string> { { 5, "value" } };
+			var dict = new Dictionary<int, string> { [5] = "value" };
 
 			// Act.
 			var result = dict.TryGetValue(5);
@@ -24,7 +24,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Collections
 		public void Test_TryGetValue_Key_DoesNotExist()
 		{
 			// Arrange.
-			var dict = new Dictionary<int, string> { { 5, "value" } };
+			var dict = new Dictionary<int, string> { [5] = "value" };
 
 			// Act.
 			var result = dict.TryGetValue(2);
