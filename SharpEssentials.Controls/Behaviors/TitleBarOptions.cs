@@ -36,8 +36,8 @@ namespace SharpEssentials.Controls.Behaviors
         /// </summary>
         public bool ShowButtons
         {
-            get { return (bool)GetValue(ShowButtonsProperty); }
-            set { SetValue(ShowButtonsProperty, value); }
+            get => (bool)GetValue(ShowButtonsProperty);
+            set => SetValue(ShowButtonsProperty, value);
         }
 
         /// <summary>

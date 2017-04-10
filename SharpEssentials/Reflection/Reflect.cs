@@ -66,11 +66,11 @@ namespace SharpEssentials.Reflection
 
 		private static PropertyInfo ExtractProperty(Type type, LambdaExpression propertyAccessor)
 		{
-			MemberExpression memberExpr = ExtractMemberExpression(type, propertyAccessor);
+			var memberExpr = ExtractMemberExpression(type, propertyAccessor);
 			if (memberExpr == null)
 				throw new ArgumentException($"The body of the expression must be a member of {type.Name}", nameof(propertyAccessor));
 
-			PropertyInfo property = memberExpr.Member as PropertyInfo;
+			var property = memberExpr.Member as PropertyInfo;
 			if (property == null)
 				throw new ArgumentException("The body of the expression must be a property invocation.", nameof(propertyAccessor));
 
@@ -79,25 +79,23 @@ namespace SharpEssentials.Reflection
 
 		private static MemberExpression ExtractMemberExpression(Type type, LambdaExpression memberAccessor)
 		{
-			MemberExpression memberExpr = memberAccessor.Body as MemberExpression;
-			if (memberExpr != null)
-				return memberExpr;
+		    switch (memberAccessor.Body)
+		    {
+                case MemberExpression memberExpr:
+                    return memberExpr;
 
-			// Value type members may be wrapped in Convert expressions.
-			if (memberAccessor.Body.NodeType == ExpressionType.Convert)
-			{
-				UnaryExpression unaryExpr = memberAccessor.Body as UnaryExpression;
-				if (unaryExpr != null)
-				{
-					memberExpr = unaryExpr.Operand as MemberExpression;
-					if (memberExpr != null && type.GetTypeInfo().IsAssignableFrom(memberExpr.Member.DeclaringType.GetTypeInfo()))
-					{
-						return memberExpr;
-					}
-				}
-			}
+                case UnaryExpression unaryExpr when unaryExpr.NodeType == ExpressionType.Convert:
+                    if (unaryExpr.Operand is MemberExpression unaryOperand &&
+                        type.GetTypeInfo().IsAssignableFrom(unaryOperand.Member.DeclaringType.GetTypeInfo()))
+                    {
+                        return unaryOperand;
+                    }
 
-			return null;
+                    goto default;
+
+                default:
+                    return null;
+            }
 		}
 
 		/// <summary>
@@ -128,11 +126,10 @@ namespace SharpEssentials.Reflection
 
 		private static MethodCallExpression ExtractMethodCall(Type type, LambdaExpression methodCaller)
 		{
-			MethodCallExpression methodCall = methodCaller.Body as MethodCallExpression;
-			if (methodCall == null)
-				throw new ArgumentException($"The body of the expression must be a method of {type.Name}", nameof(methodCaller));
+		    if (methodCaller.Body is MethodCallExpression methodCall)
+		        return methodCall;
 
-			return methodCall;
+			throw new ArgumentException($"The body of the expression must be a method of {type.Name}", nameof(methodCaller));
 		}
 	}
 }

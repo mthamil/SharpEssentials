@@ -177,7 +177,7 @@ namespace SharpEssentials.Observable
         public Property(string propertyName, Action<string> propertyChangedRaiser, IEnumerable<string> dependentPropertyNames, Func<V, V, bool> equalityComparison)
         {
             PropertyChanged += (o, e) => propertyChangedRaiser(e.PropertyName);
-            _name = propertyName;
+            Name = propertyName;
             _dependentPropertyNames = dependentPropertyNames;
             if (equalityComparison != null)
                 _equalityComparison = equalityComparison;
@@ -188,8 +188,8 @@ namespace SharpEssentials.Observable
         /// </summary>
         public V Value
         {
-            get { return _value; }
-            set { TrySetValue(value); }
+            get => _value;
+            set => TrySetValue(value);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace SharpEssentials.Observable
             if (!_equalityComparison(_value, newValue))
             {
                 _value = newValue;
-                OnPropertyChanged(_name);
+                OnPropertyChanged(Name);
                 foreach (var dependentPropertyName in _dependentPropertyNames)
                     OnPropertyChanged(dependentPropertyName);
 
@@ -224,11 +224,10 @@ namespace SharpEssentials.Observable
         /// <summary>
         /// The property's name.
         /// </summary>
-        public string Name => _name;
+        public string Name { get; }
 
-        private readonly string _name;
         private V _value;
         private readonly IEnumerable<string> _dependentPropertyNames;
-        private readonly Func<V, V, bool> _equalityComparison = (x, y) => EqualityComparer<V>.Default.Equals(x, y);
+        private readonly Func<V, V, bool> _equalityComparison = EqualityComparer<V>.Default.Equals;
     }
 }

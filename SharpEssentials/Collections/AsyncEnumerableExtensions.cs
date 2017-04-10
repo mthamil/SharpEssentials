@@ -30,20 +30,16 @@ namespace SharpEssentials.Collections
         /// </summary>
         /// <param name="tasks">The tasks to await</param>
         /// <returns>An awaiter for the completion of the tasks</returns>
-        public static TaskAwaiter GetAwaiter(this IEnumerable<Task> tasks)
-        {
-            return Task.WhenAll(tasks).GetAwaiter();
-        }
+        public static TaskAwaiter GetAwaiter(this IEnumerable<Task> tasks) => 
+            Task.WhenAll(tasks).GetAwaiter();
 
         /// <summary>
         /// Allows await-ing on an enumerable of Task&lt;T&gt;s.
         /// </summary>
         /// <param name="tasks">The tasks to await</param>
         /// <returns>An awaiter for the completion of the tasks</returns>
-        public static TaskAwaiter<T[]> GetAwaiter<T>(this IEnumerable<Task<T>> tasks)
-        {
-            return Task.WhenAll(tasks).GetAwaiter();
-        }
+        public static TaskAwaiter<T[]> GetAwaiter<T>(this IEnumerable<Task<T>> tasks) => 
+            Task.WhenAll(tasks).GetAwaiter();
 
         /// <summary>
         /// Concatenates two asynchronous sequences.
@@ -53,10 +49,8 @@ namespace SharpEssentials.Collections
         /// <param name="first">The first asynchronous sequence to concatenate.</param>
         /// <param name="second">The asynchronous sequence to concatenate to the first sequence.</param>
         /// <returns>A task representing the concatenated elements of the two input sequences.</returns>
-        public static async Task<IEnumerable<T>> Concat<T>(this Task<IEnumerable<T>> first, Task<IEnumerable<T>> second)
-        {
-            return (await first.ConfigureAwait(false)).Concat(
-                    await second.ConfigureAwait(false));
-        }
+        public static async Task<IEnumerable<T>> Concat<T>(this Task<IEnumerable<T>> first, Task<IEnumerable<T>> second) => 
+            (await first.ConfigureAwait(false)).Concat(
+             await second.ConfigureAwait(false));
     }
 }

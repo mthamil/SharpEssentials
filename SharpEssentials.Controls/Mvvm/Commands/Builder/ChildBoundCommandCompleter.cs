@@ -46,8 +46,15 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
             _canExecute = canExecute;
         }
 
+        /// <summary>
+        /// Determines whether a command can execute.
+        /// </summary>
         protected override Predicate<T> CanExecute<T>() => _ => _canExecute();
 
+        /// <summary>
+        /// Configures a command.
+        /// </summary>
+        /// <param name="command">The command to configure.</param>
         protected override TCommand Configure<TCommand>(TCommand command)
         {
             var childPropertyName = Reflect.PropertyOf(_childProperty).Name;

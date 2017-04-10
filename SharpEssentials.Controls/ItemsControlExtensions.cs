@@ -50,8 +50,7 @@ namespace SharpEssentials.Controls
                 }
 
                 var node = items.ItemContainerGenerator.ContainerFromItem(item);
-                var nodeItems = node as ItemsControl;
-                if (nodeItems != null)
+                if (node is ItemsControl nodeItems)
                 {
                     var found = GetItemPath(path, nodeItems, searchValue);
                     if (found)
@@ -76,8 +75,7 @@ namespace SharpEssentials.Controls
                 ItemsControl next;
                 do
                 {
-                    bool isNew;
-                    next = generator.GenerateNext(out isNew) as ItemsControl;
+                    next = generator.GenerateNext(out var _) as ItemsControl;
                     next?.GenerateItems();
                 } while (next != null);
             }

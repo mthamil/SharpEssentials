@@ -25,12 +25,9 @@ namespace SharpEssentials.Weak
         /// <summary>
         /// Tries to retrieve the target object that is referenced by the current <see cref="T:System.WeakReference{T}"/> object.
         /// </summary>
-        public static Option<T> TryGetTarget<T>(this WeakReference<T> reference) where T : class
-        {
-            T target;
-            return reference.TryGetTarget(out target)
+        public static Option<T> TryGetTarget<T>(this WeakReference<T> reference) where T : class =>
+            reference.TryGetTarget(out T target)
                 ? target
                 : Option.None<T>();
-        } 
     }
 }

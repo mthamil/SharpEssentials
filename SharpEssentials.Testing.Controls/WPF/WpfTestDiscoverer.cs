@@ -21,15 +21,24 @@ using Xunit.Sdk;
 
 namespace SharpEssentials.Testing.Controls.WPF
 {
+    /// <summary>
+    /// Base class for wrapping test discoverers.
+    /// </summary>
     public abstract class WpfTestDiscoverer : IXunitTestCaseDiscoverer
     {
         private readonly IXunitTestCaseDiscoverer _innerDiscoverer;
 
+        /// <summary>
+        /// Initializes a new <see cref="WpfTestDiscoverer"/>.
+        /// </summary>
         protected WpfTestDiscoverer(IXunitTestCaseDiscoverer innerDiscoverer)
         {
             _innerDiscoverer = innerDiscoverer;
         }
 
+        /// <summary>
+        /// See <see cref="IXunitTestCaseDiscoverer.Discover"/>.
+        /// </summary>
         public IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo factAttribute)
         {
             return _innerDiscoverer.Discover(discoveryOptions, testMethod, factAttribute)

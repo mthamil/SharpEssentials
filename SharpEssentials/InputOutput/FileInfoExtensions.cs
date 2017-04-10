@@ -38,21 +38,8 @@ namespace SharpEssentials.InputOutput
 			using (var sourceStream = source.OpenRead())
 			using (var destinationStream = destination.Open(destinationOverwriteMode))
 			{
-				await sourceStream.Async().CopyToAsync(destinationStream, cancellationToken).ConfigureAwait(false);
+				await sourceStream.CopyToAsync(destinationStream, cancellationToken).ConfigureAwait(false);
 			}
-		}
-
-		/// <summary>
-		/// Copies an existing file to a new file asynchronously.
-		/// </summary>
-		/// <param name="source">The file to copy</param>
-		/// <param name="destinationFileName">The file path and name to copy to</param>
-		/// <param name="overwrite">Whether to overwrite an existing destination file it it exists</param>
-		/// <param name="cancellationToken">Allows cancellation of the copy operation</param>
-		/// <returns>A Task representing the copy operation</returns>
-		public static Task CopyToAsync(this FileInfo source, string destinationFileName, bool overwrite, CancellationToken cancellationToken = default(CancellationToken))
-		{
-			return source.CopyToAsync(new FileInfo(destinationFileName), overwrite, cancellationToken);
 		}
 	}
 }

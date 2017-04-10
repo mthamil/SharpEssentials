@@ -13,8 +13,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task<int> task = 
-				Task.Factory.StartNew(() => 1m, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(result => Task<int>.Factory.StartNew(() => (int)result + 1, cts.Token, TaskCreationOptions.None, taskScheduler));
+				Task.Factory.StartNew(() => 1m, _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(result => Task<int>.Factory.StartNew(() => (int)result + 1, _cts.Token, TaskCreationOptions.None, _taskScheduler));
 
 			task.Wait();
 
@@ -28,8 +28,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task<int> task = 
-				Task.Factory.StartNew(() => 1m, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(result => Task<int>.Factory.StartNew(() => { throw new InvalidOperationException(); }, cts.Token, TaskCreationOptions.None, taskScheduler));
+				Task.Factory.StartNew(() => 1m, _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(result => Task<int>.Factory.StartNew(() => throw new InvalidOperationException(), _cts.Token, TaskCreationOptions.None, _taskScheduler));
 
 
 			// Assert.
@@ -44,7 +44,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task<int> task = 
-				Task.Factory.StartNew(() => 1m, cts.Token, TaskCreationOptions.None, taskScheduler)
+				Task.Factory.StartNew(() => 1m, _cts.Token, TaskCreationOptions.None, _taskScheduler)
 				.Then(result => (Task<int>)null);
 
 
@@ -59,13 +59,13 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task<int> task =
-				Task.Factory.StartNew(() => 1m, cts.Token, TaskCreationOptions.None, taskScheduler)
+				Task.Factory.StartNew(() => 1m, _cts.Token, TaskCreationOptions.None, _taskScheduler)
 				.Then(result => Task<int>.Factory.StartNew(() =>
 					{
-						cts.Cancel();
-						cts.Token.ThrowIfCancellationRequested();
+						_cts.Cancel();
+						_cts.Token.ThrowIfCancellationRequested();
 						return 1;
-					}, cts.Token, TaskCreationOptions.None, taskScheduler));
+					}, _cts.Token, TaskCreationOptions.None, _taskScheduler));
 
 			// Assert.
 			var exception = Assert.Throws<AggregateException>(() => task.Wait());
@@ -78,8 +78,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task<int> task = 
-				Task<decimal>.Factory.StartNew(() => { throw new InvalidOperationException(); }, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(result => Task<int>.Factory.StartNew(() => (int)result + 1, cts.Token, TaskCreationOptions.None, taskScheduler));
+				Task<decimal>.Factory.StartNew(() => throw new InvalidOperationException(), _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(result => Task<int>.Factory.StartNew(() => (int)result + 1, _cts.Token, TaskCreationOptions.None, _taskScheduler));
 
 
 			// Assert.
@@ -96,11 +96,11 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 			Task<int> task = 
 				Task.Factory.StartNew(() =>
 				{
-					cts.Cancel();
-					cts.Token.ThrowIfCancellationRequested();
+					_cts.Cancel();
+					_cts.Token.ThrowIfCancellationRequested();
 					return 1m;
-				}, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(result => Task<int>.Factory.StartNew(() => (int)result + 1, cts.Token, TaskCreationOptions.None, taskScheduler));
+				}, _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(result => Task<int>.Factory.StartNew(() => (int)result + 1, _cts.Token, TaskCreationOptions.None, _taskScheduler));
 
 			// Assert.
 			var exception = Assert.Throws<AggregateException>(() => task.Wait());
@@ -113,8 +113,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task task = 
-				Task.Factory.StartNew(() => { }, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(() => Task.Factory.StartNew(() => { }, cts.Token, TaskCreationOptions.None, taskScheduler));
+				Task.Factory.StartNew(() => { }, _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(() => Task.Factory.StartNew(() => { }, _cts.Token, TaskCreationOptions.None, _taskScheduler));
 
 			task.Wait();
 
@@ -127,8 +127,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task task = 
-				Task.Factory.StartNew(() => { }, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(() => Task.Factory.StartNew(() => { throw new InvalidOperationException(); }, cts.Token, TaskCreationOptions.None, taskScheduler));
+				Task.Factory.StartNew(() => { }, _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(() => Task.Factory.StartNew(() => throw new InvalidOperationException(), _cts.Token, TaskCreationOptions.None, _taskScheduler));
 
 
 			// Assert.
@@ -143,7 +143,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task task = 
-				Task.Factory.StartNew(() => 1m, cts.Token, TaskCreationOptions.None, taskScheduler)
+				Task.Factory.StartNew(() => 1m, _cts.Token, TaskCreationOptions.None, _taskScheduler)
 				.Then(() => (Task)null);
 
 
@@ -158,12 +158,12 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task task = 
-				Task.Factory.StartNew(() => 1m, cts.Token, TaskCreationOptions.None, taskScheduler)
+				Task.Factory.StartNew(() => 1m, _cts.Token, TaskCreationOptions.None, _taskScheduler)
 				.Then(() => Task.Factory.StartNew(() =>
 					{
-						cts.Cancel();
-						cts.Token.ThrowIfCancellationRequested();;
-					}, cts.Token, TaskCreationOptions.None, taskScheduler));
+						_cts.Cancel();
+						_cts.Token.ThrowIfCancellationRequested();;
+					}, _cts.Token, TaskCreationOptions.None, _taskScheduler));
 
 			// Assert.
 			var exception = Assert.Throws<AggregateException>(() => task.Wait());
@@ -176,8 +176,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task task = 
-				Task<decimal>.Factory.StartNew(() => { throw new InvalidOperationException(); }, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(() => Task.Factory.StartNew(() => { }, cts.Token, TaskCreationOptions.None, taskScheduler));
+				Task<decimal>.Factory.StartNew(() => throw new InvalidOperationException(), _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(() => Task.Factory.StartNew(() => { }, _cts.Token, TaskCreationOptions.None, _taskScheduler));
 
 
 			// Assert.
@@ -194,10 +194,10 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 			Task task = 
 				Task.Factory.StartNew(() =>
 				{
-					cts.Cancel();
-					cts.Token.ThrowIfCancellationRequested();
-				}, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(() => Task.Factory.StartNew(() => { }, cts.Token, TaskCreationOptions.None, taskScheduler));
+					_cts.Cancel();
+					_cts.Token.ThrowIfCancellationRequested();
+				}, _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(() => Task.Factory.StartNew(() => { }, _cts.Token, TaskCreationOptions.None, _taskScheduler));
 
 			// Assert.
 			var exception = Assert.Throws<AggregateException>(() => task.Wait());
@@ -210,8 +210,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task<int> task = 
-				Task.Factory.StartNew(() => { }, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(() => Task<int>.Factory.StartNew(() => 1, cts.Token, TaskCreationOptions.None, taskScheduler));
+				Task.Factory.StartNew(() => { }, _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(() => Task<int>.Factory.StartNew(() => 1, _cts.Token, TaskCreationOptions.None, _taskScheduler));
 
 			task.Wait();
 
@@ -225,8 +225,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task<int> task =
-				Task.Factory.StartNew(() => { }, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(() => Task<int>.Factory.StartNew(() => { throw new InvalidOperationException(); }, cts.Token, TaskCreationOptions.None, taskScheduler));
+				Task.Factory.StartNew(() => { }, _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(() => Task<int>.Factory.StartNew(() => throw new InvalidOperationException(), _cts.Token, TaskCreationOptions.None, _taskScheduler));
 
 			// Assert.
 			Assert.Throws<AggregateException>(() => task.Wait());
@@ -240,7 +240,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task<int> task =
-				Task.Factory.StartNew(() => { }, cts.Token, TaskCreationOptions.None, taskScheduler)
+				Task.Factory.StartNew(() => { }, _cts.Token, TaskCreationOptions.None, _taskScheduler)
 				.Then(() => (Task<int>)null);
 
 			// Assert.
@@ -254,13 +254,13 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task<int> task =
-				Task.Factory.StartNew(() => { }, cts.Token, TaskCreationOptions.None, taskScheduler)
+				Task.Factory.StartNew(() => { }, _cts.Token, TaskCreationOptions.None, _taskScheduler)
 				.Then(() => Task<int>.Factory.StartNew(() =>
 					{
-						cts.Cancel();
-						cts.Token.ThrowIfCancellationRequested();
+						_cts.Cancel();
+						_cts.Token.ThrowIfCancellationRequested();
 						return 1;
-					}, cts.Token, TaskCreationOptions.None, taskScheduler));
+					}, _cts.Token, TaskCreationOptions.None, _taskScheduler));
 
 			// Assert.
 			var exception = Assert.Throws<AggregateException>(() => task.Wait());
@@ -273,8 +273,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task<int> task = 
-				Task.Factory.StartNew(() => { throw new InvalidOperationException(); }, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(() => Task<int>.Factory.StartNew(() => 1, cts.Token, TaskCreationOptions.None, taskScheduler));
+				Task.Factory.StartNew(() => throw new InvalidOperationException(), _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(() => Task<int>.Factory.StartNew(() => 1, _cts.Token, TaskCreationOptions.None, _taskScheduler));
 
 
 			// Assert.
@@ -291,10 +291,10 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 			Task<int> task = 
 				Task.Factory.StartNew(() =>
 				{
-					cts.Cancel();
-					cts.Token.ThrowIfCancellationRequested();
-				}, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(() => Task<int>.Factory.StartNew(() => 1, cts.Token, TaskCreationOptions.None, taskScheduler));
+					_cts.Cancel();
+					_cts.Token.ThrowIfCancellationRequested();
+				}, _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(() => Task<int>.Factory.StartNew(() => 1, _cts.Token, TaskCreationOptions.None, _taskScheduler));
 
 			// Assert.
 			var exception = Assert.Throws<AggregateException>(() => task.Wait());
@@ -307,7 +307,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task<string> task = 
-				Task.Factory.StartNew(() => 1m, cts.Token, TaskCreationOptions.None, taskScheduler)
+				Task.Factory.StartNew(() => 1m, _cts.Token, TaskCreationOptions.None, _taskScheduler)
 				.Then(result => result.ToString());
 
 			task.Wait();
@@ -321,7 +321,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task<string> task =
-				Task<int>.Factory.StartNew(() => { throw new InvalidOperationException(); }, cts.Token, TaskCreationOptions.None, taskScheduler)
+				Task<int>.Factory.StartNew(() => throw new InvalidOperationException(), _cts.Token, TaskCreationOptions.None, _taskScheduler)
 				.Then(result => result.ToString());
 
 			// Assert.
@@ -338,10 +338,10 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 			Task<string> task = 
 				Task<decimal>.Factory.StartNew(() =>
 				{
-					cts.Cancel();
-					cts.Token.ThrowIfCancellationRequested();
+					_cts.Cancel();
+					_cts.Token.ThrowIfCancellationRequested();
 					return 1m;
-				}, cts.Token, TaskCreationOptions.None, taskScheduler)
+				}, _cts.Token, TaskCreationOptions.None, _taskScheduler)
 				.Then(result => result.ToString());
 
 			// Assert.
@@ -355,8 +355,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task<string> task = 
-				Task.Factory.StartNew(() => 1m, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(new Func<decimal, string>(result => { throw new InvalidOperationException(); }));
+				Task.Factory.StartNew(() => 1m, _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(new Func<decimal, string>(result => throw new InvalidOperationException()));
 
 			// Assert.
 			Assert.Throws<AggregateException>(() => task.Wait());
@@ -373,8 +373,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 
 			// Act.
 			Task task =
-				Task.Factory.StartNew(() => { }, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(() => { continued = true; });
+				Task.Factory.StartNew(() => { }, _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(() => continued = true);
 
 			task.Wait();
 
@@ -390,8 +390,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 
 			// Act.
 			Task task =
-				Task.Factory.StartNew(() => { throw new InvalidOperationException(); }, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(() => { continued = true; });
+				Task.Factory.StartNew(() => throw new InvalidOperationException(), _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(() => continued = true);
 
 			// Assert.
 			Assert.Throws<AggregateException>(() => task.Wait());
@@ -411,10 +411,10 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 			Task task =
 				Task.Factory.StartNew(() =>
 				{
-					cts.Cancel();
-					cts.Token.ThrowIfCancellationRequested();
-				}, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(() => { continued = true; });
+					_cts.Cancel();
+					_cts.Token.ThrowIfCancellationRequested();
+				}, _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(() => continued = true);
 
 			// Assert.
 			var exception = Assert.Throws<AggregateException>(() => task.Wait());
@@ -428,8 +428,8 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 		{
 			// Act.
 			Task task =
-				Task.Factory.StartNew(() => { }, cts.Token, TaskCreationOptions.None, taskScheduler)
-				.Then(new Action(() => { throw new InvalidOperationException(); }));
+				Task.Factory.StartNew(() => { }, _cts.Token, TaskCreationOptions.None, _taskScheduler)
+				.Then(new Action(() => throw new InvalidOperationException()));
 
 			// Assert.
 			Assert.Throws<AggregateException>(() => task.Wait());
@@ -438,7 +438,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.Concurrency
 			Assert.IsType<InvalidOperationException>(task.Exception.InnerException);
 		}
 
-		private readonly TaskScheduler taskScheduler = new SynchronousTaskScheduler();
-		private readonly CancellationTokenSource cts = new CancellationTokenSource();
+		private readonly TaskScheduler _taskScheduler = new SynchronousTaskScheduler();
+		private readonly CancellationTokenSource _cts = new CancellationTokenSource();
 	}
 }

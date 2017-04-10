@@ -53,15 +53,13 @@ namespace SharpEssentials.Controls.Collections
 
 		private void Unsubscribe(ICollection collection)
 		{
-			var notifierCollection = collection as INotifyCollectionChanged;
-			if (notifierCollection != null)
+			if (collection is INotifyCollectionChanged notifierCollection)
 				CollectionChangedEventManager.RemoveListener(notifierCollection, this);
 		}
 
 		private void Subscribe(ICollection collection)
 		{
-			var notifierCollection = collection as INotifyCollectionChanged;
-			if (notifierCollection != null)
+			if (collection is INotifyCollectionChanged notifierCollection)
 				CollectionChangedEventManager.AddListener(notifierCollection, this);
 		}
 

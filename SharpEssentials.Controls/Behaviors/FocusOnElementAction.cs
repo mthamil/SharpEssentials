@@ -39,8 +39,8 @@ namespace SharpEssentials.Controls.Behaviors
 		/// </summary>
 		public UIElement ElementToFocus
 		{
-			get { return (UIElement)GetValue(ElementToFocusProperty); }
-			set { SetValue(ElementToFocusProperty, value); }
+			get => (UIElement)GetValue(ElementToFocusProperty);
+		    set => SetValue(ElementToFocusProperty, value);
 		}
 
 		/// <summary>

@@ -83,9 +83,7 @@ namespace SharpEssentials.Controls.Selectors
                 throw new ArgumentNullException(nameof(item));
 
             var dataType = item.GetType();
-
-            DataTemplate template;
-            if (_dataTemplateMap.TryGetValue(dataType, out template))
+            if (_dataTemplateMap.TryGetValue(dataType, out var template))
                 return template;
 
             // Fallback to assignability.

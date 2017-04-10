@@ -68,8 +68,8 @@ namespace SharpEssentials.Controls.Markup
 		/// </summary>
 		public Collection<object> ConstructorArguments { get; } = new Collection<object>();
 
-	    private Type ConstructType() 
-            => Type.IsGenericTypeDefinition
+	    private Type ConstructType() =>
+	        Type.IsGenericTypeDefinition
 	            ? Type.MakeGenericType(TypeArguments.ToArray())
 	            : Type;
 

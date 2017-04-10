@@ -61,20 +61,20 @@ namespace SharpEssentials.Testing
         {
             object sender = null;
             PropertyChangedEventArgs args = null;
-            PropertyChangedEventHandler handler = (o, e) =>
+            void Handler(object o, PropertyChangedEventArgs e)
             {
                 sender = o;
                 args = e;
-            };
+            }
 
             try
             {
-                @object.PropertyChanged += handler;
+                @object.PropertyChanged += Handler;
                 testCode();
             }
             finally
             {
-                @object.PropertyChanged -= handler;
+                @object.PropertyChanged -= Handler;
             }
 
             if (args != null && ReferenceEquals(sender, @object))
@@ -320,7 +320,7 @@ namespace SharpEssentials.Testing
         /// <summary>
         /// The type of object owning the event.
         /// </summary>
-        public Type EventOwner { get; private set; }
+        public Type EventOwner { get; }
 
         /// <summary>
         /// The name of the event.
@@ -341,13 +341,13 @@ namespace SharpEssentials.Testing
         /// Gets a message that describes the current exception.
         /// </summary>
         /// <returns>The error message that explains the reason for the exception, or an empty string("").</returns>
-        public override string Message
-            => String.Format("{0}{1}The event {2} {3} when {4}.",
-                              base.Message,
-                              Environment.NewLine,
-                              EventName,
-                              WasRaised ? "was raised" : "was not raised",
-                              ShouldHaveBeenRaised ? "expected" : "not expected");
+        public override string Message =>
+            String.Format("{0}{1}The event {2} {3} when {4}.",
+                           base.Message,
+                           Environment.NewLine,
+                           EventName,
+                           WasRaised ? "was raised" : "was not raised",
+                           ShouldHaveBeenRaised ? "expected" : "not expected");
     }
 
     /// <summary>
@@ -388,14 +388,14 @@ namespace SharpEssentials.Testing
         /// Gets a message that describes the current exception.
         /// </summary>
         /// <returns>The error message that explains the reason for the exception, or an empty string("").</returns>
-        public override string Message
-            => String.Format("{0}{1}Expected: {2}{3}{1}Actual: {4}{5}",
-                              base.Message,
-                              Environment.NewLine,
-                              Expected == string.Empty ? EMPTY_COLLECTION_MESSAGE : Expected,
-                              _expectedFullyDrained ? string.Empty : ",...",
-                              Actual == string.Empty ? EMPTY_COLLECTION_MESSAGE : Actual,
-                              _actualFullyDrained ? string.Empty : ",...");
+        public override string Message => 
+            String.Format("{0}{1}Expected: {2}{3}{1}Actual: {4}{5}",
+                           base.Message,
+                           Environment.NewLine,
+                           Expected == string.Empty ? EMPTY_COLLECTION_MESSAGE : Expected,
+                           _expectedFullyDrained ? string.Empty : ",...",
+                           Actual == string.Empty ? EMPTY_COLLECTION_MESSAGE : Actual,
+                           _actualFullyDrained ? string.Empty : ",...");
 
         private readonly IEnumerable _expected;
         private readonly IEnumerable _actual;

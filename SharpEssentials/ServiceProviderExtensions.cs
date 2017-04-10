@@ -28,7 +28,7 @@ namespace SharpEssentials
         /// <typeparam name="TService">The type of service</typeparam>
         /// <param name="serviceProvider">The service provider</param>
         /// <returns>A service of the specified type</returns>
-        public static TService GetService<TService>(this IServiceProvider serviceProvider) 
-            => (TService)serviceProvider.GetService(typeof(TService));
+        public static TService GetService<TService>(this IServiceProvider serviceProvider) =>
+            (TService)serviceProvider.GetService(typeof(TService));
     }
 }

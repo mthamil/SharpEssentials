@@ -30,8 +30,8 @@ namespace SharpEssentials.Controls.Behaviors
         /// </summary>
         public IReadOnlyCollection<object> ItemPath
         {
-            get { return (IReadOnlyCollection<object>)GetValue(ItemPathProperty); }
-            set { SetValue(ItemPathProperty, value); }
+            get => (IReadOnlyCollection<object>)GetValue(ItemPathProperty);
+            set => SetValue(ItemPathProperty, value);
         }
 
         /// <summary>

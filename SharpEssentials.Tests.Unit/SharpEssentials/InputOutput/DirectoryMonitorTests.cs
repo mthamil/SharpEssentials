@@ -16,11 +16,11 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
             var timerFactory = new Func<ITimer>(() =>
             {
                 var timer = new Mock<ITimer>();
-                timers.Add(timer);
+                _timers.Add(timer);
                 return timer.Object;
             });
 
-            monitor = new DirectoryMonitor(watcher.Object, timerFactory)
+            _underTest = new DirectoryMonitor(_watcher.Object, timerFactory)
             {
                 FileCreationWaitTimeout = TimeSpan.FromSeconds(2)
             };
@@ -30,14 +30,14 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
         public void Test_Filter()
         {
             // Arrange.
-            watcher.SetupProperty(w => w.Filter);
+            _watcher.SetupProperty(w => w.Filter);
 
             // Act.
-            monitor.Filter = "*.exe";
+            _underTest.Filter = "*.exe";
 
             // Assert.
-            watcher.VerifySet(w => w.Filter = "*.exe");
-            Assert.Equal("*.exe", monitor.Filter);
+            _watcher.VerifySet(w => w.Filter = "*.exe");
+            Assert.Equal("*.exe", _underTest.Filter);
         }
 
         [Fact]
@@ -47,12 +47,12 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
             var directory = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
 
             // Act.
-            monitor.StartMonitoring(directory);
+            _underTest.StartMonitoring(directory);
 
             // Assert.
-            watcher.VerifySet(w => w.Path = directory.FullName);
-            watcher.VerifySet(w => w.EnableRaisingEvents = true);
-            Assert.Equal(directory, monitor.MonitoredDirectory);
+            _watcher.VerifySet(w => w.Path = directory.FullName);
+            _watcher.VerifySet(w => w.EnableRaisingEvents = true);
+            Assert.Equal(directory, _underTest.MonitoredDirectory);
         }
 
         [Fact]
@@ -60,32 +60,32 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
         {
             // Arrange.
             var directory = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
-            monitor.StartMonitoring(directory);
-            monitor.StopMonitoring();
+            _underTest.StartMonitoring(directory);
+            _underTest.StopMonitoring();
 
             // Act.
-            monitor.RestartMonitoring();
+            _underTest.RestartMonitoring();
 
             // Assert.
-            watcher.VerifySet(w => w.Path = directory.FullName);
-            watcher.VerifySet(w => w.EnableRaisingEvents = true);
+            _watcher.VerifySet(w => w.Path = directory.FullName);
+            _watcher.VerifySet(w => w.EnableRaisingEvents = true);
         }
 
         [Fact]
         public void Test_RestartMonitoring_NeverStarted()
         {
             // Act/Assert.
-            Assert.Throws<InvalidOperationException>(() => monitor.RestartMonitoring());
+            Assert.Throws<InvalidOperationException>(() => _underTest.RestartMonitoring());
         }
 
         [Fact]
         public void Test_StopMonitoring()
         {
             // Act.
-            monitor.StopMonitoring();
+            _underTest.StopMonitoring();
 
             // Assert.
-            watcher.VerifySet(w => w.EnableRaisingEvents = false);
+            _watcher.VerifySet(w => w.EnableRaisingEvents = false);
         }
 
         [Fact]
@@ -95,24 +95,24 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
             {
                 // Arrange.
                 var createdArgs = new List<FileSystemEventArgs>();
-                EventHandler<FileSystemEventArgs> createdHandler = (o, e) => createdArgs.Add(e);
-                monitor.Created += createdHandler;
+                void CreatedHandler(object o, FileSystemEventArgs e) => createdArgs.Add(e);
+                _underTest.Created += CreatedHandler;
 
                 // Act.
-                watcher.Raise(w => w.Created += null, new FileSystemEventArgs(WatcherChangeTypes.Created, temp.File.Directory.FullName, temp.File.Name));
+                _watcher.Raise(w => w.Created += null, new FileSystemEventArgs(WatcherChangeTypes.Created, temp.File.Directory.FullName, temp.File.Name));
 
                 // Assert.
-                Assert.Single(timers);
-                timers.Single().VerifySet(t => t.Interval = TimeSpan.FromSeconds(2));
-                timers.Single().Verify(t => t.Restart(temp.File.FullName));
+                Assert.Single(_timers);
+                _timers.Single().VerifySet(t => t.Interval = TimeSpan.FromSeconds(2));
+                _timers.Single().Verify(t => t.Restart(temp.File.FullName));
 
                 // Act.
-                timers.Single().Raise(t => t.Elapsed += null, new TimerElapsedEventArgs(DateTime.Now, temp.File.FullName));
+                _timers.Single().Raise(t => t.Elapsed += null, new TimerElapsedEventArgs(DateTime.Now, temp.File.FullName));
 
                 // Assert.
                 Assert.Single(createdArgs);
                 Assert.Equal(temp.File.FullName, createdArgs.Single().FullPath);
-                timers.Single().Verify(t => t.TryStop());
+                _timers.Single().Verify(t => t.TryStop());
             }
         }
 
@@ -123,26 +123,26 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
             {
                 // Arrange.
                 var createdArgs = new List<FileSystemEventArgs>();
-                EventHandler<FileSystemEventArgs> createdHandler = (o, e) => createdArgs.Add(e);
-                monitor.Created += createdHandler;
+                void CreatedHandler(object o, FileSystemEventArgs e) => createdArgs.Add(e);
+                _underTest.Created += CreatedHandler;
 
-                watcher.Raise(w => w.Created += null, new FileSystemEventArgs(WatcherChangeTypes.Created, temp.File.Directory.FullName, temp.File.Name));
+                _watcher.Raise(w => w.Created += null, new FileSystemEventArgs(WatcherChangeTypes.Created, temp.File.Directory.FullName, temp.File.Name));
 
                 // Act.
-                watcher.Raise(w => w.Changed += null, new FileSystemEventArgs(WatcherChangeTypes.Changed, temp.File.Directory.FullName, temp.File.Name));
+                _watcher.Raise(w => w.Changed += null, new FileSystemEventArgs(WatcherChangeTypes.Changed, temp.File.Directory.FullName, temp.File.Name));
 
                 // Assert.
-                Assert.Single(timers);
-                timers.Single().VerifySet(t => t.Interval = TimeSpan.FromSeconds(2));
-                timers.Single().Verify(t => t.Restart(temp.File.FullName), Times.Exactly(2));
+                Assert.Single(_timers);
+                _timers.Single().VerifySet(t => t.Interval = TimeSpan.FromSeconds(2));
+                _timers.Single().Verify(t => t.Restart(temp.File.FullName), Times.Exactly(2));
 
                 // Act.
-                timers.Single().Raise(t => t.Elapsed += null, new TimerElapsedEventArgs(DateTime.Now, temp.File.FullName));
+                _timers.Single().Raise(t => t.Elapsed += null, new TimerElapsedEventArgs(DateTime.Now, temp.File.FullName));
 
                 // Assert.
                 Assert.Single(createdArgs);
                 Assert.Equal(temp.File.FullName, createdArgs.Single().FullPath);
-                timers.Single().Verify(t => t.TryStop());
+                _timers.Single().Verify(t => t.TryStop());
             }
         }
 
@@ -153,20 +153,20 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
             {
                 // Arrange.
                 var createdArgs = new List<FileSystemEventArgs>();
-                EventHandler<FileSystemEventArgs> createdHandler = (o, e) => createdArgs.Add(e);
-                monitor.Created += createdHandler;
+                void CreatedHandler(object o, FileSystemEventArgs e) => createdArgs.Add(e);
+                _underTest.Created += CreatedHandler;
 
-                watcher.Raise(w => w.Created += null, new FileSystemEventArgs(WatcherChangeTypes.Created, temp.File.Directory.FullName, temp.File.Name));
+                _watcher.Raise(w => w.Created += null, new FileSystemEventArgs(WatcherChangeTypes.Created, temp.File.Directory.FullName, temp.File.Name));
 
                 // Act.
-                watcher.Raise(w => w.Deleted += null, new FileSystemEventArgs(WatcherChangeTypes.Deleted, temp.File.Directory.FullName, temp.File.Name));
+                _watcher.Raise(w => w.Deleted += null, new FileSystemEventArgs(WatcherChangeTypes.Deleted, temp.File.Directory.FullName, temp.File.Name));
 
                 // Assert.
-                Assert.Single(timers);
-                timers.Single().Verify(t => t.TryStop());
+                Assert.Single(_timers);
+                _timers.Single().Verify(t => t.TryStop());
 
                 // Act.
-                timers.Single().Raise(t => t.Elapsed += null, new TimerElapsedEventArgs(DateTime.Now, temp.File.FullName));
+                _timers.Single().Raise(t => t.Elapsed += null, new TimerElapsedEventArgs(DateTime.Now, temp.File.FullName));
 
                 // Assert.
                 Assert.Empty(createdArgs);
@@ -178,11 +178,11 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
         {
             // Arrange.
             FileSystemEventArgs deleteArgs = null;
-            EventHandler<FileSystemEventArgs> deleteHandler = (o, e) => deleteArgs = e;
-            monitor.Deleted += deleteHandler;
+            void DeletedHandler(object o, FileSystemEventArgs e) => deleteArgs = e;
+            _underTest.Deleted += DeletedHandler;
 
             // Act.
-            watcher.Raise(w => w.Deleted += null, new FileSystemEventArgs(WatcherChangeTypes.Deleted, "Dir", "File"));
+            _watcher.Raise(w => w.Deleted += null, new FileSystemEventArgs(WatcherChangeTypes.Deleted, "Dir", "File"));
 
             // Assert.
             Assert.NotNull(deleteArgs);
@@ -194,11 +194,11 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
         {
             // Arrange.
             FileSystemEventArgs changedArgs = null;
-            EventHandler<FileSystemEventArgs> changedHandler = (o, e) => changedArgs = e;
-            monitor.Changed += changedHandler;
+            void ChangedHandler(object o, FileSystemEventArgs e) => changedArgs = e;
+            _underTest.Changed += ChangedHandler;
 
             // Act.
-            watcher.Raise(w => w.Changed += null, new FileSystemEventArgs(WatcherChangeTypes.Changed, "Dir", "File"));
+            _watcher.Raise(w => w.Changed += null, new FileSystemEventArgs(WatcherChangeTypes.Changed, "Dir", "File"));
 
             // Assert.
             Assert.NotNull(changedArgs);
@@ -210,11 +210,11 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
         {
             // Arrange.
             RenamedEventArgs renameArgs = null;
-            EventHandler<RenamedEventArgs> renameHandler = (o, e) => renameArgs = e;
-            monitor.Renamed += renameHandler;
+            void RenamedHandler(object o, RenamedEventArgs e) => renameArgs = e;
+            _underTest.Renamed += RenamedHandler;
 
             // Act.
-            watcher.Raise(w => w.Renamed += null, new RenamedEventArgs(WatcherChangeTypes.Renamed, "Dir", "New", "Old"));
+            _watcher.Raise(w => w.Renamed += null, new RenamedEventArgs(WatcherChangeTypes.Renamed, "Dir", "New", "Old"));
 
             // Assert.
             Assert.NotNull(renameArgs);
@@ -227,28 +227,28 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
         {
             // Arrange.
             FileSystemEventArgs createArgs = null;
-            EventHandler<FileSystemEventArgs> createHandler = (o, e) => createArgs = e;
-            monitor.Created += createHandler;
+            void CreatedHandler(object o, FileSystemEventArgs e) => createArgs = e;
+            _underTest.Created += CreatedHandler;
 
             FileSystemEventArgs deleteArgs = null;
-            EventHandler<FileSystemEventArgs> deleteHandler = (o, e) => deleteArgs = e;
-            monitor.Deleted += deleteHandler;
+            void DeletedHandler(object o, FileSystemEventArgs e) => deleteArgs = e;
+            _underTest.Deleted += DeletedHandler;
 
             FileSystemEventArgs changedArgs = null;
-            EventHandler<FileSystemEventArgs> changedHandler = (o, e) => changedArgs = e;
-            monitor.Changed += changedHandler;
+            void ChangedHandler(object o, FileSystemEventArgs e) => changedArgs = e;
+            _underTest.Changed += ChangedHandler;
 
             RenamedEventArgs renameArgs = null;
-            EventHandler<RenamedEventArgs> renameHandler = (o, e) => renameArgs = e;
-            monitor.Renamed += renameHandler;
+            void RenamedHandler(object o, RenamedEventArgs e) => renameArgs = e;
+            _underTest.Renamed += RenamedHandler;
 
             // Act.
-            monitor.Dispose();
+            _underTest.Dispose();
 
-            watcher.Raise(w => w.Created += null, new FileSystemEventArgs(WatcherChangeTypes.Created, "Dir", "File"));
-            watcher.Raise(w => w.Deleted += null, new FileSystemEventArgs(WatcherChangeTypes.Deleted, "Dir", "File"));
-            watcher.Raise(w => w.Changed += null, new FileSystemEventArgs(WatcherChangeTypes.Changed, "Dir", "File"));
-            watcher.Raise(w => w.Renamed += null, new RenamedEventArgs(WatcherChangeTypes.Renamed, "Dir", "New", "Old"));
+            _watcher.Raise(w => w.Created += null, new FileSystemEventArgs(WatcherChangeTypes.Created, "Dir", "File"));
+            _watcher.Raise(w => w.Deleted += null, new FileSystemEventArgs(WatcherChangeTypes.Deleted, "Dir", "File"));
+            _watcher.Raise(w => w.Changed += null, new FileSystemEventArgs(WatcherChangeTypes.Changed, "Dir", "File"));
+            _watcher.Raise(w => w.Renamed += null, new RenamedEventArgs(WatcherChangeTypes.Renamed, "Dir", "New", "Old"));
 
             // Assert.
             Assert.Null(createArgs);
@@ -256,12 +256,12 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
             Assert.Null(changedArgs);
             Assert.Null(renameArgs);
 
-            watcher.Verify(w => w.Dispose());
+            _watcher.Verify(w => w.Dispose());
         }
 
-        private readonly DirectoryMonitor monitor;
+        private readonly DirectoryMonitor _underTest;
 
-        private readonly Mock<IFileSystemWatcher> watcher = new Mock<IFileSystemWatcher>();
-        private readonly IList<Mock<ITimer>> timers = new List<Mock<ITimer>>(); 
+        private readonly Mock<IFileSystemWatcher> _watcher = new Mock<IFileSystemWatcher>();
+        private readonly IList<Mock<ITimer>> _timers = new List<Mock<ITimer>>(); 
     }
 }

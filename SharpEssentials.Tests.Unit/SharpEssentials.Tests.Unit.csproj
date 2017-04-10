@@ -146,7 +146,7 @@
     <Compile Include="SharpEssentials\DisposableAdapterTests.cs" />
     <Compile Include="SharpEssentials\DisposableBaseTests.cs" />
     <Compile Include="SharpEssentials\DisposableExtensionsTests.cs" />
-    <Compile Include="SharpEssentials\InputOutput\AsyncStreamTests.cs" />
+    <Compile Include="SharpEssentials\InputOutput\AsyncStreamExtensionTests.cs" />
     <Compile Include="SharpEssentials\InputOutput\DirectoryMonitorTests.cs" />
     <Compile Include="SharpEssentials\InputOutput\FileInfoExtensionsTests.cs" />
     <Compile Include="SharpEssentials\InputOutput\FileSystemInfoPathEqualityComparerTests.cs" />

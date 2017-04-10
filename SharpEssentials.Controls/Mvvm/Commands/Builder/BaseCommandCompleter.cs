@@ -66,8 +66,15 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
             return Configure(command);
         }
 
+        /// <summary>
+        /// When overridden, provides a predicate that determines whether a command can be executed.
+        /// </summary>
         protected abstract Predicate<T> CanExecute<T>(); 
 
+        /// <summary>
+        /// When overridden, configures a command.
+        /// </summary>
+        /// <param name="command">The command to configure.</param>
         protected virtual TCommand Configure<TCommand>(TCommand command) where TCommand : ITriggerableCommand => command;
     }
 }

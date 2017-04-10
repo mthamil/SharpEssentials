@@ -33,26 +33,17 @@ namespace SharpEssentials.Controls.Mvvm.Commands
         /// <param name="canExecute">Function that determines whether a command can be executed</param>
         public AsyncRelayCommand(Func<Task> execute, Func<bool> canExecute = null)
         {
-            if (execute == null)
-                throw new ArgumentNullException(nameof(execute));
-
-            _execute = execute;
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
 
         #region ICommand Members
 
         /// <see cref="ICommand.CanExecute"/>
-        public override bool CanExecute(object parameter)
-        {
-            if (_canExecute == null)
-                return true;
-
-            return _canExecute();
-        }
+        public override bool CanExecute(object parameter) => _canExecute == null || _canExecute();
 
         /// <see cref="ICommand.Execute"/>
-        public async override void Execute(object parameter)
+        public override async void Execute(object parameter)
         {
             await ExecuteAsync(parameter);
         }
@@ -84,10 +75,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands
         /// <param name="canExecute">Function that determines whether a command can be executed</param>
         public AsyncRelayCommand(Func<T, Task> execute, Predicate<T> canExecute = null)
         {
-            if (execute == null)
-                throw new ArgumentNullException(nameof(execute));
-
-            _execute = execute;
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
 
@@ -106,7 +94,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands
         }
 
         /// <see cref="ICommand.Execute"/>
-        public async override void Execute(object parameter)
+        public override async void Execute(object parameter)
         {
             await ExecuteAsync(parameter);
         }

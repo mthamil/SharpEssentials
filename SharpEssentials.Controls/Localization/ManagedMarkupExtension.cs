@@ -54,12 +54,7 @@ namespace SharpEssentials.Controls.Localization
 
             // When used in a template the _targetProperty may be null - in this case
             // return this.
-            if (_targetProperty != null)
-            {
-                return GetValue();
-            }
-
-            return this;
+            return TargetProperty != null ? GetValue() : this;
         }
 
         /// <summary>
@@ -77,8 +72,8 @@ namespace SharpEssentials.Controls.Localization
             // allowing the extension to be evaluated for each instance of the template.
             if (target != null && target.GetType().FullName != "System.Windows.SharedDp")
             {
-                _targetProperty = provideValueTarget.TargetProperty;
-                _targetObjects.Add(new WeakReference(target));
+                TargetProperty = provideValueTarget.TargetProperty;
+                TargetObjects.Add(new WeakReference(target));
             }
         }
 
@@ -88,16 +83,15 @@ namespace SharpEssentials.Controls.Localization
         /// <param name="target">The target to update</param>
         protected virtual void UpdateTarget(object target)
         {
-            var dependencyProperty = _targetProperty as DependencyProperty;
-            if (dependencyProperty != null)
+            switch (TargetProperty)
             {
-                var dependencyObject = target as DependencyObject;
-                dependencyObject?.SetValue(dependencyProperty, GetValue());
-            }
-            else
-            {
-                var property = _targetProperty as PropertyInfo;
-                property?.SetValue(target, GetValue(), null);
+                case DependencyProperty dependencyProperty when target is DependencyObject dependencyObject:
+                    dependencyObject.SetValue(dependencyProperty, GetValue());
+                    break;
+
+                case PropertyInfo property:
+                    property.SetValue(target, GetValue(), null);
+                    break;
             }
         }
 
@@ -106,7 +100,7 @@ namespace SharpEssentials.Controls.Localization
         /// </summary>
         public void UpdateTargets()
         {
-            foreach (WeakReference reference in _targetObjects)
+            foreach (var reference in TargetObjects)
             {
                 if (reference.IsAlive)
                 {
@@ -120,10 +114,8 @@ namespace SharpEssentials.Controls.Localization
         /// </summary>
         /// <param name="target">The target to check</param>
         /// <returns>True if the object is one of the targets for this extension</returns>
-        public bool IsTarget(object target)
-        {
-            return _targetObjects.Any(reference => reference.IsAlive && reference.Target == target);
-        }
+        public bool IsTarget(object target) => TargetObjects.Any(reference => reference.IsAlive &&
+                                                                              reference.Target == target);
 
         /// <summary>
         /// Is an associated target still alive, ie. not garbage collected.
@@ -132,33 +124,28 @@ namespace SharpEssentials.Controls.Localization
         {
             get 
             {
-                // For normal elements the _targetObjects.Count will always be 1
+                // For normal elements the TargetObjects.Count will always be 1
                 // for templates the Count may be zero if this method is called
                 // in the middle of window elaboration after the template has been
-                // instantiated but before the elements that use it have been.  In
+                // instantiated but before the elements that use it have been. In
                 // this case return true so that we don't unhook the extension
                 // prematurely.
-                if (_targetObjects.Count == 0)
+                if (!TargetObjects.Any())
                     return true;
                 
                 // Otherwise, just check whether the referenced target(s) are alive.
-                return _targetObjects.Any(reference => reference.IsAlive);
+                return TargetObjects.Any(reference => reference.IsAlive);
             } 
         }
 
         /// <summary>
         /// Returns true if a target attached to this extension is in design mode.
         /// </summary>
-        public bool IsInDesignMode
-        {
-            get
-            {
-                return _targetObjects
-                    .Select(reference => reference.Target)
-                    .OfType<DependencyObject>()
-                    .Any(element => element != null && DesignerProperties.GetIsInDesignMode(element));
-            }
-        }
+        public bool IsInDesignMode =>
+            TargetObjects
+                .Select(reference => reference.Target)
+                .OfType<DependencyObject>()
+                .Any(element => element != null && DesignerProperties.GetIsInDesignMode(element));
 
         /// <summary>
         /// Return the target objects the extension is associated with.
@@ -167,7 +154,7 @@ namespace SharpEssentials.Controls.Localization
         /// For normal elements their will be a single target. For templates
         /// their may be zero or more targets
         /// </remarks>
-        protected IEnumerable<WeakReference> TargetObjects => _targetObjects;
+        protected ICollection<WeakReference> TargetObjects { get; } = new List<WeakReference>();
 
         /// <summary>
         /// Return the Target Property the extension is associated with
@@ -175,7 +162,7 @@ namespace SharpEssentials.Controls.Localization
         /// <remarks>
         /// Can either be a <see cref="DependencyProperty"/> or <see cref="PropertyInfo"/>
         /// </remarks>
-        protected object TargetProperty => _targetProperty;
+        protected object TargetProperty { get; private set; }
 
         /// <summary>
         /// The type of the Target Property.
@@ -184,11 +171,15 @@ namespace SharpEssentials.Controls.Localization
         {
             get
             {
-                if (_targetProperty is DependencyProperty)
-                    return ((DependencyProperty)_targetProperty).PropertyType;
-                if (_targetProperty is PropertyInfo)
-                    return ((PropertyInfo)_targetProperty).PropertyType;
-                return _targetProperty?.GetType();
+                switch (TargetProperty)
+                {
+                    case DependencyProperty dependencyProperty:
+                        return dependencyProperty.PropertyType;
+                    case PropertyInfo property:
+                        return property.PropertyType;
+                    default:
+                        return TargetProperty?.GetType();
+                }
             }
         }
 
@@ -197,16 +188,5 @@ namespace SharpEssentials.Controls.Localization
         /// </summary>
         /// <returns>The value from the resources if possible otherwise the default value</returns>
         protected abstract object GetValue();
-
-        /// <summary>
-        /// The target property 
-        /// </summary>
-        private object _targetProperty;
-        
-        /// <summary>
-        /// List of weak reference to the target DependencyObjects to allow them to 
-        /// be garbage collected
-        /// </summary>
-        private readonly ICollection<WeakReference> _targetObjects = new List<WeakReference>();
     }
 }

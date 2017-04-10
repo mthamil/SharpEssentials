@@ -24,6 +24,9 @@ namespace SharpEssentials.Testing.Controls.WPF
     /// </remarks>
     public class WpfFactDiscoverer : WpfTestDiscoverer
     {
+        /// <summary>
+        /// Initializes a new <see cref="WpfFactDiscoverer"/>.
+        /// </summary>
         public WpfFactDiscoverer(IMessageSink diagnosticMessageSink)
             : base(new FactDiscoverer(diagnosticMessageSink)) { }
     }

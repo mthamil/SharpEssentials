@@ -29,8 +29,8 @@ namespace SharpEssentials.Controls.Behaviors.GridSplitterExpanderSupport
 
 		public override GridLength DimensionSize
 		{
-			get { return _expanderRow.Height; }
-			set { _expanderRow.Height = value; }
+			get => _expanderRow.Height;
+		    set => _expanderRow.Height = value;
 		}
 
 		#endregion

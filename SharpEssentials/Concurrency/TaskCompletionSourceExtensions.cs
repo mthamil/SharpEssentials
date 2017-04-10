@@ -37,8 +37,8 @@ namespace SharpEssentials.Concurrency
 				case TaskStatus.RanToCompletion:
 					var taskWithResult = task as Task<TResult>;
 					completionSource.TrySetResult(taskWithResult != null
-												? taskWithResult.Result		// Use the task's result IF it has one.
-												: default(TResult));
+												    ? taskWithResult.Result		// Use the task's result IF it has one.
+												    : default(TResult));
 					break;
 
 				case TaskStatus.Faulted:

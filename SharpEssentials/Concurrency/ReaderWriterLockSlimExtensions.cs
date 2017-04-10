@@ -28,30 +28,21 @@ namespace SharpEssentials.Concurrency
 		/// </summary>
 		/// <param name="readWriteLock">The reader/writer lock to lock</param>
 		/// <returns>A token that, when disposed, releases the read lock</returns>
-		public static IDisposable ReadLock(this ReaderWriterLockSlim readWriteLock)
-		{
-			return new ReadLock(readWriteLock);
-		}
+		public static IDisposable ReadLock(this ReaderWriterLockSlim readWriteLock) => new ReadLock(readWriteLock);
 
-		/// <summary>
+	    /// <summary>
 		/// Enters a write lock.
 		/// </summary>
 		/// <param name="readWriteLock">The reader/writer lock to lock</param>
 		/// <returns>A token that, when disposed, releases the write lock</returns>
-		public static IDisposable WriteLock(this ReaderWriterLockSlim readWriteLock)
-		{
-			return new WriteLock(readWriteLock);
-		}
+		public static IDisposable WriteLock(this ReaderWriterLockSlim readWriteLock) => new WriteLock(readWriteLock);
 
-		/// <summary>
+	    /// <summary>
 		/// Enters an upgradeable read lock.
 		/// </summary>
 		/// <param name="readWriteLock">The reader/writer lock to lock</param>
 		/// <returns>A token that, when disposed, releases the upgradeable read lock</returns>
-		public static IDisposable UpgradeableReadLock(this ReaderWriterLockSlim readWriteLock)
-		{
-			return new UpgradeableReadLock(readWriteLock);
-		}
+		public static IDisposable UpgradeableReadLock(this ReaderWriterLockSlim readWriteLock) => new UpgradeableReadLock(readWriteLock);
 	}
 
 	/// <summary>

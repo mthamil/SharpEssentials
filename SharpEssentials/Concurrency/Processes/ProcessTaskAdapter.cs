@@ -52,35 +52,36 @@ namespace SharpEssentials.Concurrency.Processes
 				StartInfo = processInfo
 			};
 
-			Stream errorStream = new MemoryStream();
-			DataReceivedEventHandler errorHandler = (o, e) => WriteErrorData(errorStream, e.Data);
-			cancellationToken.Register(() => CancelProcess(process), true);
+		    cancellationToken.Register(() => CancelProcess(process), true);
 
 			var tcs = new TaskCompletionSource<object>();
-			EventHandler exitedHandler = null;
-			exitedHandler = (o, e) =>
-			{
-				process.Exited -= exitedHandler;
-				process.ErrorDataReceived -= errorHandler;
+		    var errorStream = new MemoryStream();
 
-				if (cancellationToken.IsCancellationRequested)
-				{
-					tcs.TrySetCanceled();
-				}
-				else if (errorStream.Length > 0)
-				{
-					tcs.TrySetException(CreateExceptionFromErrorStream(errorStream));
-				}
-				else
-				{
-					tcs.TrySetResult(null);
-				}
+            void ErrorHandler(object o, DataReceivedEventArgs e) => WriteErrorData(errorStream, e.Data);
 
-				process.Dispose();
-			};
+            void ExitedHandler(object o, EventArgs e)
+		    {
+		        process.Exited -= ExitedHandler;
+		        process.ErrorDataReceived -= ErrorHandler;
 
-			process.Exited += exitedHandler;
-			process.ErrorDataReceived += errorHandler;
+		        if (cancellationToken.IsCancellationRequested)
+		        {
+		            tcs.TrySetCanceled();
+		        }
+		        else if (errorStream.Length > 0)
+		        {
+		            tcs.TrySetException(CreateExceptionFromErrorStream(errorStream));
+		        }
+		        else
+		        {
+		            tcs.TrySetResult(null);
+		        }
+
+		        process.Dispose();
+		    }
+
+		    process.Exited += ExitedHandler;
+			process.ErrorDataReceived += ErrorHandler;
 			if (process.Start())
 				process.BeginErrorReadLine();
 
@@ -107,11 +108,11 @@ namespace SharpEssentials.Concurrency.Processes
 				if (process.Start())
 				{
 					// Asynchronously read from std error.
-					var readErrorTask = process.StandardError.BaseStream.CopyToAsync(errorStream, BUFFER_SIZE, cancellationToken);
+					var readErrorTask = process.StandardError.BaseStream.CopyToAsync(errorStream, BufferSize, cancellationToken);
 
 					// Asynchronously read from std output. This technique is used instead 
 					// of BeginOutputReadLine because that method only returns strings.
-					var readOutputTask = process.StandardOutput.BaseStream.CopyToAsync(outputStream, BUFFER_SIZE, cancellationToken);
+					var readOutputTask = process.StandardOutput.BaseStream.CopyToAsync(outputStream, BufferSize, cancellationToken);
 
 					// Asynchronously write to std input.
 					var writeInputTask = WriteInput(process, input, cancellationToken);
@@ -135,7 +136,7 @@ namespace SharpEssentials.Concurrency.Processes
 
 		private static async Task WriteInput(Process process, Stream input, CancellationToken cancellationToken)
 		{
-			await input.CopyToAsync(process.StandardInput.BaseStream, BUFFER_SIZE, cancellationToken).ConfigureAwait(false);
+			await input.CopyToAsync(process.StandardInput.BaseStream, BufferSize, cancellationToken).ConfigureAwait(false);
 			process.StandardInput.Dispose();
 		}
 
@@ -177,6 +178,6 @@ namespace SharpEssentials.Concurrency.Processes
 		/// <summary>
 		/// The default buffer size for Stream copy methods, taken from .NET documentation.
 		/// </summary>
-		private const int BUFFER_SIZE = 4096;
+		private const int BufferSize = 4096;
 	}
 }

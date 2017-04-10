@@ -39,8 +39,8 @@ namespace SharpEssentials.Controls.Behaviors
 		/// </summary>
 		public Predicate<object> Filter
 		{
-			get { return (Predicate<object>)GetValue(FilterProperty); }
-			set { SetValue(FilterProperty, value); }
+			get => (Predicate<object>)GetValue(FilterProperty);
+		    set => SetValue(FilterProperty, value);
 		}
 
 		/// <summary>

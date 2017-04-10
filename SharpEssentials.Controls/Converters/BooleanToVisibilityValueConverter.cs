@@ -32,7 +32,7 @@ namespace SharpEssentials.Controls.Converters
 		{
 			if (value != null)
 			{
-				if (((bool)value))
+				if ((bool)value)
 					return Visibility.Visible;
 				return Visibility.Collapsed;
 			}
@@ -43,7 +43,7 @@ namespace SharpEssentials.Controls.Converters
 		///<see cref="IValueConverter.ConvertBack"/>
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return value != null && ((Visibility)value) == Visibility.Visible;
+			return value != null && (Visibility)value == Visibility.Visible;
 		}
 	}
 }

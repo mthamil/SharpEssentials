@@ -30,20 +30,14 @@ namespace SharpEssentials.Controls.Converters
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			var file = value as FileInfo;
-			if (file == null)
-				return null;
-
-			return new Uri(file.FullName);
+			return file == null ? null : new Uri(file.FullName);
 		}
 		
 		/// <see cref="IValueConverter.ConvertBack"/>
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			var uri = value as Uri;
-			if (uri == null)
-				return null;
-
-			return new FileInfo(uri.LocalPath);
+			return uri == null ? null : new FileInfo(uri.LocalPath);
 		}
 	}
 }

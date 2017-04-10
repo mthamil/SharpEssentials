@@ -16,11 +16,12 @@
 using System;
 using System.Windows;
 using System.Windows.Markup;
+using SharpEssentials.Controls.Weak;
 
 namespace SharpEssentials.Controls.Localization
 {
     /// <summary>
-    /// Markup Extension used to dynamically set the Language property of an Markup element to the
+    /// Markup Extension used to dynamically set the Language property of a markup element to the
     /// the current <see cref="CultureManager.UICulture"/> property value.
     /// </summary>
     /// <remarks>
@@ -47,7 +48,7 @@ namespace SharpEssentials.Controls.Localization
         {
             _cultureManager = cultureManager;
 
-            WeakEventManager<ICultureManager, EventArgs>.AddHandler(_cultureManager, "UICultureChanged", cultureManager_UICultureChanged);
+            _cultureManager.AddWeakHandler<ICultureManager, EventArgs>(nameof(ICultureManager.UICultureChanged), cultureManager_UICultureChanged);
         }
 
         private void cultureManager_UICultureChanged(object sender, EventArgs eventArgs)
@@ -62,10 +63,7 @@ namespace SharpEssentials.Controls.Localization
         /// The <see cref="XmlLanguage"/> corresponding to the current 
         /// <see cref="ICultureManager.UICulture"/> property value
         /// </returns>
-        protected override object GetValue()
-        {
-            return XmlLanguage.GetLanguage(_cultureManager.UICulture.IetfLanguageTag);
-        }
+        protected override object GetValue() => XmlLanguage.GetLanguage(_cultureManager.UICulture.IetfLanguageTag);
 
         private readonly ICultureManager _cultureManager;
     }

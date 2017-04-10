@@ -18,14 +18,23 @@ using System.Windows;
 
 namespace SharpEssentials.Controls.Weak
 {
+    /// <summary>
+    /// Provides extension methods relating to <see cref="WeakEventManager{TEventSource,TEventArgs}"/>.
+    /// </summary>
     public static class WeakEventManagerExtensions
     {
+        /// <summary>
+        /// Adds the specified weak event handler to an object's event.
+        /// </summary>
         public static void AddWeakHandler<TSource, TEventArgs>(this TSource source, string eventName,
                                                                EventHandler<TEventArgs> handler) where TEventArgs : EventArgs
         {
             WeakEventManager<TSource, TEventArgs>.AddHandler(source, eventName, handler);
         }
 
+        /// <summary>
+        /// Removes the specified weak event handler from an object's event.
+        /// </summary>
         public static void RemoveWeakHandler<TSource, TEventArgs>(this TSource source, string eventName,
                                                                   EventHandler<TEventArgs> handler) where TEventArgs : EventArgs
         {

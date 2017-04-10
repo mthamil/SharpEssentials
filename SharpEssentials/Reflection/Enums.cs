@@ -26,12 +26,9 @@ namespace SharpEssentials.Reflection
         /// Attempts to convert the string representation of the name of an enumerated constant to its equivalent
         /// enumerated object.
         /// </summary>
-        public static Option<TEnum> TryParse<TEnum>(string value) where TEnum : struct
-        {
-            TEnum parsed;
-            return Enum.TryParse(value, out parsed) 
-                ? parsed 
+        public static Option<TEnum> TryParse<TEnum>(string value) where TEnum : struct =>
+            Enum.TryParse(value, out TEnum parsed)
+                ? parsed
                 : Option.None<TEnum>();
-        }
     }
 }

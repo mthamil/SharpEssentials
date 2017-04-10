@@ -33,20 +33,20 @@ namespace SharpEssentials.InputOutput
         /// <param name="timerFactory">Creates timers</param>
         public DirectoryMonitor(IFileSystemWatcher fileSystemWatcher, Func<ITimer> timerFactory)
         {
-            _fileSystemWatcher = fileSystemWatcher;
-            _timerFactory = timerFactory;
+            _fileSystemWatcher = fileSystemWatcher ?? throw new ArgumentNullException(nameof(fileSystemWatcher));
+            _timerFactory = timerFactory ?? throw new ArgumentNullException(nameof(timerFactory));
 
-            _fileSystemWatcher.Created += fileSystemWatcher_Created;
-            _fileSystemWatcher.Deleted += fileSystemWatcher_Deleted;
-            _fileSystemWatcher.Changed += fileSystemWatcher_Changed;
-            _fileSystemWatcher.Renamed += fileSystemWatcher_Renamed;
+            _fileSystemWatcher.Created += FileSystemWatcher_Created;
+            _fileSystemWatcher.Deleted += FileSystemWatcher_Deleted;
+            _fileSystemWatcher.Changed += FileSystemWatcher_Changed;
+            _fileSystemWatcher.Renamed += FileSystemWatcher_Renamed;
         }
 
         /// <see cref="IDirectoryMonitor.Filter"/>
         public string Filter 
         {
-            get { return _fileSystemWatcher.Filter; }
-            set { _fileSystemWatcher.Filter = value; }
+            get => _fileSystemWatcher.Filter;
+            set => _fileSystemWatcher.Filter = value;
         }
 
         /// <see cref="IDirectoryMonitor.MonitoredDirectory"/>
@@ -78,10 +78,10 @@ namespace SharpEssentials.InputOutput
         /// <see cref="IDirectoryMonitor.Changed"/>
         public event EventHandler<FileSystemEventArgs> Changed;
 
-        void fileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
+        private void FileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
         {
             ITimer timer;
-            if (fileCreationTimers.TryGetValue(e.FullPath, out timer))
+            if (_fileCreationTimers.TryGetValue(e.FullPath, out timer))
                 timer.Restart(e.FullPath);	// The created file is still changing, reset the timer.
 
             OnChanged(e);
@@ -95,13 +95,13 @@ namespace SharpEssentials.InputOutput
         /// <see cref="IDirectoryMonitor.Created"/>
         public event EventHandler<FileSystemEventArgs> Created;
 
-        void fileSystemWatcher_Created(object sender, FileSystemEventArgs e)
+        private void FileSystemWatcher_Created(object sender, FileSystemEventArgs e)
         {
-            fileCreationTimers.GetOrAdd(e.FullPath, path =>
+            _fileCreationTimers.GetOrAdd(e.FullPath, path =>
             {
                 var timer = _timerFactory();
                 timer.Interval = FileCreationWaitTimeout;
-                timer.Elapsed += fileTimer_Elapsed;
+                timer.Elapsed += FileTimer_Elapsed;
                 timer.Restart(path);
                 return timer;
             });
@@ -112,14 +112,13 @@ namespace SharpEssentials.InputOutput
             Created?.Invoke(this, args);
         }
 
-        void fileTimer_Elapsed(object sender, TimerElapsedEventArgs e)
+        private void FileTimer_Elapsed(object sender, TimerElapsedEventArgs e)
         {
             var path = (string)e.State;
-            ITimer creationTimer;
-            if (fileCreationTimers.TryRemove(path, out creationTimer))
+            if (_fileCreationTimers.TryRemove(path, out ITimer creationTimer))
             {
                 creationTimer.TryStop();
-                creationTimer.Elapsed -= fileTimer_Elapsed;
+                creationTimer.Elapsed -= FileTimer_Elapsed;
                 if (File.Exists(path))
                     OnCreated(new FileSystemEventArgs(WatcherChangeTypes.Created, Path.GetDirectoryName(path), Path.GetFileName(path)));
             }
@@ -128,13 +127,12 @@ namespace SharpEssentials.InputOutput
         /// <see cref="IDirectoryMonitor.Deleted"/>
         public event EventHandler<FileSystemEventArgs> Deleted;
 
-        void fileSystemWatcher_Deleted(object sender, FileSystemEventArgs e)
+        private void FileSystemWatcher_Deleted(object sender, FileSystemEventArgs e)
         {
-            ITimer creationTimer;
-            if (fileCreationTimers.TryRemove(e.FullPath, out creationTimer))
+            if (_fileCreationTimers.TryRemove(e.FullPath, out ITimer creationTimer))
             {
                 creationTimer.TryStop();
-                creationTimer.Elapsed -= fileTimer_Elapsed;
+                creationTimer.Elapsed -= FileTimer_Elapsed;
             }
 
             OnDeleted(e);
@@ -148,7 +146,7 @@ namespace SharpEssentials.InputOutput
         /// <see cref="IDirectoryMonitor.Renamed"/>
         public event EventHandler<RenamedEventArgs> Renamed;
 
-        void fileSystemWatcher_Renamed(object sender, RenamedEventArgs e)
+        private void FileSystemWatcher_Renamed(object sender, RenamedEventArgs e)
         {
             OnRenamed(e);
         }
@@ -169,10 +167,10 @@ namespace SharpEssentials.InputOutput
         /// <see cref="DisposableBase.OnDisposing"/>
         protected override void OnDisposing()
         {
-            _fileSystemWatcher.Created -= fileSystemWatcher_Created;
-            _fileSystemWatcher.Deleted -= fileSystemWatcher_Deleted;
-            _fileSystemWatcher.Changed -= fileSystemWatcher_Changed;
-            _fileSystemWatcher.Renamed -= fileSystemWatcher_Renamed;
+            _fileSystemWatcher.Created -= FileSystemWatcher_Created;
+            _fileSystemWatcher.Deleted -= FileSystemWatcher_Deleted;
+            _fileSystemWatcher.Changed -= FileSystemWatcher_Changed;
+            _fileSystemWatcher.Renamed -= FileSystemWatcher_Renamed;
         }
 
         /// <see cref="DisposableBase.OnDispose"/>
@@ -186,7 +184,7 @@ namespace SharpEssentials.InputOutput
         /// <summary>
         /// Timers used to track file changes.
         /// </summary>
-        private readonly ConcurrentDictionary<string, ITimer> fileCreationTimers = new ConcurrentDictionary<string, ITimer>();
+        private readonly ConcurrentDictionary<string, ITimer> _fileCreationTimers = new ConcurrentDictionary<string, ITimer>();
 
         private readonly IFileSystemWatcher _fileSystemWatcher;
         private readonly Func<ITimer> _timerFactory;

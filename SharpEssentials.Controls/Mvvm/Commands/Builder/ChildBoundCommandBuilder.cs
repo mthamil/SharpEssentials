@@ -57,9 +57,9 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
 				throw new ArgumentNullException(nameof(aggregatePredicate));
 
 			var propertyAggregationFunc = aggregatePredicate.Compile();
-			Func<bool> canExecute = () => propertyAggregationFunc(_collectionGetter());
+		    bool CanExecute() => propertyAggregationFunc(_collectionGetter());
 
-			return new ChildBoundCommandCompleter<TChild>(_collectionGetter, FindChildProperty(aggregatePredicate), canExecute);
+		    return new ChildBoundCommandCompleter<TChild>(_collectionGetter, FindChildProperty(aggregatePredicate), CanExecute);
 		}
 
 		/// <summary>
