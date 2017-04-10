@@ -17,7 +17,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using SharpEssentials.Controls.Commands;
-using SharpEssentials.Testing.Controls.WPF;
 using Xunit;
 
 namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Commands
