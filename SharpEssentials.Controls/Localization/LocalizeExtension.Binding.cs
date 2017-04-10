@@ -35,8 +35,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(null)]
         public string BindingElementName
         {
-            get { return Binding.ElementName; }
-            set { Binding.ElementName = value; }
+            get => Binding.ElementName;
+            set => Binding.ElementName = value;
         }
 
         /// <summary>
@@ -45,8 +45,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(null)]
         public PropertyPath BindingPath
         {
-            get { return Binding.Path; }
-            set { Binding.Path = value; }
+            get => Binding.Path;
+            set => Binding.Path = value;
         }
 
         /// <summary>
@@ -55,8 +55,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(null)]
         public RelativeSource BindingRelativeSource
         {
-            get { return Binding.RelativeSource; }
-            set { Binding.RelativeSource = value; }
+            get => Binding.RelativeSource;
+            set => Binding.RelativeSource = value;
         }
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(null)]
         public object BindingSource
         {
-            get { return Binding.Source; }
-            set { Binding.Source = value; }
+            get => Binding.Source;
+            set => Binding.Source = value;
         }
 
         /// <summary>
@@ -75,8 +75,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(null)]
         public string BindingXPath
         {
-            get { return Binding.XPath; }
-            set { Binding.XPath = value; }
+            get => Binding.XPath;
+            set => Binding.XPath = value;
         }
 
         /// <summary>
@@ -85,8 +85,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(null)]
         public IValueConverter BindingConverter
         {
-            get { return Binding.Converter; }
-            set { Binding.Converter = value; }
+            get => Binding.Converter;
+            set => Binding.Converter = value;
         }
 
         /// <summary>
@@ -95,8 +95,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(null)]
         public string BindingGroupName
         {
-            get { return Binding.BindingGroupName; }
-            set { Binding.BindingGroupName = value; }
+            get => Binding.BindingGroupName;
+            set => Binding.BindingGroupName = value;
         }
 
         /// <summary>
@@ -105,8 +105,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(null)]
         public CultureInfo BindingConverterCulture
         {
-            get { return Binding.ConverterCulture; }
-            set { Binding.ConverterCulture = value; }
+            get => Binding.ConverterCulture;
+            set => Binding.ConverterCulture = value;
         }
 
         /// <summary>
@@ -115,8 +115,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(null)]
         public object BindingConverterParameter
         {
-            get { return Binding.ConverterParameter; }
-            set { Binding.ConverterParameter = value; }
+            get => Binding.ConverterParameter;
+            set => Binding.ConverterParameter = value;
         }
 
         /// <summary>
@@ -125,8 +125,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(false)]
         public bool BindsDirectlyToSource
         {
-            get { return Binding.BindsDirectlyToSource; }
-            set { Binding.BindsDirectlyToSource = value; }
+            get => Binding.BindsDirectlyToSource;
+            set => Binding.BindsDirectlyToSource = value;
         }
 
         /// <summary>
@@ -135,8 +135,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(BindingMode.Default)]
         public BindingMode BindingMode
         {
-            get { return Binding.Mode; }
-            set { Binding.Mode = value; }
+            get => Binding.Mode;
+            set => Binding.Mode = value;
         }
 
         /// <summary>
@@ -145,8 +145,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(false)]
         public bool BindingNotifyOnSourceUpdated
         {
-            get { return Binding.NotifyOnSourceUpdated; }
-            set { Binding.NotifyOnSourceUpdated = value; }
+            get => Binding.NotifyOnSourceUpdated;
+            set => Binding.NotifyOnSourceUpdated = value;
         }
 
         /// <summary>
@@ -155,8 +155,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(false)]
         public bool BindingNotifyOnTargetUpdated
         {
-            get { return Binding.NotifyOnTargetUpdated; }
-            set { Binding.NotifyOnTargetUpdated = value; }
+            get => Binding.NotifyOnTargetUpdated;
+            set => Binding.NotifyOnTargetUpdated = value;
         }
 
         /// <summary>
@@ -165,8 +165,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(false)]
         public bool BindingNotifyOnValidationError
         {
-            get { return Binding.NotifyOnValidationError; }
-            set { Binding.NotifyOnValidationError = value; }
+            get => Binding.NotifyOnValidationError;
+            set => Binding.NotifyOnValidationError = value;
         }
 
         /// <summary>
@@ -175,8 +175,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(null)]
         public object BindingAsyncState
         {
-            get { return Binding.AsyncState; }
-            set { Binding.AsyncState = value; }
+            get => Binding.AsyncState;
+            set => Binding.AsyncState = value;
         }
 
         /// <summary>
@@ -185,8 +185,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(false)]
         public bool BindingIsAsync
         {
-            get { return Binding.IsAsync; }
-            set { Binding.IsAsync = value; }
+            get => Binding.IsAsync;
+            set => Binding.IsAsync = value;
         }
 
         /// <summary>
@@ -195,8 +195,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(null)]
         public object BindingFallbackValue
         {
-            get { return Binding.FallbackValue; }
-            set { Binding.FallbackValue = value; }
+            get => Binding.FallbackValue;
+            set => Binding.FallbackValue = value;
         }
 
         /// <summary>
@@ -205,8 +205,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(null)]
         public object BindingTargetNullValue
         {
-            get { return Binding.TargetNullValue; }
-            set { Binding.TargetNullValue = value; }
+            get => Binding.TargetNullValue;
+            set => Binding.TargetNullValue = value;
         }
 
         /// <summary>
@@ -215,8 +215,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(false)]
         public bool BindingValidatesOnDataErrors
         {
-            get { return Binding.ValidatesOnDataErrors; }
-            set { Binding.ValidatesOnDataErrors = value; }
+            get => Binding.ValidatesOnDataErrors;
+            set => Binding.ValidatesOnDataErrors = value;
         }
 
         /// <summary>
@@ -225,8 +225,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(false)]
         public bool BindingValidatesOnExceptions
         {
-            get { return Binding.ValidatesOnExceptions; }
-            set { Binding.ValidatesOnExceptions = value; }
+            get => Binding.ValidatesOnExceptions;
+            set => Binding.ValidatesOnExceptions = value;
         }
 
         /// <summary>
@@ -235,8 +235,8 @@ namespace SharpEssentials.Controls.Localization
         [DefaultValue(UpdateSourceTrigger.Default)]
         public UpdateSourceTrigger BindingUpdateSourceTrigger
         {
-            get { return Binding.UpdateSourceTrigger; }
-            set { Binding.UpdateSourceTrigger = value; }
+            get => Binding.UpdateSourceTrigger;
+            set => Binding.UpdateSourceTrigger = value;
         }
 
         /// <summary>

@@ -95,7 +95,6 @@
     <Compile Include="Commands\OpenContextMenuCommand.cs" />
     <Compile Include="Commands\OpenDialogCommand.cs" />
     <Compile Include="Converters\BooleanToVisibilityValueConverter.cs" />
-    <Compile Include="Converters\BoolSwitchVisibilityConverter.cs" />
     <Compile Include="Converters\ComposingConverter.cs" />
     <Compile Include="Converters\AndConverter.cs" />
     <Compile Include="Converters\DirectoryInfoConverter.cs" />
@@ -109,7 +108,6 @@
     <Compile Include="Converters\OrConverter.cs" />
     <Compile Include="Converters\ReverseConverter.cs" />
     <Compile Include="Converters\SecondsToTimeSpanConverter.cs" />
-    <Compile Include="Converters\TextInputToVisibilityConverter.cs" />
     <Compile Include="Converters\UriConverter.cs" />
     <Compile Include="Converters\UriToCachedImageConverter.cs" />
     <Compile Include="FileSystemPicker.cs" />

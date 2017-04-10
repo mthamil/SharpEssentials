@@ -34,15 +34,15 @@ namespace SharpEssentials.Controls.Converters
 				return null;
 
 			var imageUri = (Uri)value;
-			BitmapImage bi = new BitmapImage();
-			bi.BeginInit();
-			bi.UriSource = imageUri;
-			bi.CacheOption = CacheOption;
-			bi.CreateOptions = InitOptions;
+			var bitmap = new BitmapImage();
+			bitmap.BeginInit();
+			bitmap.UriSource = imageUri;
+			bitmap.CacheOption = CacheOption;
+			bitmap.CreateOptions = InitOptions;
 			try
 			{
-				bi.EndInit();
-				return bi;
+				bitmap.EndInit();
+				return bitmap;
 			}
 			catch
 			{

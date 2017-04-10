@@ -35,7 +35,7 @@ namespace SharpEssentials.Controls.Markup
 				throw new ArgumentNullException(nameof(enumType));
 
 			if (!enumType.IsEnum)
-				throw new ArgumentException(@"enumType must derive from type Enum.", nameof(enumType));
+				throw new ArgumentException(@"Must be an enum type.", nameof(enumType));
 
 			_enumType = enumType;
 		}

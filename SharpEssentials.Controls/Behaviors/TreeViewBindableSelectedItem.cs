@@ -47,8 +47,8 @@ namespace SharpEssentials.Controls.Behaviors
         /// </summary>
         public object SelectedItem
         {
-            get { return GetValue(SelectedItemProperty); }
-            set { SetValue(SelectedItemProperty, value); }
+            get => GetValue(SelectedItemProperty);
+            set => SetValue(SelectedItemProperty, value);
         }
 
         /// <summary>

@@ -33,7 +33,7 @@ namespace SharpEssentials.Controls.Localization
 		/// <summary>
 		/// The default culture manager instance.
 		/// </summary>
-		public static ICultureManager Default => _defaultInstance;
+		public static ICultureManager Default => DefaultInstance;
 
 	    /// <summary>
         /// Sets the UICulture for a <see cref="CultureManager"/> and raises the <see cref="UICultureChanged"/>
@@ -42,14 +42,10 @@ namespace SharpEssentials.Controls.Localization
         /// </summary>
         public CultureInfo UICulture
         {
-            get
-            {
-                if (_uiCulture == null)
-                {
-                    _uiCulture = Thread.CurrentThread.CurrentUICulture;
-                }
-                return _uiCulture;
-            }
+	        get
+	        {
+	            return _uiCulture ?? (_uiCulture = Thread.CurrentThread.CurrentUICulture);
+	        }
             set
             {
                 if (value != UICulture)
@@ -110,16 +106,16 @@ namespace SharpEssentials.Controls.Localization
         }
 
 	    /// <summary>
-        /// Current UICulture of the manager.
+        /// The current UICulture of the manager.
         /// </summary>
         private CultureInfo _uiCulture;
 
         /// <summary>
-        /// Should the <see cref="Thread.CurrentCulture"/> be changed when the
-        /// <see cref="UICulture"/> changes.
+        /// Whether the <see cref="Thread.CurrentCulture"/> should be changed 
+        /// when the <see cref="UICulture"/> changes.
         /// </summary>
         private bool _keepThreadCurrentCultureInSync = true;
 
-		private static readonly CultureManager _defaultInstance = new CultureManager();
+		private static readonly CultureManager DefaultInstance = new CultureManager();
     }
 }

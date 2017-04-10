@@ -30,6 +30,7 @@ using System.Windows.Data;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media.Imaging;
+using SharpEssentials.Controls.Weak;
 
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "SharpEssentials.Controls.Localization")]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2007/xaml/presentation", "SharpEssentials.Controls.Localization")]
@@ -60,37 +61,37 @@ namespace SharpEssentials.Controls.Localization
         /// </summary>
         public static event GetResourceHandler GetResource;
 
-	    /// <summary>
+        /// <summary>
         /// Initializes a new instance of the markup extension.
         /// </summary>
         public LocalizeExtension()
-			: this(null) { }
+            : this(null) { }
 
         /// <summary>
-		/// Initializes a new instance of the markup extension.
+        /// Initializes a new instance of the markup extension.
         /// </summary>
         /// <param name="key">The key used to get the value from the resources</param>
         public LocalizeExtension(string key)
-			: this(MarkupExtensionManager.For<LocalizeExtension>(CleanupInterval), CultureManager.Default, key) { }
+            : this(MarkupExtensionManager.For<LocalizeExtension>(CleanupInterval), CultureManager.Default, key) { }
 
-		/// <summary>
-		/// Initializes a new instance of the markup extension.
-		/// </summary>
-	    internal LocalizeExtension(MarkupExtensionManager markupExtensionManager, ICultureManager cultureManager, string key)
-			: base(markupExtensionManager)
-		{
-			_cultureManager = cultureManager;
-			Key = key;
+        /// <summary>
+        /// Initializes a new instance of the markup extension.
+        /// </summary>
+        internal LocalizeExtension(MarkupExtensionManager markupExtensionManager, ICultureManager cultureManager, string key)
+            : base(markupExtensionManager)
+        {
+            _cultureManager = cultureManager;
+            Key = key;
 
-			WeakEventManager<ICultureManager, EventArgs>.AddHandler(_cultureManager, "UICultureChanged", cultureManager_UICultureChanged);
-		}
+            cultureManager.AddWeakHandler<ICultureManager, EventArgs>(nameof(ICultureManager.UICultureChanged), cultureManager_UICultureChanged);
+        }
 
-	    private void cultureManager_UICultureChanged(object sender, EventArgs eventArgs)
-	    {
-		    UpdateTargets();
-	    }
+        private void cultureManager_UICultureChanged(object sender, EventArgs eventArgs)
+        {
+            UpdateTargets();
+        }
 
-	    /// <summary>
+        /// <summary>
         /// The fully qualified name of the embedded resx (without .resources) to get
         /// the resource from.
         /// </summary>
@@ -127,13 +128,13 @@ namespace SharpEssentials.Controls.Localization
         }
 
         /// <summary>
-		/// The explicitly set embedded Resx Name (if any).
-		/// </summary>
-		private string _resxName;
+        /// The explicitly set embedded Resx Name (if any).
+        /// </summary>
+        private string _resxName;
 
         /// <summary>
-		/// The key used to retrieve the resource.
-		/// </summary>
+        /// The key used to retrieve the resource.
+        /// </summary>
         public string Key { get; set; }
 
         /// <summary>
@@ -155,7 +156,7 @@ namespace SharpEssentials.Controls.Localization
         /// elements similar to a <see cref="MultiBinding"/>.
         /// </remarks>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Collection<LocalizeExtension> Children => _children;
+        public Collection<LocalizeExtension> Children { get; } = new Collection<LocalizeExtension>();
 
         /// <summary>
         /// Returns the value for this instance of the Markup Extension.
@@ -177,45 +178,45 @@ namespace SharpEssentials.Controls.Localization
                 return this;
             }
 
-	        // If this extension has child Resx elements then invoke AFTER this method has returned
-	        // to setup the MultiBinding on the target element.
-	        if (IsMultiBindingParent)
-	        {
-		        MultiBinding binding = CreateMultiBinding();
-		        return binding.ProvideValue(serviceProvider);
-	        }
+            // If this extension has child Resx elements then invoke AFTER this method has returned
+            // to setup the MultiBinding on the target element.
+            if (IsMultiBindingParent)
+            {
+                MultiBinding binding = CreateMultiBinding();
+                return binding.ProvideValue(serviceProvider);
+            }
 
-	        if (IsBindingExpression)
-	        {
-		        // If this is a simple binding then return the binding.
-		        Binding binding = CreateBinding();
-		        return binding.ProvideValue(serviceProvider);
-	        }
+            if (IsBindingExpression)
+            {
+                // If this is a simple binding then return the binding.
+                Binding binding = CreateBinding();
+                return binding.ProvideValue(serviceProvider);
+            }
 
-	        // Otherwise, return the value from the resources.
-	        return GetValue();
+            // Otherwise, return the value from the resources.
+            return GetValue();
         }
 
-		/// <summary>
-		/// Gets the DefaultResxName attached property for the given target.
-		/// </summary>
-		/// <param name="target">The Target object</param>
-		/// <returns>The name of the Resx</returns>
-		[AttachedPropertyBrowsableForChildren(IncludeDescendants = true)]
-		public static string GetDefaultResxName(DependencyObject target)
-		{
-			return (string)target.GetValue(DefaultResxNameProperty);
-		}
+        /// <summary>
+        /// Gets the DefaultResxName attached property for the given target.
+        /// </summary>
+        /// <param name="target">The Target object</param>
+        /// <returns>The name of the Resx</returns>
+        [AttachedPropertyBrowsableForChildren(IncludeDescendants = true)]
+        public static string GetDefaultResxName(DependencyObject target)
+        {
+            return (string)target.GetValue(DefaultResxNameProperty);
+        }
 
-		/// <summary>
-		/// Sets the DefaultResxName attached property for the given target.
-		/// </summary>
-		/// <param name="target">The Target object</param>
-		/// <param name="value">The name of the Resx</param>
-		public static void SetDefaultResxName(DependencyObject target, string value)
-		{
-			target.SetValue(DefaultResxNameProperty, value);
-		}
+        /// <summary>
+        /// Sets the DefaultResxName attached property for the given target.
+        /// </summary>
+        /// <param name="target">The Target object</param>
+        /// <param name="value">The name of the Resx</param>
+        public static void SetDefaultResxName(DependencyObject target, string value)
+        {
+            target.SetValue(DefaultResxNameProperty, value);
+        }
 
         /// <summary>
         /// The ResxName attached property.
@@ -229,97 +230,97 @@ namespace SharpEssentials.Controls.Localization
                 FrameworkPropertyMetadataOptions.Inherits,
                 OnDefaultResxNamePropertyChanged));
 
-		/// <summary>
-		/// Handles a change to the attached DefaultResxName property.
-		/// </summary>
-		/// <param name="element">The dependency object (a WPF element)</param>
-		/// <param name="args">The dependency property changed event arguments</param>
-		/// <remarks>In design mode, updates the extension with the correct ResxName</remarks>
-		private static void OnDefaultResxNamePropertyChanged(DependencyObject element, DependencyPropertyChangedEventArgs args)
-		{
-			if (DesignerProperties.GetIsInDesignMode(element))
-			{
-				var applicableExtensions = MarkupExtensionManager.For<LocalizeExtension>(CleanupInterval)
+        /// <summary>
+        /// Handles a change to the attached DefaultResxName property.
+        /// </summary>
+        /// <param name="element">The dependency object (a WPF element)</param>
+        /// <param name="args">The dependency property changed event arguments</param>
+        /// <remarks>In design mode, updates the extension with the correct ResxName</remarks>
+        private static void OnDefaultResxNamePropertyChanged(DependencyObject element, DependencyPropertyChangedEventArgs args)
+        {
+            if (DesignerProperties.GetIsInDesignMode(element))
+            {
+                var applicableExtensions = MarkupExtensionManager.For<LocalizeExtension>(CleanupInterval)
                                                                  .ActiveExtensions
-																 .OfType<LocalizeExtension>()
-															     .Where(extension => extension.IsTarget(element));
-				foreach (var extension in applicableExtensions)
-				{
-					// Force the resource manager to be reloaded when the attached resx name changes.
-					extension._resourceManager = null;
-					extension._defaultResxName = args.NewValue as string;
-					extension.UpdateTarget(element);
-				}
-			}
-		}
+                                                                 .OfType<LocalizeExtension>()
+                                                                 .Where(extension => extension.IsTarget(element));
+                foreach (var extension in applicableExtensions)
+                {
+                    // Force the resource manager to be reloaded when the attached resx name changes.
+                    extension._resourceManager = null;
+                    extension._defaultResxName = args.NewValue as string;
+                    extension.UpdateTarget(element);
+                }
+            }
+        }
 
         /// <summary>
-		/// The default resx name (based on the attached property).
-		/// </summary>
-		private string _defaultResxName;
+        /// The default resx name (based on the attached property).
+        /// </summary>
+        private string _defaultResxName;
 
         #region Local Methods
 
         /// <summary>
-		/// Creates a binding for this <see cref="LocalizeExtension"/>.
+        /// Creates a binding for this <see cref="LocalizeExtension"/>.
         /// </summary>
-		/// <returns>A binding for this <see cref="LocalizeExtension"/></returns>
+        /// <returns>A binding for this <see cref="LocalizeExtension"/></returns>
         private Binding CreateBinding()
         {
-	        if (!IsBindingExpression)
-	        {
-		        return new Binding
-		        {
-			        Source = GetValue()
-		        };
-	        }
+            if (!IsBindingExpression)
+            {
+                return new Binding
+                {
+                    Source = GetValue()
+                };
+            }
 
-	        // Copy all the properties of the binding to a new binding.
-	        var binding = new Binding
-	        {
-		        AsyncState = _binding.Value.AsyncState,
-		        BindingGroupName = _binding.Value.BindingGroupName,
-		        BindsDirectlyToSource = _binding.Value.BindsDirectlyToSource,
-		        Converter = _binding.Value.Converter,
-		        ConverterCulture = _binding.Value.ConverterCulture,
-		        ConverterParameter = _binding.Value.ConverterParameter,
-		        FallbackValue = _binding.Value.FallbackValue,
-		        IsAsync = _binding.Value.IsAsync,
-		        Mode = _binding.Value.Mode,
-		        NotifyOnSourceUpdated = _binding.Value.NotifyOnSourceUpdated,
-		        NotifyOnTargetUpdated = _binding.Value.NotifyOnTargetUpdated,
-		        NotifyOnValidationError = _binding.Value.NotifyOnValidationError,
-		        Path = _binding.Value.Path,
-		        TargetNullValue = _binding.Value.TargetNullValue,
-		        XPath = _binding.Value.XPath,
-		        StringFormat = GetValue() as string,
-		        UpdateSourceTrigger = _binding.Value.UpdateSourceTrigger,
-		        ValidatesOnDataErrors = _binding.Value.ValidatesOnDataErrors,
-		        ValidatesOnExceptions = _binding.Value.ValidatesOnExceptions
-	        };
+            // Copy all the properties of the binding to a new binding.
+            var binding = new Binding
+            {
+                AsyncState = _binding.Value.AsyncState,
+                BindingGroupName = _binding.Value.BindingGroupName,
+                BindsDirectlyToSource = _binding.Value.BindsDirectlyToSource,
+                Converter = _binding.Value.Converter,
+                ConverterCulture = _binding.Value.ConverterCulture,
+                ConverterParameter = _binding.Value.ConverterParameter,
+                FallbackValue = _binding.Value.FallbackValue,
+                IsAsync = _binding.Value.IsAsync,
+                Mode = _binding.Value.Mode,
+                NotifyOnSourceUpdated = _binding.Value.NotifyOnSourceUpdated,
+                NotifyOnTargetUpdated = _binding.Value.NotifyOnTargetUpdated,
+                NotifyOnValidationError = _binding.Value.NotifyOnValidationError,
+                Path = _binding.Value.Path,
+                TargetNullValue = _binding.Value.TargetNullValue,
+                XPath = _binding.Value.XPath,
+                StringFormat = GetValue() as string,
+                UpdateSourceTrigger = _binding.Value.UpdateSourceTrigger,
+                ValidatesOnDataErrors = _binding.Value.ValidatesOnDataErrors,
+                ValidatesOnExceptions = _binding.Value.ValidatesOnExceptions
+            };
 
-	        foreach (var rule in _binding.Value.ValidationRules)
-		        binding.ValidationRules.Add(rule);
-				
-	        if (_binding.Value.ElementName != null)
-		        binding.ElementName = _binding.Value.ElementName;
+            foreach (var rule in _binding.Value.ValidationRules)
+                binding.ValidationRules.Add(rule);
+                
+            if (_binding.Value.ElementName != null)
+                binding.ElementName = _binding.Value.ElementName;
 
-	        if (_binding.Value.RelativeSource != null)
-		        binding.RelativeSource = _binding.Value.RelativeSource;
+            if (_binding.Value.RelativeSource != null)
+                binding.RelativeSource = _binding.Value.RelativeSource;
 
-	        if (_binding.Value.Source != null)
-		        binding.Source = _binding.Value.Source;
+            if (_binding.Value.Source != null)
+                binding.Source = _binding.Value.Source;
 
-	        return binding;
+            return binding;
         }
 
-	    /// <summary>
-		/// Creates a new MultiBinding that binds to the child <see cref="LocalizeExtension"/>s.
+        /// <summary>
+        /// Creates a new MultiBinding that binds to the child <see cref="LocalizeExtension"/>s.
         /// </summary>
         private MultiBinding CreateMultiBinding()
         {
             var result = new MultiBinding();
-            foreach (var child in _children)
+            foreach (var child in Children)
             {
                 // Ensure the child has a resx name.
                 if (child.ResxName == null)
@@ -335,20 +336,20 @@ namespace SharpEssentials.Controls.Localization
         /// <summary>
         /// Whether any binding properties have been set.
         /// </summary>
-        private bool IsBindingExpression 
-            => (_binding.Value.Source != null || _binding.Value.RelativeSource != null ||
-                _binding.Value.ElementName != null || _binding.Value.XPath != null ||
-                _binding.Value.Path != null);
+        private bool IsBindingExpression => 
+            _binding.Value.Source != null || _binding.Value.RelativeSource != null ||
+            _binding.Value.ElementName != null || _binding.Value.XPath != null ||
+            _binding.Value.Path != null;
 
         /// <summary>
-		/// Whether this <see cref="LocalizeExtension"/> is being used as a multi-binding parent.
+        /// Whether this <see cref="LocalizeExtension"/> is being used as a multi-binding parent.
         /// </summary>
-        private bool IsMultiBindingParent => _children.Count > 0;
+        private bool IsMultiBindingParent => Children.Count > 0;
 
         /// <summary>
-		/// Whether this <see cref="LocalizeExtension"/> is being used inside another <see cref="LocalizeExtension"/> for multi-binding.
+        /// Whether this <see cref="LocalizeExtension"/> is being used inside another <see cref="LocalizeExtension"/> for multi-binding.
         /// </summary>
-        private bool IsMultiBindingChild => (TargetPropertyType == typeof(Collection<LocalizeExtension>));
+        private bool IsMultiBindingChild => TargetPropertyType == typeof(Collection<LocalizeExtension>);
 
         /// <summary>
         /// Produces the value for the markup extension.
@@ -357,17 +358,17 @@ namespace SharpEssentials.Controls.Localization
         protected override object GetValue()
         {
             if (string.IsNullOrEmpty(Key)) 
-				return null;
+                return null;
 
             object result = null;
             if (!String.IsNullOrEmpty(ResxName))
             {
                 try
                 {
-	                var localGetResource = GetResource;
-					if (localGetResource != null)
+                    var localGetResource = GetResource;
+                    if (localGetResource != null)
                     {
-						result = localGetResource(ResxName, Key, _cultureManager.UICulture);
+                        result = localGetResource(ResxName, Key, _cultureManager.UICulture);
                     }
 
                     if (result == null)
@@ -389,7 +390,7 @@ namespace SharpEssentials.Controls.Localization
                 }
                 catch (Exception e)
                 {
-					Debug.Write(e);
+                    Debug.Write(e);
                 }
             }
 
@@ -404,7 +405,7 @@ namespace SharpEssentials.Controls.Localization
         {
             // Binding of child extensions is done by the parent.
             if (IsMultiBindingChild) 
-				return;
+                return;
 
             if (IsMultiBindingParent)
             {
@@ -436,10 +437,10 @@ namespace SharpEssentials.Controls.Localization
         /// <param name="assembly">The assembly to check</param>
         /// <param name="resxName">The name of the resource we are looking for</param>
         /// <returns>True if the assembly contains the resource</returns>
-        private bool HasEmbeddedResx(Assembly assembly, string resxName)
+        private static bool HasEmbeddedResx(Assembly assembly, string resxName)
         {
             if (assembly.IsDynamic) 
-				return false;
+                return false;
 
             try
             {
@@ -448,48 +449,49 @@ namespace SharpEssentials.Controls.Localization
 
                 if (resources.Any(resource => resource.ToLower() == searchName))
                 {
-	                return true;
+                    return true;
                 }
             }
             catch (Exception e)
             {
                 // GetManifestResourceNames may throw an exception
                 // for some assemblies - just ignore these assemblies,
-				// but log them in debug mode.
-				Debug.Write(e);
+                // but log them in debug mode.
+                Debug.Write(e);
             }
             return false;
         }
 
-		/// <summary>
-		/// Checks whether an assembly is a system assembly.
-		/// </summary>
-	    private bool IsSystemAssembly(Assembly assembly)
-	    {
-			string name = assembly.FullName;
-			return (name.StartsWith("Microsoft.") ||
-			        name.StartsWith("System.") ||
-			        name.StartsWith("System,") ||
-			        name.StartsWith("mscorlib,") ||
-			        name.StartsWith("PresentationFramework,") ||
-			        name.StartsWith("WindowsBase,"));
-	    }
+        /// <summary>
+        /// Checks whether an assembly is a system assembly.
+        /// </summary>
+        private static bool IsSystemAssembly(Assembly assembly)
+        {
+            string name = assembly.FullName;
+            return name.StartsWith("Microsoft.") ||
+                   name.StartsWith("System.") ||
+                   name.StartsWith("System,") ||
+                   name.StartsWith("mscorlib,") ||
+                   name.StartsWith("PresentationFramework,") ||
+                   name.StartsWith("WindowsBase,");
+        }
 
-	    /// <summary>
+        /// <summary>
         /// Finds the assembly that contains the type.
         /// </summary>
         /// <returns>The assembly if loaded (otherwise null)</returns>
-        private Assembly FindResourceAssembly()
+        private static Assembly FindResourceAssembly(string resxName)
         {
             var assembly = Assembly.GetEntryAssembly();
 
             // Check the entry assembly first - this will short circuit a lot of searching.
-            if (assembly != null && HasEmbeddedResx(assembly, ResxName)) 
-				return assembly;
+            if (assembly != null && HasEmbeddedResx(assembly, resxName))
+                return assembly;
 
-			return AppDomain.CurrentDomain.GetAssemblies()
-				.Where(searchAssembly => !IsSystemAssembly(searchAssembly))	// Don't check system provided assemblies.
-				.FirstOrDefault(searchAssembly => HasEmbeddedResx(searchAssembly, ResxName));
+            return AppDomain.CurrentDomain
+                .GetAssemblies()
+                .Where(searchAssembly => !IsSystemAssembly(searchAssembly))	// Don't check system provided assemblies.
+                .FirstOrDefault(searchAssembly => HasEmbeddedResx(searchAssembly, resxName));
         }
 
         /// <summary>
@@ -498,30 +500,29 @@ namespace SharpEssentials.Controls.Localization
         /// <param name="resxName">The name of the embedded resx</param>
         /// <returns>The resource manager</returns>
         /// <remarks>Caches resource managers to improve performance</remarks>
-        private ResourceManager GetResourceManager(string resxName)
+        private static ResourceManager GetResourceManager(string resxName)
         {
             if (resxName == null) 
-				return null;
+                return null;
 
-			WeakReference<ResourceManager> reference;
-			ResourceManager result = null;
-            if (_resourceManagers.TryGetValue(resxName, out reference))
+            ResourceManager result = null;
+            if (ResourceManagers.TryGetValue(resxName, out var reference))
             {
-	            if (!reference.TryGetTarget(out result))
-	            {
-					// If the resource manager has been garbage collected then remove the cache
-					// entry (it will be readded).
-					_resourceManagers.Remove(resxName);
-	            }
+                if (!reference.TryGetTarget(out result))
+                {
+                    // If the resource manager has been garbage collected then remove the cache
+                    // entry (it will be readded).
+                    ResourceManagers.Remove(resxName);
+                }
             }
 
             if (result == null)
             {
-                var assembly = FindResourceAssembly();
+                var assembly = FindResourceAssembly(resxName);
                 if (assembly != null)
                 {
                     result = new ResourceManager(resxName, assembly);
-					_resourceManagers.Add(resxName, new WeakReference<ResourceManager>(result));
+                    ResourceManagers.Add(resxName, new WeakReference<ResourceManager>(result));
                 }
             }
             return result;
@@ -535,76 +536,75 @@ namespace SharpEssentials.Controls.Localization
         private object ConvertValue(object value)
         {
             var bitmapSource = TryCreateBitmapSource(value);
-	        if (bitmapSource != null)
+            if (bitmapSource != null)
             {
-	            // If the target property is expecting the Icon to be content then we
+                // If the target property is expecting the Icon to be content then we
                 // create an ImageControl and set its Source property to image.
                 if (TargetPropertyType == typeof(object))
                 {
                     return new System.Windows.Controls.Image
                     {
-	                    Source = bitmapSource,
-	                    Width = bitmapSource.Width,
-	                    Height = bitmapSource.Height
+                        Source = bitmapSource,
+                        Width = bitmapSource.Width,
+                        Height = bitmapSource.Height
                     };
                 }
 
-	            return bitmapSource;
+                return bitmapSource;
             }
             
-	        // Allow for resources to either contain simple strings or typed data.
-	        Type targetType = TargetPropertyType;
-	        if (targetType != null)
-	        {
-		        if (value is String && targetType != typeof(String) && targetType != typeof(object))
-		        {
-			        TypeConverter converter = TypeDescriptor.GetConverter(targetType);
-			        return converter.ConvertFromInvariantString(value as string);
-		        }
-	        }
+            // Allow for resources to either contain simple strings or typed data.
+            Type targetType = TargetPropertyType;
+            if (targetType != null)
+            {
+                if (value is string stringValue && targetType != typeof(string) && targetType != typeof(object))
+                {
+                    TypeConverter converter = TypeDescriptor.GetConverter(targetType);
+                    return converter.ConvertFromInvariantString(stringValue);
+                }
+            }
 
-			return value;
+            return value;
         }
 
-		/// <summary>
-		/// Attempts to create a <see cref="BitmapSource"/> from an icon or bitmap so
-		/// that it is usable by WPF.
-		/// </summary>
-	    private BitmapSource TryCreateBitmapSource(object value)
-		{
-			if (value is Icon)
-			{
-				// For icons we must create a new BitmapFrame from the icon data stream
-				// The approach we use for bitmaps (below) doesn't work when setting the
-				// Icon property of a window (although it will work for other Icons).
-				using (var iconStream = new MemoryStream())
-				{
-					var icon = (Icon)value;
-					icon.Save(iconStream);
-					iconStream.Seek(0, SeekOrigin.Begin);
-					return BitmapFrame.Create(iconStream);
-				}
-			}
+        /// <summary>
+        /// Attempts to create a <see cref="BitmapSource"/> from an icon or bitmap so
+        /// that it is usable by WPF.
+        /// </summary>
+        private static BitmapSource TryCreateBitmapSource(object value)
+        {
+            switch (value)
+            {
+                case Icon icon:
+                    // For icons we must create a new BitmapFrame from the icon data stream
+                    // The approach we use for bitmaps (below) doesn't work when setting the
+                    // Icon property of a window (although it will work for other Icons).
+                    using (var iconStream = new MemoryStream())
+                    {
+                        icon.Save(iconStream);
+                        iconStream.Seek(0, SeekOrigin.Begin);
+                        return BitmapFrame.Create(iconStream);
+                    }
 
-			if (value is Bitmap)
-			{
-				var bitmap = (Bitmap)value;
-				IntPtr bitmapHandle = bitmap.GetHbitmap();
-				var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(
-					bitmapHandle, IntPtr.Zero, Int32Rect.Empty,
-					BitmapSizeOptions.FromEmptyOptions());
-				bitmapSource.Freeze();
-				DeleteObject(bitmapHandle);
-				return bitmapSource;
-			}
+                case Bitmap bitmap:
+                    IntPtr bitmapHandle = bitmap.GetHbitmap();
+                    var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(
+                        bitmapHandle, IntPtr.Zero, Int32Rect.Empty,
+                        BitmapSizeOptions.FromEmptyOptions());
+                    bitmapSource.Freeze();
+                    DeleteObject(bitmapHandle);
+                    return bitmapSource;
 
-			return null;
-		}
+                default:
+                    return null;
 
-		[DllImport("gdi32.dll")]
-		private static extern bool DeleteObject(IntPtr hObject);
+            }
+        }
 
-	    /// <summary>
+        [DllImport("gdi32.dll")]
+        private static extern bool DeleteObject(IntPtr hObject);
+
+        /// <summary>
         /// Returns the default value for a property.
         /// </summary>
         private object GetDefaultValue(string key)
@@ -612,57 +612,52 @@ namespace SharpEssentials.Controls.Localization
             Type targetType = TargetPropertyType;
             if (DefaultValue == null)
             {
-                if (targetType == typeof(String) || targetType == typeof(object) || IsMultiBindingChild)
+                if (targetType == typeof(string) || targetType == typeof(object) || IsMultiBindingChild)
                 {
                     return "#" + key;
                 }
             }
             else if (targetType != null)
             {
-				// Convert the default value to the required type if necessary.
-                if (targetType != typeof(String) && targetType != typeof(object))
+                // Convert the default value to the required type if necessary.
+                if (targetType != typeof(string) && targetType != typeof(object))
                 {
                     try
                     {
-                        TypeConverter converter = TypeDescriptor.GetConverter(targetType);
+                        var converter = TypeDescriptor.GetConverter(targetType);
                         return converter.ConvertFromInvariantString(DefaultValue);
                     }
                     catch (Exception e)
                     {
-						Debug.Write(e);
+                        Debug.Write(e);
                     }
                 }
             }
 
-			return DefaultValue;
+            return DefaultValue;
         }
 
         #endregion
 
         /// <summary>
-		/// The resource manager to use for this extension.  Holding a strong reference to the
-		/// Resource Manager keeps it in the cache while ever there are LocalizeExtensions that
-		/// are using it.
-		/// </summary>
-		private ResourceManager _resourceManager;
+        /// The resource manager to use for this extension. Holding a strong reference to the
+        /// Resource Manager keeps it in the cache while ever there are LocalizeExtensions that
+        /// are using it.
+        /// </summary>
+        private ResourceManager _resourceManager;
 
-		private readonly ICultureManager _cultureManager;
+        private readonly ICultureManager _cultureManager;
 
-		/// <summary>
-		/// The binding (if any) used to store the binding properties for the extension  .
-		/// </summary>
-		private readonly Lazy<Binding> _binding = new Lazy<Binding>(() => new Binding());
+        /// <summary>
+        /// The binding (if any) used to store the binding properties for the extension  .
+        /// </summary>
+        private readonly Lazy<Binding> _binding = new Lazy<Binding>(() => new Binding());
 
-		/// <summary>
-		/// The child <see cref="LocalizeExtension"/>s (if any) when using MultiBinding expressions.
-		/// </summary>
-		private readonly Collection<LocalizeExtension> _children = new Collection<LocalizeExtension>();
+        private const int CleanupInterval = 40;
 
-	    private const int CleanupInterval = 40;
-
-		/// <summary>
-		/// Cached resource managers.
-		/// </summary>
-		private static readonly IDictionary<string, WeakReference<ResourceManager>> _resourceManagers = new Dictionary<string, WeakReference<ResourceManager>>();
+        /// <summary>
+        /// Cached resource managers.
+        /// </summary>
+        private static readonly IDictionary<string, WeakReference<ResourceManager>> ResourceManagers = new Dictionary<string, WeakReference<ResourceManager>>();
     }
 }

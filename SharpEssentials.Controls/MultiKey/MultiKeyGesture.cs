@@ -74,14 +74,14 @@ namespace SharpEssentials.Controls.MultiKey
 		public override bool Matches(object targetElement, InputEventArgs inputEventArgs)
 		{
 			var args = inputEventArgs as KeyEventArgs;
-			if ((args == null))
+			if (args == null)
 				return false;
 
 			var keyboardDevice = inputEventArgs.Device as KeyboardDevice;
 			if (keyboardDevice == null)
 				return false;
 
-			if (_currentKeyIndex != 0 && ((DateTime.Now - _lastKeyPressTime) > MaximumDelayBetweenKeyPresses))
+			if (_currentKeyIndex != 0 && DateTime.Now - _lastKeyPressTime > MaximumDelayBetweenKeyPresses)
 			{
 				// The key gesture timed-out.
 				_currentKeyIndex = 0;
@@ -133,23 +133,15 @@ namespace SharpEssentials.Controls.MultiKey
 	/// </summary>
 	public class KeyInput
 	{
-		/// <summary>
-		/// Initializes a new key input pair.
-		/// </summary>
-		public KeyInput()
-		{
-			Key = Key.None;
-			Modifier = ModifierKeys.None;
-		}
+	    /// <summary>
+	    /// The key to use. This is required.
+	    /// </summary>
+	    public Key Key { get; set; } = Key.None;
 
-		/// <summary>
-		/// The key to use.  This is required.
-		/// </summary>
-		public Key Key { get; set; }
+	    /// <summary>
+	    /// The key modifier. This is optional.
+	    /// </summary>
+	    public ModifierKeys Modifier { get; set; } = ModifierKeys.None;
 
-		/// <summary>
-		/// The key modifier.  This is optional.
-		/// </summary>
-		public ModifierKeys Modifier { get; set; }
 	}
 }

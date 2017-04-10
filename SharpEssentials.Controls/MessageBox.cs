@@ -42,8 +42,8 @@ namespace SharpEssentials.Controls
         /// </summary>
         public bool Trigger
         {
-            get { return (bool)GetValue(TriggerProperty);  }
-            set  { SetValue(TriggerProperty, value); }
+            get => (bool)GetValue(TriggerProperty);
+            set => SetValue(TriggerProperty, value);
         }
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace SharpEssentials.Controls
         /// </summary>
         public MessageBoxButton Type
         {
-            get { return (MessageBoxButton)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
+            get => (MessageBoxButton)GetValue(TypeProperty);
+            set => SetValue(TypeProperty, value);
         }
 
         /// <summary>
@@ -82,8 +82,8 @@ namespace SharpEssentials.Controls
         /// </summary>
         public ICommand AffirmativeAction
         {
-            get { return (ICommand)GetValue(AffirmativeActionProperty); }
-            set  { SetValue(AffirmativeActionProperty, value); }
+            get => (ICommand)GetValue(AffirmativeActionProperty);
+            set => SetValue(AffirmativeActionProperty, value);
         }
 
         /// <summary>
@@ -99,8 +99,8 @@ namespace SharpEssentials.Controls
         /// </summary>
         public ICommand NegativeAction
         {
-            get { return (ICommand)GetValue(NegativeActionProperty); }
-            set { SetValue(NegativeActionProperty, value); }
+            get => (ICommand)GetValue(NegativeActionProperty);
+            set => SetValue(NegativeActionProperty, value);
         }
 
         /// <summary>
@@ -116,8 +116,8 @@ namespace SharpEssentials.Controls
         /// </summary>
         public ICommand CancelAction
         {
-            get { return (ICommand)GetValue(NegativeActionProperty); }
-            set { SetValue(NegativeActionProperty, value); }
+            get => (ICommand)GetValue(NegativeActionProperty);
+            set => SetValue(NegativeActionProperty, value);
         }
 
         /// <summary>
@@ -133,8 +133,8 @@ namespace SharpEssentials.Controls
         /// </summary>
         public string Message
         {
-            get { return (string)GetValue(MessageProperty); }
-            set { SetValue(MessageProperty, value); }
+            get => (string)GetValue(MessageProperty);
+            set => SetValue(MessageProperty, value);
         }
 
         /// <summary>
@@ -150,8 +150,8 @@ namespace SharpEssentials.Controls
         /// </summary>
         public string Caption
         {
-            get { return (string)GetValue(CaptionProperty); }
-            set { SetValue(CaptionProperty, value); }
+            get => (string)GetValue(CaptionProperty);
+            set => SetValue(CaptionProperty, value);
         }
 
         /// <summary>

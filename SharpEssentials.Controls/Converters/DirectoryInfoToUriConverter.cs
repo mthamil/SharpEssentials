@@ -32,20 +32,14 @@ namespace SharpEssentials.Controls.Converters
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			var directoryInfo = value as DirectoryInfo;
-			if (directoryInfo == null)
-				return null;
-
-			return new Uri(directoryInfo.FullName, UriKind.Absolute);
+			return directoryInfo == null ? null : new Uri(directoryInfo.FullName, UriKind.Absolute);
 		}
 
 		/// <see cref="IValueConverter.ConvertBack"/>
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			var uri = value as Uri;
-			if (uri == null)
-				return null;
-
-			return new DirectoryInfo(uri.LocalPath);
+			return uri == null ? null : new DirectoryInfo(uri.LocalPath);
 		}
 
 		#endregion

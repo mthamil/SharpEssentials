@@ -53,9 +53,9 @@ namespace SharpEssentials.Controls.Mvvm.Commands.Builder
         public ICommandCompleter DependsOn(Expression<Func<TChild, bool>> childProperty)
         {
             var parentPropertyGetter = _parentProperty.Compile();
-            Func<bool> canExecute = () => parentPropertyGetter(_parent);
+            bool CanExecute() => parentPropertyGetter(_parent);
 
-            return new ChildBoundCommandCompleter<TChild>(_collectionGetter, childProperty, canExecute);
+            return new ChildBoundCommandCompleter<TChild>(_collectionGetter, childProperty, CanExecute);
         }
 
         private readonly TParent _parent;

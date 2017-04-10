@@ -31,9 +31,9 @@ namespace SharpEssentials.Controls.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             object converted = value;
-            for (int i = 0; i < _converters.Count; i++)
+            for (int i = 0; i < Converters.Count; i++)
             {
-                converted = _converters[i].Convert(converted, targetType, parameter, culture);
+                converted = Converters[i].Convert(converted, targetType, parameter, culture);
             }
             return converted;
         }
@@ -42,9 +42,9 @@ namespace SharpEssentials.Controls.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             object converted = value;
-            for (int i = _converters.Count - 1; i >= 0; i--)
+            for (int i = Converters.Count - 1; i >= 0; i--)
             {
-                converted = _converters[i].ConvertBack(converted, targetType, parameter, culture);
+                converted = Converters[i].ConvertBack(converted, targetType, parameter, culture);
             }
             return converted;
         }
@@ -54,11 +54,6 @@ namespace SharpEssentials.Controls.Converters
         /// <summary>
         /// The converters to compose.
         /// </summary>
-        public Collection<IValueConverter> Converters
-        {
-            get { return _converters; }
-        }
-
-        private readonly Collection<IValueConverter> _converters = new Collection<IValueConverter>();
+        public Collection<IValueConverter> Converters { get; } = new Collection<IValueConverter>();
     }
 }

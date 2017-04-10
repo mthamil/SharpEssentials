@@ -66,8 +66,8 @@ namespace SharpEssentials.Controls.Commands
         /// </summary>
         public Window Owner
         {
-            get { return (Window)GetValue(OwnerProperty); }
-            set { SetValue(OwnerProperty, value); }
+            get => (Window)GetValue(OwnerProperty);
+            set => SetValue(OwnerProperty, value);
         }
 
         /// <summary>

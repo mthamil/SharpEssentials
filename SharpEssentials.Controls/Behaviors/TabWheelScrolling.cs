@@ -63,8 +63,8 @@ namespace SharpEssentials.Controls.Behaviors
         /// </summary>
         public bool InvertScrollDirection
         {
-            get { return (bool)GetValue(InvertScrollDirectionProperty); }
-            set { SetValue(InvertScrollDirectionProperty, value); }
+            get => (bool)GetValue(InvertScrollDirectionProperty);
+            set => SetValue(InvertScrollDirectionProperty, value);
         }
 
         /// <summary>
@@ -81,8 +81,8 @@ namespace SharpEssentials.Controls.Behaviors
         /// </summary>
         public bool ScrollWrapsAround
         {
-            get { return (bool)GetValue(ScrollWrapsAroundProperty); }
-            set { SetValue(ScrollWrapsAroundProperty, value); }
+            get => (bool)GetValue(ScrollWrapsAroundProperty);
+            set => SetValue(ScrollWrapsAroundProperty, value);
         }
 
         /// <summary>

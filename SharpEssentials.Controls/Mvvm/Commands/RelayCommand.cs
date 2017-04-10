@@ -32,25 +32,16 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		/// <param name="canExecute">Function that determines whether a command can be executed</param>
 		public RelayCommand(Action execute, Func<bool> canExecute = null)
 		{
-			if (execute == null)
-				throw new ArgumentNullException(nameof(execute));
-
-			_execute = execute;
+		    _execute = execute ?? throw new ArgumentNullException(nameof(execute));
 			_canExecute = canExecute;
 		}
 
 		#region ICommand Members
 
 		/// <see cref="ICommand.CanExecute"/>
-		public override bool CanExecute(object parameter)
-		{
-			if (_canExecute == null)
-				return true;
+		public override bool CanExecute(object parameter) => _canExecute == null || _canExecute();
 
-			return _canExecute();
-		}
-
-		/// <see cref="ICommand.Execute"/>
+	    /// <see cref="ICommand.Execute"/>
 		public override void Execute(object parameter)
 		{
 			_execute();
@@ -77,10 +68,7 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 		/// <param name="canExecute">Function that determines whether a command can be executed</param>
 		public RelayCommand(Action<T> execute, Predicate<T> canExecute = null)
 		{
-			if (execute == null)
-				throw new ArgumentNullException(nameof(execute));
-
-			_execute = execute;
+		    _execute = execute ?? throw new ArgumentNullException(nameof(execute));
 			_canExecute = canExecute;
 		}
 

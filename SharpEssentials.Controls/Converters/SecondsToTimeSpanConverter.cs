@@ -30,20 +30,15 @@ namespace SharpEssentials.Controls.Converters
 		/// <see cref="IValueConverter.Convert"/>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (value == null)
-				return string.Empty;
-
-			return ((TimeSpan)value).TotalSeconds.ToString(culture);
+		    return ((TimeSpan?)value)?.TotalSeconds.ToString(culture) ?? string.Empty;
 		}
 
 		/// <see cref="IValueConverter.ConvertBack"/>
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			int seconds;
-			if (Int32.TryParse((string)value, out seconds))
-				return TimeSpan.FromSeconds(seconds);
-
-			return null;
+		    return Int32.TryParse((string)value, out int seconds) 
+                ? (object)TimeSpan.FromSeconds(seconds) 
+                : null;
 		}
 
 		#endregion

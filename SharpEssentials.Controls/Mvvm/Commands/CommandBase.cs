@@ -24,27 +24,21 @@ namespace SharpEssentials.Controls.Mvvm.Commands
 	public abstract class CommandBase : ICommand
 	{
 		/// <see cref="ICommand.CanExecute"/>
-		public virtual bool CanExecute(object parameter)
-		{
-			return true;
-		}
+		public virtual bool CanExecute(object parameter) => true;
 
-		/// <see cref="ICommand.Execute"/>
+	    /// <see cref="ICommand.Execute"/>
 		public abstract void Execute(object parameter);
 
 		/// <see cref="ICommand.CanExecuteChanged"/>
 		public virtual event EventHandler CanExecuteChanged
 		{
-			add { CommandManager.RequerySuggested += value; }
-			remove { CommandManager.RequerySuggested -= value; }
+			add => CommandManager.RequerySuggested += value;
+		    remove => CommandManager.RequerySuggested -= value;
 		}
 
 		/// <summary>
 		/// Raises the CanExecuteChanged event.
 		/// </summary>
-		protected virtual void OnCanExecuteChanged()
-		{
-			CommandManager.InvalidateRequerySuggested();
-		}
+		protected virtual void OnCanExecuteChanged() => CommandManager.InvalidateRequerySuggested();
 	}
 }

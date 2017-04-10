@@ -34,8 +34,7 @@ namespace SharpEssentials.Controls.Converters
 			if (String.IsNullOrEmpty(uriPath))
 				return null;
 
-			Uri uri;
-			if (Uri.TryCreate(uriPath, UriKind.RelativeOrAbsolute, out uri))
+			if (Uri.TryCreate(uriPath, UriKind.RelativeOrAbsolute, out var uri))
 				return uri;
 
 			return null;

@@ -45,8 +45,8 @@ namespace SharpEssentials.Controls
 		/// </summary>
 		public bool Trigger
 		{
-			get { return (bool)GetValue(TriggerProperty); }
-			set { SetValue(TriggerProperty, value); }
+			get => (bool)GetValue(TriggerProperty);
+		    set => SetValue(TriggerProperty, value);
 		}
 
 		/// <summary>
@@ -124,8 +124,8 @@ namespace SharpEssentials.Controls
 		/// </summary>
 		public FileSystemInfo SelectedPath
 		{
-			get { return (FileSystemInfo)GetValue(SelectedPathProperty); }
-			set { SetValue(SelectedPathProperty, value); }
+			get => (FileSystemInfo)GetValue(SelectedPathProperty);
+		    set => SetValue(SelectedPathProperty, value);
 		}
 
 		/// <summary>
@@ -142,8 +142,8 @@ namespace SharpEssentials.Controls
 		/// </summary>
 		public string InitialFileName
 		{
-			get { return (string)GetValue(InitialFileNameProperty); }
-			set { SetValue(InitialFileNameProperty, value); }
+			get => (string)GetValue(InitialFileNameProperty);
+		    set => SetValue(InitialFileNameProperty, value);
 		}
 
 		/// <summary>
@@ -159,8 +159,8 @@ namespace SharpEssentials.Controls
 		/// </summary>
 		public DirectoryInfo InitialLocation
 		{
-			get { return (DirectoryInfo)GetValue(InitialLocationProperty); }
-			set { SetValue(InitialLocationProperty, value); }
+			get => (DirectoryInfo)GetValue(InitialLocationProperty);
+		    set => SetValue(InitialLocationProperty, value);
 		}
 
 		/// <summary>
@@ -177,8 +177,8 @@ namespace SharpEssentials.Controls
 		/// </summary>
 		public string Filter
 		{
-			get { return (string)GetValue(FilterProperty); }
-			set { SetValue(FilterProperty, value); }
+			get => (string)GetValue(FilterProperty);
+		    set => SetValue(FilterProperty, value);
 		}
 
 		/// <summary>
@@ -194,8 +194,8 @@ namespace SharpEssentials.Controls
 		/// </summary>
 		public FilePickerMode Mode
 		{
-			get { return (FilePickerMode)GetValue(ModeProperty); }
-			set { SetValue(ModeProperty, value); }
+			get => (FilePickerMode)GetValue(ModeProperty);
+		    set => SetValue(ModeProperty, value);
 		}
 
 		/// <summary>
@@ -212,8 +212,8 @@ namespace SharpEssentials.Controls
 		/// </summary>
 		public ICommand AffirmativeCommand
 		{
-			get { return (ICommand)GetValue(AffirmativeCommandProperty); }
-			set { SetValue(AffirmativeCommandProperty, value); }
+			get => (ICommand)GetValue(AffirmativeCommandProperty);
+		    set => SetValue(AffirmativeCommandProperty, value);
 		}
 
 		/// <summary>
@@ -229,8 +229,8 @@ namespace SharpEssentials.Controls
 		/// </summary>
 		public IValueConverter AffirmativeCommandConverter
 		{
-			get { return (IValueConverter)GetValue(AffirmativeCommandConverterProperty); }
-			set { SetValue(AffirmativeCommandConverterProperty, value); }
+			get => (IValueConverter)GetValue(AffirmativeCommandConverterProperty);
+		    set => SetValue(AffirmativeCommandConverterProperty, value);
 		}
 
 		/// <summary>

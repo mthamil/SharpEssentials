@@ -47,7 +47,7 @@ namespace SharpEssentials.Controls.Localization
         /// </summary>
         public virtual void UpdateAllTargets()
         {
-            foreach (ManagedMarkupExtension extension in _extensions)
+            foreach (var extension in _extensions)
             {
                 extension.UpdateTargets();
             }
@@ -100,7 +100,7 @@ namespace SharpEssentials.Controls.Localization
         /// <param name="cleanupInterval">The interval at which to cleanup and remove extensions.</param>
         public static MarkupExtensionManager For<TExtension>(int cleanupInterval) where TExtension : ManagedMarkupExtension
         {
-            return managers.GetOrAdd(typeof(TExtension), extensionType => 
+            return Managers.GetOrAdd(typeof(TExtension), extensionType => 
                 ManagerFactory(extensionType, cleanupInterval));
         }
 
@@ -122,7 +122,7 @@ namespace SharpEssentials.Controls.Localization
         /// <summary>
         /// Cached/shared markup extension managers.
         /// </summary>
-        private static readonly ConcurrentDictionary<Type, MarkupExtensionManager> managers = new ConcurrentDictionary<Type, MarkupExtensionManager>();
+        private static readonly ConcurrentDictionary<Type, MarkupExtensionManager> Managers = new ConcurrentDictionary<Type, MarkupExtensionManager>();
 
         /// <summary>
         /// Function used to create new <see cref="MarkupExtensionManager"/>s.

@@ -47,8 +47,8 @@ namespace SharpEssentials.Controls.Behaviors
         /// </summary>
         public bool ShowItemBeingDragged
         {
-            get { return (bool)GetValue(ShowItemBeingDraggedProperty); }
-            set { SetValue(ShowItemBeingDraggedProperty, value); }
+            get => (bool)GetValue(ShowItemBeingDraggedProperty);
+            set => SetValue(ShowItemBeingDraggedProperty, value);
         }
 
         /// <summary>
@@ -129,16 +129,14 @@ namespace SharpEssentials.Controls.Behaviors
         private void Item_DragEnter(object sender, DragEventArgs e)
         {
             var targetItem = AssociatedObject.ItemContainerGenerator.ItemFromContainer((DependencyObject)sender);
-            object sourceItem;
-            if (!e.Data.TryGetData(targetItem.GetType(), out sourceItem) || Object.ReferenceEquals(sourceItem, targetItem))
+            if (!e.Data.TryGetData(targetItem.GetType(), out var sourceItem) || Object.ReferenceEquals(sourceItem, targetItem))
                 e.Effects = DragDropEffects.None;
         }
 
         private void Item_Drop(object sender, DragEventArgs e)
         {
             var targetItem = AssociatedObject.ItemContainerGenerator.ItemFromContainer((DependencyObject)sender);
-            object sourceItem;
-            if (e.Data.TryGetData(targetItem.GetType(), out sourceItem) && !Object.ReferenceEquals(sourceItem, targetItem))
+            if (e.Data.TryGetData(targetItem.GetType(), out var sourceItem) && !Object.ReferenceEquals(sourceItem, targetItem))
             {
                 var targetIndex = AssociatedObject.ItemContainerGenerator.IndexFromContainer((DependencyObject)sender);
                 var items = AssociatedObject.ItemsSource as IList;
@@ -146,8 +144,7 @@ namespace SharpEssentials.Controls.Behaviors
                 {
                     items.Remove(sourceItem);
                     items.Insert(targetIndex, sourceItem);
-                    var selector = AssociatedObject as Selector;
-                    if (selector != null)
+                    if (AssociatedObject is Selector selector)
                         selector.SelectedItem = sourceItem;
                 }
             }
