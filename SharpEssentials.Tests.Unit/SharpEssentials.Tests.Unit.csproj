@@ -106,6 +106,9 @@
     <Reference Include="xunit.runner.utility.net452, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <HintPath>..\packages\xunit.runner.utility.2.2.0\lib\net452\xunit.runner.utility.net452.dll</HintPath>
     </Reference>
+    <Reference Include="Xunit.StaFact, Version=0.2.0.0, Culture=neutral, PublicKeyToken=593f35978b459a4b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xunit.StaFact.0.2.3-beta\lib\net452\Xunit.StaFact.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertThatTests.cs" />
@@ -171,10 +174,6 @@
     <ProjectReference Include="..\SharpEssentials.Controls\SharpEssentials.Controls.csproj">
       <Project>{3be8d9dc-ddc3-47d8-848f-68cf43026cca}</Project>
       <Name>SharpEssentials.Controls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharpEssentials.Testing.Controls\SharpEssentials.Testing.Controls.csproj">
-      <Project>{b667a48f-c77c-4612-82dc-df701509da08}</Project>
-      <Name>SharpEssentials.Testing.Controls</Name>
     </ProjectReference>
     <ProjectReference Include="..\SharpEssentials.Testing\SharpEssentials.Testing.csproj">
       <Project>{03bbcd92-4b36-4c97-8fa4-f2a26b81c04a}</Project>

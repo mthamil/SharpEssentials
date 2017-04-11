@@ -4,7 +4,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using SharpEssentials.Controls.Behaviors;
 using SharpEssentials.Observable;
-using SharpEssentials.Testing.Controls.WPF;
 using Xunit;
 
 namespace SharpEssentials.Tests.Unit.SharpEssentials.Controls.Behaviors
