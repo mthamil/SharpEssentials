@@ -23,7 +23,6 @@ init:
       $versionDelimiter = "$(if ($isBranch) { '-' } else { '' })"
       $Env:VersionPrefix = "$($Env:major).$($Env:minor).$($Env:APPVEYOR_BUILD_NUMBER)"
       $Env:VersionSuffix = "$(if ($isBranch) { $Env:APPVEYOR_REPO_BRANCH } else { '' })"
-      $Env:AssemblyVersion = "$($Env:major).$($Env:minor).0"
       appveyor UpdateBuild -Version "$($Env:VersionPrefix)$($versionDelimiter)$($Env:VersionSuffix)"
 
 #---------------------------------#
@@ -42,6 +41,13 @@ build:
 
 cache:
   - packages -> **\packages.config
+
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '$($Env:major).$($Env:minor).0'
+  assembly_file_version: '$($Env:VersionPrefix)'
+  assembly_informational_version: '{version}'
 
 nuget:
   project_feed: true
