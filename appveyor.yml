@@ -46,8 +46,8 @@ cache:
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
-  assembly_version: '{VersionAssembly}'
-  assembly_file_version: '{VersionPrefix}'
+  assembly_version: $(VersionAssembly)
+  assembly_file_version: $(VersionPrefix)
   assembly_informational_version: '{version}'
 
 nuget:
