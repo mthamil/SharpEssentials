@@ -19,7 +19,6 @@ environment:
 init:
   - git config --global core.autocrlf true
   - ps: |
-      $Env:VersionAssembly = "$($Env:major).$($Env:minor).0.0"
       $isBranch = $Env:APPVEYOR_REPO_BRANCH -ne 'master'
       $versionDelimiter = "$(if ($isBranch) { '-' } else { '' })"
       $Env:VersionPrefix = "$($Env:major).$($Env:minor).$($Env:APPVEYOR_BUILD_NUMBER)"
@@ -46,7 +45,7 @@ cache:
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
-  assembly_version: $(VersionAssembly)
+  assembly_version: $(major).$(minor).0.0
   assembly_file_version: $(VersionPrefix)
   assembly_informational_version: '{version}'
 
