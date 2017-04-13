@@ -23,6 +23,7 @@ init:
       $versionDelimiter = "$(if ($isBranch) { '-' } else { '' })"
       $Env:VersionPrefix = "$($Env:major).$($Env:minor).$($Env:APPVEYOR_BUILD_NUMBER)"
       $Env:VersionSuffix = "$(if ($isBranch) { $Env:APPVEYOR_REPO_BRANCH } else { '' })"
+      $Env:AssemblyVersion = "$($Env:major).$($Env:minor).0"
       appveyor UpdateBuild -Version "$($Env:VersionPrefix)$($versionDelimiter)$($Env:VersionSuffix)"
 
 #---------------------------------#
