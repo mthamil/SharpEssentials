@@ -21,7 +21,7 @@ init:
   - git config --global core.autocrlf true
   - ps: |
       $isCI = $Env:APPVEYOR_REPO_TAG -ne $true
-      $isBranch = $Env:APPVEYOR_REPO_BRANCH -ne 'master'
+      $isBranch = $isCI -and ($Env:APPVEYOR_REPO_BRANCH -ne 'master')
       $branchSuffix = "$(if ($isBranch) { '-' + $Env:APPVEYOR_REPO_BRANCH } else { '' })"
       $Env:VersionPrefix = "$($Env:major).$($Env:minor).$($Env:APPVEYOR_BUILD_NUMBER)"
       $Env:VersionSuffix = "$(if ($isCI) { 'CI' + $branchSuffix } else { '' })"
