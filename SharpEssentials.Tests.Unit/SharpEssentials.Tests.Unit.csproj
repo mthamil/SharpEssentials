@@ -59,9 +59,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
-    </Reference>
     <Reference Include="Moq, Version=4.2.1507.118, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
@@ -72,9 +69,6 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq">
@@ -106,36 +100,10 @@
     <Reference Include="xunit.runner.utility.net452, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <HintPath>..\packages\xunit.runner.utility.2.2.0\lib\net452\xunit.runner.utility.net452.dll</HintPath>
     </Reference>
-    <Reference Include="Xunit.StaFact, Version=0.2.0.0, Culture=neutral, PublicKeyToken=593f35978b459a4b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xunit.StaFact.0.2.3-beta\lib\net452\Xunit.StaFact.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertThatTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SharpEssentials.Controls\Behaviors\CollectionViewSourceFilterActionTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Behaviors\AutoSelectOnFocusBehaviorTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Behaviors\TreeViewBindableSelectedItemBehaviorTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Collections\CollectionMirrorGenericTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Collections\CollectionMirrorTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Commands\CloseWindowCommandTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Commands\OpenContextMenuCommandTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Converters\BooleanToVisibilityValueConverterTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Converters\ComposingConverterTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Converters\AndConverterTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Converters\DirectoryInfoToUriConverterTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Converters\FileInfoToUriConverterTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Converters\NegatingConverterTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Converters\ObjectGetTypeConverterTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Converters\OrConverterTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Converters\ReverseConverterTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Converters\SecondsToTimeSpanConverterTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Converters\UriConverterTests.cs" />
-    <Compile Include="SharpEssentials.Controls\EnumValuesExtensionTests.cs" />
-    <Compile Include="SharpEssentials.Controls\ItemsControlExtensionsTests.cs" />
-    <Compile Include="SharpEssentials.Controls\MultiKey\MultiKeyGestureConverterTests.cs" />
-    <Compile Include="SharpEssentials.Controls\MultiKey\MultiKeyGestureTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Selectors\TypeMapDataTemplateSelectorTests.cs" />
     <Compile Include="SharpEssentials\Collections\AsyncEnumerableExtensionsTests.cs" />
     <Compile Include="SharpEssentials\Collections\CollectionExtensionTests.cs" />
     <Compile Include="SharpEssentials\Collections\DictionaryExtensionsTests.cs" />
@@ -155,12 +123,6 @@
     <Compile Include="SharpEssentials\InputOutput\FileSystemInfoPathEqualityComparerTests.cs" />
     <Compile Include="SharpEssentials\InputOutput\StreamExtensionsTests.cs" />
     <Compile Include="SharpEssentials\InputOutput\TemporaryFileTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Mvvm\Commands\BoundRelayCommandTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Mvvm\Commands\AggregateBoundRelayCommandTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Mvvm\Commands\CancelTaskCommandTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Mvvm\Commands\AsyncRelayCommandTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Mvvm\Commands\DependentBoundRelayCommandTests.cs" />
-    <Compile Include="SharpEssentials.Controls\Mvvm\Commands\RelayCommandTests.cs" />
     <Compile Include="SharpEssentials\Net\UriEqualityComparerTests.cs" />
     <Compile Include="SharpEssentials\OptionTests.cs" />
     <Compile Include="SharpEssentials\Observable\PropertyTests.cs" />
@@ -171,10 +133,6 @@
     <Compile Include="SharpEssentials\Weak\WeakReferenceExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharpEssentials.Controls\SharpEssentials.Controls.csproj">
-      <Project>{3be8d9dc-ddc3-47d8-848f-68cf43026cca}</Project>
-      <Name>SharpEssentials.Controls</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SharpEssentials.Testing\SharpEssentials.Testing.csproj">
       <Project>{03bbcd92-4b36-4c97-8fa4-f2a26b81c04a}</Project>
       <Name>SharpEssentials.Testing</Name>
@@ -188,7 +146,9 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
