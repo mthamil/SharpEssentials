@@ -13,17 +13,20 @@ os: Visual Studio 2017
 environment:  
   major: 1
   minor: 0
+  patch: 0
 
 
 # scripts that are called at very beginning, before repo cloning
 init:
   - git config --global core.autocrlf true
   - ps: |
+      $isCI = $Env:APPVEYOR_REPO_TAG -ne $true
       $isBranch = $Env:APPVEYOR_REPO_BRANCH -ne 'master'
-      $versionDelimiter = "$(if ($isBranch) { '-' } else { '' })"
+      $branchSuffix = "$(if ($isBranch) { '-' + $Env:APPVEYOR_REPO_BRANCH } else { '' })"
       $Env:VersionPrefix = "$($Env:major).$($Env:minor).$($Env:APPVEYOR_BUILD_NUMBER)"
-      $Env:VersionSuffix = "$(if ($isBranch) { $Env:APPVEYOR_REPO_BRANCH } else { '' })"
-      appveyor UpdateBuild -Version "$($Env:VersionPrefix)$($versionDelimiter)$($Env:VersionSuffix)"
+      $Env:VersionSuffix = "$(if ($isCI) { 'CI' + $branchSuffix } else { '' })"
+      appveyor UpdateBuild -Version "$($Env:VersionPrefix)$(if ($Env:VersionSuffix -ne '') { '-' } else { '' })$($Env:VersionSuffix)"
+
 
 #---------------------------------#
 #       build configuration       #
@@ -45,7 +48,7 @@ cache:
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
-  assembly_version: $(major).$(minor).0.0
+  assembly_version: $(major).$(minor).$(patch).0
   assembly_file_version: $(VersionPrefix)
   assembly_informational_version: '{version}'
 
