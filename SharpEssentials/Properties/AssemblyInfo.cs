@@ -15,11 +15,10 @@
 
 using System.Reflection;
 
-//[assembly: AssemblyTitle("SharpEssentials")]
-//[assembly: AssemblyProduct("SharpEssentials")]
-//[assembly: AssemblyDescription("Commonly used utility code for C#.")]
-//[assembly: AssemblyCompany("Matt Hamilton")]
-//[assembly: AssemblyCopyright("Matt Hamilton 2017")]
+[assembly: AssemblyTitle("SharpEssentials")]
+[assembly: AssemblyProduct("SharpEssentials")]
+[assembly: AssemblyDescription("Commonly used utility code for C#.")]
+[assembly: AssemblyCopyright("Matt Hamilton 2017")]
 
 [assembly: AssemblyVersion("0.0.0.0")]
 [assembly: AssemblyFileVersion("0.0.0.0")]
