@@ -27,7 +27,6 @@ init:
       $Env:VersionSuffix = "$(if ($isCI) { 'CI' + $branchSuffix } else { '' })"
       appveyor UpdateBuild -Version "$($Env:VersionPrefix)$(if ($Env:VersionSuffix -ne '') { '-' } else { '' })$($Env:VersionSuffix)"
 
-
 #---------------------------------#
 #       build configuration       #
 #---------------------------------#
