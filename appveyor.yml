@@ -21,14 +21,11 @@ init:
   - git config --global core.autocrlf true
   - ps: |
       $isCI = $Env:APPVEYOR_REPO_TAG -eq $false
-      Write-Host($isCI)
       $isBranch = $isCI -and ($Env:APPVEYOR_REPO_BRANCH -ne 'master')
-      Write-Host($isBranch)
-      $branchSuffix = "$(if ($isBranch) { '-' + $Env:APPVEYOR_REPO_BRANCH } else { '' })"
+      $branchSuffix = "$(if ($isBranch) { '-' + $Env:APPVEYOR_REPO_BRANCH } else { $null })"
       $Env:VersionPrefix = "$($Env:major).$($Env:minor).$($Env:APPVEYOR_BUILD_NUMBER)"
-      $Env:VersionSuffix = "$(if ($isCI) { 'CI' + $branchSuffix } else { '' })"
-      Write-Host($Env:VersionSuffix)
-      appveyor UpdateBuild -Version "$($Env:VersionPrefix)$(if ($Env:VersionSuffix -ne '') { '-' } else { '' })$($Env:VersionSuffix)"
+      $Env:VersionSuffix = "$(if ($isCI) { 'CI' + $branchSuffix } else { $null })"
+      appveyor UpdateBuild -Version "$($Env:VersionPrefix)$(if ($isCI) { '-' } else { $null })$($Env:VersionSuffix)"
 
 #---------------------------------#
 #       build configuration       #
