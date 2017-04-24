@@ -23,8 +23,8 @@ init:
       $isCI = $Env:APPVEYOR_REPO_TAG -eq $false
       $isBranch = $isCI -and ($Env:APPVEYOR_REPO_BRANCH -ne 'master')
       $branchSuffix = "$(if ($isBranch) { '-' + $Env:APPVEYOR_REPO_BRANCH } else { $null })"
-      $Env:VersionPrefix = "$($Env:major).$($Env:minor).$($Env:APPVEYOR_BUILD_NUMBER)"
-      $Env:VersionSuffix = "$(if ($isCI) { 'CI' + $branchSuffix } else { $null })"
+      $Env:VersionPrefix = "$($Env:major).$($Env:minor).$($Env:patch)"
+      $Env:VersionSuffix = "$(if ($isCI) { 'CI' + $Env:APPVEYOR_BUILD_NUMBER + $branchSuffix } else { $null })"
       appveyor UpdateBuild -Version "$($Env:VersionPrefix)$(if ($isCI) { '-' } else { $null })$($Env:VersionSuffix)"
 
 #---------------------------------#
@@ -48,7 +48,7 @@ assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
   assembly_version: $(major).$(minor).$(patch).0
-  assembly_file_version: $(VersionPrefix)
+  assembly_file_version: $(major).$(minor).$(patch).$(build)
   assembly_informational_version: '{version}'
 
 nuget:
