@@ -47,8 +47,8 @@ cache:
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
-  assembly_version: $(major).$(minor).$(patch).0
-  assembly_file_version: $(major).$(minor).$(patch).$(build)
+  assembly_version: $(VersionPrefix).0
+  assembly_file_version: $(VersionPrefix).$(APPVEYOR_BUILD_NUMBER)
   assembly_informational_version: '{version}'
 
 nuget:
