@@ -13,52 +13,39 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
 using System.Reflection;
-using System.Runtime.Remoting.Messaging;
-using System.Runtime.Remoting.Proxies;
 using SharpEssentials.Reflection;
 
 namespace SharpEssentials.Testing
 {
-	/// <summary>
-	/// Proxy that records method invocations.
-	/// </summary>
-	public class MethodRecorder<T> : RealProxy
-	{
-		/// <summary>
-		/// Creates a new interceptor that records method invocations.
-		/// </summary>
-		public MethodRecorder()
-			: base(typeof(T))
-		{
-			_proxy = new Lazy<T>(() => (T)base.GetTransparentProxy());
-		}
+    /// <summary>
+    /// Proxy that records method invocations.
+    /// </summary>
+    public class MethodRecorder<T> : DispatchProxy, IMethodRecorder
+    {
+        /// <summary>
+        /// Creates a new interceptor that records method invocations.
+        /// </summary>
+        public static T Create() => Create<T, MethodRecorder<T>>();
 
-		/// <summary>
-		/// The underlying proxy.
-		/// </summary>
-		public T Proxy => _proxy.Value;
+        /// <summary>
+        /// The most recent invocation made on the proxy.
+        /// </summary>
+        public MethodInfo LastInvocation { get; private set; }
 
-	    /// <summary>
-		/// The most recent invocation made on the proxy.
-		/// </summary>
-		public IMethodCallMessage LastInvocation { get; private set; }
+        /// <summary>
+        /// <see cref="DispatchProxy.Invoke"/>
+        /// </summary>
+        protected override object Invoke(MethodInfo targetMethod, object[] args)
+        {
+            LastInvocation = targetMethod;
+            var returnValue = targetMethod.ReturnType.GetDefaultValue();
+            return returnValue;
+        }
+    }
 
-		/// <see cref="RealProxy.Invoke"/>
-		public override IMessage Invoke(IMessage msg)
-		{
-			var methodCall = msg as IMethodCallMessage;
-			LastInvocation = methodCall;
-
-			object returnValue = null;
-			var method = methodCall.MethodBase as MethodInfo;
-			if (method != null)
-				returnValue = method.ReturnType.GetDefaultValue();
-
-			return new ReturnMessage(returnValue, new object[0], 0, methodCall.LogicalCallContext, methodCall);
-		}
-
-		private readonly Lazy<T> _proxy;
-	}
+    internal interface IMethodRecorder
+    {
+        MethodInfo LastInvocation { get; }
+    }
 }

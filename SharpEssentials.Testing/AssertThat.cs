@@ -20,7 +20,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 using SharpEssentials.Reflection;
 using Xunit;
 using Xunit.Sdk;
@@ -198,14 +197,14 @@ namespace SharpEssentials.Testing
 
         private static EventInfo ExtractEvent<T>(Action<T> eventAccessor, T target)
         {
-            var recorder = new MethodRecorder<T>();
-            eventAccessor(recorder.Proxy);
+            var proxy = MethodRecorder<T>.Create();
+            eventAccessor(proxy);
 
-            IMethodCallMessage eventMember = recorder.LastInvocation;
-            if (!(eventMember.MethodName.StartsWith("add_") || eventMember.MethodName.StartsWith("remove_")))
+            var eventMember = ((IMethodRecorder)proxy).LastInvocation;
+            if (!(eventMember.Name.StartsWith("add_") || eventMember.Name.StartsWith("remove_")))
                 throw new ArgumentException(@"Invocation must be an event subscription or unsubscription", nameof(eventAccessor));
 
-            string eventName = eventMember.MethodName.Replace("add_", string.Empty).Replace("remove_", string.Empty);
+            string eventName = eventMember.Name.Replace("add_", string.Empty).Replace("remove_", string.Empty);
             EventInfo eventInfo = typeof(T).GetEvent(eventName);
             return eventInfo;
         }
@@ -264,7 +263,7 @@ namespace SharpEssentials.Testing
             // this method to dynamically subscribe for events was taken from 
             // http://www.codeproject.com/KB/cs/eventtracingviareflection.aspx
             EventProxy proxy = new EventProxy();
-            Delegate d = Delegate.CreateDelegate(eventInfo.EventHandlerType, proxy, EventProxy.Handler);
+            Delegate d = EventProxy.Handler.CreateDelegate(eventInfo.EventHandlerType, proxy);
 
             eventInfo.AddEventHandler(target, d);
             eventDelegate.DynamicInvoke();
