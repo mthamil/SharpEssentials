@@ -28,8 +28,4 @@
     <ProjectReference Include="..\SharpEssentials\SharpEssentials.csproj" />
   </ItemGroup>
   
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-  
 </Project>

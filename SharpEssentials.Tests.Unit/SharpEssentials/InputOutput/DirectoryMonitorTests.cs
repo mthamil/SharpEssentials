@@ -44,7 +44,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
         public void Test_StartMonitoring()
         {
             // Arrange.
-            var directory = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+            var directory = new DirectoryInfo(AppContext.BaseDirectory);
 
             // Act.
             _underTest.StartMonitoring(directory);
@@ -59,7 +59,7 @@ namespace SharpEssentials.Tests.Unit.SharpEssentials.InputOutput
         public void Test_RestartMonitoring()
         {
             // Arrange.
-            var directory = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+            var directory = new DirectoryInfo(AppContext.BaseDirectory);
             _underTest.StartMonitoring(directory);
             _underTest.StopMonitoring();
 

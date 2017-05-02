@@ -1,160 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4AB0FC65-635E-46C2-B821-5B8C74DB7C8F}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SharpEssentials.Tests.Unit</RootNamespace>
-    <AssemblyName>SharpEssentials.Tests.Unit</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <PackageId>SharpEssentials.Tests.Unit</PackageId>
+    <Authors>Matt Hamilton</Authors>
+    <Product>SharpEssentials.Tests.Unit</Product>
+    <Copyright>Matt Hamilton 2017</Copyright>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Moq, Version=4.2.1507.118, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.abstractions.2.0.1\lib\net35\xunit.abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.assert, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.assert.2.2.0\lib\netstandard1.1\xunit.assert.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.core, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.core.2.2.0\lib\netstandard1.1\xunit.core.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.execution.desktop, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.execution.2.2.0\lib\net452\xunit.execution.desktop.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.runner.reporters.net452, Version=2.2.0.3545, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.runner.reporters.2.2.0\lib\net452\xunit.runner.reporters.net452.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.runner.utility.net452, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.runner.utility.2.2.0\lib\net452\xunit.runner.utility.net452.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Include="Moq" Version="4.7.9" />
+    <PackageReference Include="xunit" Version="2.2.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="AssertThatTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SharpEssentials\Collections\AsyncEnumerableExtensionsTests.cs" />
-    <Compile Include="SharpEssentials\Collections\CollectionExtensionTests.cs" />
-    <Compile Include="SharpEssentials\Collections\DictionaryExtensionsTests.cs" />
-    <Compile Include="SharpEssentials\Collections\EnumerableExtensionsTests.cs" />
-    <Compile Include="SharpEssentials\Collections\ReverseComparerTests.cs" />
-    <Compile Include="SharpEssentials\Concurrency\ReaderWriterLockSlimExtensionTests.cs" />
-    <Compile Include="SharpEssentials\Concurrency\TaskExtensionsTests.cs" />
-    <Compile Include="SharpEssentials\Concurrency\TasksTests.cs" />
-    <Compile Include="SharpEssentials\Concurrency\WaitHandleExtensionsTests.cs" />
-    <Compile Include="SharpEssentials\Diagnostics\ExceptionExtensionsTests.cs" />
-    <Compile Include="SharpEssentials\DisposableAdapterTests.cs" />
-    <Compile Include="SharpEssentials\DisposableBaseTests.cs" />
-    <Compile Include="SharpEssentials\DisposableExtensionsTests.cs" />
-    <Compile Include="SharpEssentials\InputOutput\AsyncStreamExtensionTests.cs" />
-    <Compile Include="SharpEssentials\InputOutput\DirectoryMonitorTests.cs" />
-    <Compile Include="SharpEssentials\InputOutput\FileInfoExtensionsTests.cs" />
-    <Compile Include="SharpEssentials\InputOutput\FileSystemInfoPathEqualityComparerTests.cs" />
-    <Compile Include="SharpEssentials\InputOutput\StreamExtensionsTests.cs" />
-    <Compile Include="SharpEssentials\InputOutput\TemporaryFileTests.cs" />
-    <Compile Include="SharpEssentials\Net\UriEqualityComparerTests.cs" />
-    <Compile Include="SharpEssentials\OptionTests.cs" />
-    <Compile Include="SharpEssentials\Observable\PropertyTests.cs" />
-    <Compile Include="SharpEssentials\Reflection\EnumsTests.cs" />
-    <Compile Include="SharpEssentials\Reflection\ReflectionExtensionsTests.cs" />
-    <Compile Include="SharpEssentials\Reflection\ReflectTests.cs" />
-    <Compile Include="SharpEssentials\Weak\WeakEventHandlerTests.cs" />
-    <Compile Include="SharpEssentials\Weak\WeakReferenceExtensionsTests.cs" />
+    <ProjectReference Include="..\SharpEssentials.Testing\SharpEssentials.Testing.csproj" />
+    <ProjectReference Include="..\SharpEssentials\SharpEssentials.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\SharpEssentials.Testing\SharpEssentials.Testing.csproj">
-      <Project>{03bbcd92-4b36-4c97-8fa4-f2a26b81c04a}</Project>
-      <Name>SharpEssentials.Testing</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharpEssentials\SharpEssentials.csproj">
-      <Project>{573d5f8c-4c19-42c3-b84b-bc585008b505}</Project>
-      <Name>SharpEssentials</Name>
-    </ProjectReference>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

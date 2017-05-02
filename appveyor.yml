@@ -61,7 +61,7 @@ nuget:
 #---------------------------------#
 
 test_script:
-  - ps: '&"$($env:APPVEYOR_BUILD_FOLDER)\packages\xunit.runner.console*\tools\xunit.console.exe" "$($env:APPVEYOR_BUILD_FOLDER)\SharpEssentials.Tests.Unit\bin\$($env:CONFIGURATION)\SharpEssentials.Tests.Unit.dll" -parallel none -appveyor'
+  - ps: 'dotnet test .\SharpEssentials.Tests.Unit\SharpEssentials.Tests.Unit.csproj'
 
 
 #---------------------------------#
