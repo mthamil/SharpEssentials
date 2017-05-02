@@ -41,9 +41,6 @@ before_build:
 build:
   verbosity: minimal               # MSBuild verbosity level
 
-cache:
-  - packages -> **\packages.config
-
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
